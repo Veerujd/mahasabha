@@ -78,26 +78,17 @@ let ribbonUntil  = 0;
 let lastScrolled = null;
 
 function updateSpacer() {
-    if (!ribbon || !pageSpacer) return;
-    // Ribbon is position:fixed. At any scroll position,
-    // getBoundingClientRect().bottom gives its viewport bottom.
-    // The spacer height should equal the ribbon's viewport bottom
-    // (how much space the fixed stack takes from the top of the page).
-    // Since the spacer is at the top of document flow (scrollY=0 equivalent position),
-    // its height = ribbon's viewport bottom position is always correct.
-    const h = ribbon.getBoundingClientRect().bottom;
-    pageSpacer.style.height = Math.max(0, h) + 'px';
+    if (!pageSpacer) return;
+    const headerBottom = header ? header.getBoundingClientRect().bottom : 0;
+    const tickerBottom = topBar ? topBar.getBoundingClientRect().bottom : 0;
+    const h = Math.max(headerBottom, tickerBottom);
+    // Subtracting 4px to ensure a definitive overlap with the navbar's bottom decorative border, 
+    // eliminating potential white-seams from sub-pixel browser rendering.
+    pageSpacer.style.setProperty('height', (Math.floor(h) - 4) + 'px', 'important');
 }
 
 function positionRibbon() {
-    if (!header || !ribbon) return;
-    const headerBottom = header.getBoundingClientRect().bottom;
-    const tickerBottom = topBar ? topBar.getBoundingClientRect().bottom : 0;
-    
-    // Choose whichever stays lower to avoid overlap
-    const finalTop = Math.max(0, headerBottom, tickerBottom);
-    
-    ribbon.style.setProperty('top', finalTop + 'px', 'important');
+    // Ribbon is now static/relative in index.html, no positioning needed.
     updateSpacer();
 }
 
@@ -119,21 +110,21 @@ const handleScroll = () => {
     // PREVENT GLITCH: If mobile nav is open, ignore scroll-based header/ribbon toggling
     if (nav && nav.classList.contains('active')) return;
 
-    const isScrolled = window.scrollY > 50; /* Increased threshold for stability */
+    const isScrolled = window.scrollY > 10; /* Increased threshold for stability */
     if (isScrolled !== lastScrolled) {
         lastScrolled = isScrolled;
         if (isScrolled) {
-            header.classList.add('scrolled');
-            if (topBar) topBar.classList.add('hidden');
-            if (ribbon) ribbon.classList.add('hidden');
-            document.body.classList.add('body-scrolled');
+            header.classList.add("scrolled");
+            if (topBar) topBar.classList.add("hidden");
+            if (ribbon) ribbon.classList.add("hidden");
+            document.body.classList.add("body-scrolled");
         } else {
-            header.classList.remove('scrolled');
-            if (topBar) topBar.classList.remove('hidden');
-            if (ribbon) ribbon.classList.remove('hidden');
-            document.body.classList.remove('body-scrolled');
+            header.classList.remove("scrolled");
+            if (topBar) topBar.classList.remove("hidden");
+            if (ribbon) ribbon.classList.remove("hidden");
+            document.body.classList.remove("body-scrolled");
         }
-        trackRibbonFor(600);
+        trackRibbonFor(200);
     }
 };
 
@@ -141,7 +132,16 @@ window.addEventListener('scroll', handleScroll, { passive: true });
 window.addEventListener('resize', () => trackRibbonFor(300));
 
 handleScroll();
+updateSpacer(); // Immediate initialization
 trackRibbonFor(1000);
+
+// Fix for dynamic image loading affecting header height
+const logo = header ? header.querySelector('img') : null;
+if (logo) {
+    logo.addEventListener('load', () => updateSpacer());
+    // Fallback for cached images
+    if (logo.complete) updateSpacer();
+}
 
 // Immersive Hero Slider
 const slides = document.querySelectorAll('.slide');
@@ -211,123 +211,164 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Gallery Filtering & Lightbox logic
+// Modern Gallery & Simplified Filter logic
 const initGallery = () => {
     const tabBtns = document.querySelectorAll('.tab-btn');
+    const yearBtns = document.querySelectorAll('.year-btn');
     const galleryItems = document.querySelectorAll('.gallery-item');
     const lightbox = document.getElementById('lightbox');
-    const lightboxImg = lightbox ? lightbox.querySelector('img') : null;
 
-    if (tabBtns.length > 0) {
-        tabBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                tabBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                
-                const category = btn.getAttribute('data-category');
-                
-                galleryItems.forEach(item => {
-                    item.style.transition = 'all 0.5s ease';
-                    if (category === 'all' || item.classList.contains(category)) {
-                        item.style.display = 'block';
-                        setTimeout(() => {
-                            item.style.opacity = '1';
-                            item.style.transform = 'scale(1)';
-                        }, 10);
-                    } else {
-                        item.style.opacity = '0';
-                        item.style.transform = 'scale(0.8)';
-                        setTimeout(() => {
-                            item.style.display = 'none';
-                        }, 500);
-                    }
-                });
-            });
+    let activeCategory = 'all';
+    let activeYear = 'all';
+
+    const filterGallery = () => {
+        galleryItems.forEach(item => {
+            const itemDate = item.getAttribute('data-full-date') || "";
+            const itemYear = itemDate.split('-')[0];
+            
+            const categoryMatch = activeCategory === 'all' || item.classList.contains(activeCategory);
+            const yearMatch = activeYear === 'all' || itemYear === activeYear;
+
+            item.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+            if (categoryMatch && yearMatch) {
+                item.style.display = 'inline-block';
+                setTimeout(() => {
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateY(0) scale(1)';
+                }, 10);
+            } else {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(30px) scale(0.95)';
+                setTimeout(() => {
+                    item.style.display = 'none';
+                }, 500);
+            }
         });
-    }
+    };
+
+    // Category Buttons
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            tabBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            activeCategory = btn.getAttribute('data-category');
+            filterGallery();
+        });
+    });
+
+    // Year Buttons
+    yearBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            yearBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            activeYear = btn.getAttribute('data-year');
+            filterGallery();
+        });
+    });
+
+    // Initial Filter
+    filterGallery();
 
     if (lightbox) {
-        const lbTrack = document.getElementById('lb-track');
+        const lbMainImg = document.getElementById('lb-main-img');
+        const lbTitle = document.getElementById('lb-title');
+        const lbDesc = document.getElementById('lb-desc');
+        const lbCounter = document.getElementById('lb-counter');
+        const lbMiniSlider = document.getElementById('lb-mini-slider');
         const lbPrev = document.getElementById('lb-prev');
         const lbNext = document.getElementById('lb-next');
-        const lbDots = document.getElementById('lb-dots');
-        const lbTitle = document.getElementById('lightbox-title');
-        const lbDesc = document.getElementById('lightbox-desc');
-        
-        let currentLbIndex = 0;
-        let lbImages = [];
+        const closeBtn = document.getElementById('close-lightbox');
+
+        let currentImages = [];
+        let currentTitles = [];
+        let currentDescs = [];
+        let currentIdx = 0;
+
+        const updateLightbox = (index) => {
+            currentIdx = index;
+            
+            // Update Main Display
+            lbMainImg.style.opacity = '0.3';
+            setTimeout(() => {
+                lbMainImg.src = currentImages[currentIdx];
+                lbMainImg.style.opacity = '1';
+            }, 150);
+
+            // Update Text
+            lbTitle.innerText = currentTitles[currentIdx] || "Gallery";
+            lbDesc.innerText = currentDescs[currentIdx] || "";
+            lbCounter.innerText = `${currentIdx + 1} / ${currentImages.length}`;
+
+            // Update Thumbnails
+            const thumbs = lbMiniSlider.querySelectorAll('.mini-thumb');
+            thumbs.forEach((t, i) => {
+                t.classList.toggle('active', i === currentIdx);
+                if (i === currentIdx) {
+                    t.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                }
+            });
+        };
+
+        const openLightbox = (item) => {
+            try {
+                currentImages = JSON.parse(item.getAttribute('data-images'));
+                currentTitles = JSON.parse(item.getAttribute('data-titles'));
+                currentDescs = JSON.parse(item.getAttribute('data-descs'));
+            } catch (e) {
+                console.error("Gallery data parsing failed", e);
+                return;
+            }
+
+            // Populate thumbnails
+            lbMiniSlider.innerHTML = currentImages.map((src, i) => `
+                <div class="mini-thumb" data-idx="${i}">
+                    <img src="${src}" alt="Thumb ${i+1}">
+                </div>
+            `).join('');
+
+            lbMiniSlider.querySelectorAll('.mini-thumb').forEach(thumb => {
+                thumb.addEventListener('click', () => {
+                    updateLightbox(parseInt(thumb.getAttribute('data-idx')));
+                });
+            });
+
+            lightbox.classList.add('active');
+            updateLightbox(0);
+            document.body.style.overflow = 'hidden';
+        };
 
         const closeLightbox = () => {
-            lightbox.style.display = 'none';
+            lightbox.classList.remove('active');
             document.body.style.overflow = 'auto';
         };
 
-        const updateLbPosition = () => {
-            lbTrack.style.transform = `translateX(-${currentLbIndex * 100}%)`;
-            const dots = lbDots.querySelectorAll('.lb-dot');
-            dots.forEach((dot, i) => {
-                dot.classList.toggle('active', i === currentLbIndex);
-            });
-        };
-
-        const renderLbSlider = () => {
-            lbTrack.innerHTML = lbImages.map(src => `<img src="${src}" alt="Gallery Detail">`).join('');
-            lbDots.innerHTML = lbImages.map((_, i) => `<div class="lb-dot ${i === 0 ? 'active' : ''}" data-index="${i}"></div>`).join('');
-            updateLbPosition();
-        };
-
-        galleryItems.forEach(item => {
-            item.addEventListener('click', () => {
-                const mainImg = item.querySelector('img').src;
-                const titleText = item.querySelector('h4') ? item.querySelector('h4').textContent : '';
-                const descText = item.querySelector('p') ? item.querySelector('p').textContent : '';
-                
-                lbImages = [mainImg, mainImg, mainImg]; 
-
-                currentLbIndex = 0;
-                lbTitle.textContent = titleText;
-                lbDesc.textContent = descText;
-                
-                renderLbSlider();
-                lightbox.style.display = 'flex';
-                document.body.style.overflow = 'hidden';
-            });
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            item.addEventListener('click', () => openLightbox(item));
         });
 
-        if (lbPrev) lbPrev.addEventListener('click', (e) => {
+        lbPrev.addEventListener('click', (e) => {
             e.stopPropagation();
-            currentLbIndex = (currentLbIndex > 0) ? currentLbIndex - 1 : lbImages.length - 1;
-            updateLbPosition();
+            let prevIdx = (currentIdx - 1 + currentImages.length) % currentImages.length;
+            updateLightbox(prevIdx);
         });
 
-        if (lbNext) lbNext.addEventListener('click', (e) => {
+        lbNext.addEventListener('click', (e) => {
             e.stopPropagation();
-            currentLbIndex = (currentLbIndex < lbImages.length - 1) ? currentLbIndex + 1 : 0;
-            updateLbPosition();
+            let nextIdx = (currentIdx + 1) % currentImages.length;
+            updateLightbox(nextIdx);
         });
 
-        if (lbDots) lbDots.addEventListener('click', (e) => {
-            if (e.target.classList.contains('lb-dot')) {
-                e.stopPropagation();
-                currentLbIndex = parseInt(e.target.getAttribute('data-index'));
-                updateLbPosition();
-            }
-        });
-
-        document.addEventListener('keydown', (e) => {
-            if (lightbox.style.display === 'flex') {
-                if (e.key === 'ArrowLeft') lbPrev.click();
-                if (e.key === 'ArrowRight') lbNext.click();
-                if (e.key === 'Escape') closeLightbox();
-            }
-        });
-
-        const closeBtn = document.getElementById('close-lightbox');
         if (closeBtn) closeBtn.addEventListener('click', closeLightbox);
         
         lightbox.addEventListener('click', (e) => {
-            if (e.target === lightbox || e.target.classList.contains('lightbox-content')) {
-                closeLightbox();
+            if (e.target === lightbox || e.target.classList.contains('lightbox-overlay')) closeLightbox();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (lightbox.classList.contains('active')) {
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') lbPrev.click();
+                if (e.key === 'ArrowRight') lbNext.click();
             }
         });
     }
@@ -352,7 +393,7 @@ const initLeadersSlider = () => {
             members.push({
                 name: `Sri Committe Member ${i+1}-${j+1}`,
                 role: `Regional Secretary`,
-                img: `img/presidents/p${picId}.webp`
+                img: `/static/img/presidents/p${picId}.webp`
             });
         }
         officeBearersDB.push(members);
@@ -481,6 +522,89 @@ document.addEventListener('DOMContentLoaded', () => {
                 top: 0,
                 behavior: 'smooth'
             });
+        });
+    }
+});
+
+/* ==========================================================================
+   FOUNDER BIO TOGGLE (ABOUT PAGE)
+   ========================================================================== */
+document.addEventListener('DOMContentLoaded', () => {
+    const toggleBtn = document.getElementById('toggle-founder-bio');
+    const fullContent = document.getElementById('founder-full-content');
+    
+    if (toggleBtn && fullContent) {
+        toggleBtn.addEventListener('click', () => {
+            const isCollapsed = fullContent.classList.toggle('collapsed');
+            toggleBtn.classList.toggle('active', !isCollapsed);
+            
+            if (isCollapsed) {
+                toggleBtn.innerHTML = 'Read More <i class="fas fa-chevron-down"></i>';
+                // Scroll back to summary start for better experience if content was long
+                setTimeout(() => {
+                    toggleBtn.closest('.founder-content-wrapper').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 300);
+            } else {
+                toggleBtn.innerHTML = 'Read Less <i class="fas fa-chevron-up"></i>';
+            }
+        });
+    }
+});
+
+/* ==========================================================================
+   LOAD MORE PRESIDENTS (ABOUT PAGE)
+   ========================================================================== */
+document.addEventListener('DOMContentLoaded', () => {
+    const loadMoreBtn = document.getElementById('btn-load-more-presidents');
+    const timelineItems = document.querySelectorAll('#about-presidents-timeline .load-more-item');
+    let currentIndex = 0;
+    const batchSize = 6;
+
+    if (loadMoreBtn && timelineItems.length > 0) {
+        loadMoreBtn.addEventListener('click', () => {
+            const nextBatch = Array.from(timelineItems).slice(currentIndex, currentIndex + batchSize);
+            
+            nextBatch.forEach((item, index) => {
+                setTimeout(() => {
+                    item.style.display = 'block';
+                    // Re-trigger AOS if necessary or add simple fade
+                    item.style.opacity = '0';
+                    item.style.transition = 'opacity 0.5s ease';
+                    requestAnimationFrame(() => {
+                        item.style.opacity = '1';
+                    });
+                }, index * 100);
+            });
+
+            currentIndex += batchSize;
+
+            if (currentIndex >= timelineItems.length) {
+                loadMoreBtn.parentElement.style.display = 'none'; // Hide the entire button wrapper
+            }
+        });
+    }
+});
+
+/* ==========================================================================
+   INTRODUCTION SECTION TOGGLE (ABOUT PAGE)
+   ========================================================================== */
+document.addEventListener('DOMContentLoaded', () => {
+    const toggleBtn = document.getElementById('toggle-intro-content');
+    const fullContent = document.getElementById('intro-full-content');
+    
+    if (toggleBtn && fullContent) {
+        toggleBtn.addEventListener('click', () => {
+            const isCollapsed = fullContent.classList.toggle('collapsed');
+            toggleBtn.classList.toggle('active', !isCollapsed);
+            
+            if (isCollapsed) {
+                toggleBtn.innerHTML = 'Read More <i class="fas fa-chevron-down"></i>';
+                setTimeout(() => {
+                    toggleBtn.closest('.intro-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 300);
+            } else {
+                toggleBtn.innerHTML = 'Read Less <i class="fas fa-chevron-up"></i>';
+            }
         });
     }
 });

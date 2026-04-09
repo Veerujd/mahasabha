@@ -26,7 +26,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Tiro+Devanagari+Hindi:ital@0,400;1,400&family=Noto+Sans+Kannada:wght@400;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Tiro+Devanagari+Hindi:ital@0,400;1,400&family=Noto+Sans+Kannada:wght@400;700&display=swap"
         rel="stylesheet">
 
     <!-- CSS -->
@@ -36,7 +36,7 @@
     {% block extra_css %}{% endblock %}
 </head>
 
-<body class="sacred-pattern">
+<body class="sacred-pattern {% block body_class %}{% endblock %}">
     <!-- Sacred Om Watermark (LARGE) -->
     <div class="sacred-om-watermark">🕉️</div>
     <div class="sacred-watermark">🔱</div>
@@ -89,82 +89,7 @@
         </div>
     </header>
 
-    <!-- Leadership Ribbon -->
-    <div class="leadership-ribbon">
-        <div class="ribbon-track">
-            <!-- Round 1 -->
-            <div class="ribbon-item">
-                <div class="ribbon-img-wrapper"><img src="{{ url_for('static', filename='img/images/jagadguru-renukacharya.webp') }}"
-                        alt="Adi Jagadguru Shri Renukacharya" loading="lazy"></div>
-                <div class="ribbon-info"><strong>Adi Jagadguru</strong><span>Shri Renukacharya</span></div>
-            </div>
-            <div class="ribbon-item">
-                <div class="ribbon-img-wrapper"><img src="{{ url_for('static', filename='img/images/vishwaguru-basavanna.webp') }}"
-                        alt="Jagajyoti Vishwaguru" loading="lazy"></div>
-                <div class="ribbon-info"><strong>Jagajyoti Vishwaguru</strong><span>Bhakti Bhandari
-                        Basaveshwara</span></div>
-            </div>
-            <div class="ribbon-item">
-                <div class="ribbon-img-wrapper"><img src="{{ url_for('static', filename='img/images/shivayogi hanagal kumarswamy.webp') }}"
-                        alt="Hanagal Shri Kumara" loading="lazy"></div>
-                <div class="ribbon-info"><strong>Hanagal</strong><span>Shri Kumara Shivayogi</span></div>
-            </div>
-            <div class="ribbon-item">
-                <div class="ribbon-img-wrapper"><img src="{{ url_for('static', filename='img/images/eshwar-kandre.webp') }}" alt="National President"
-                        loading="lazy"></div>
-                <div class="ribbon-info"><strong>National President</strong><span>Shri Eshwar Khandre</span></div>
-            </div>
-            <div class="ribbon-item">
-                <div class="ribbon-img-wrapper"><img src="{{ url_for('static', filename='img/images/bheemanna-kandre.webp') }}" alt="Honorary President"
-                        loading="lazy"></div>
-                <div class="ribbon-info"><strong>Honorary President</strong><span>Dr. Bheemanna Khandre</span></div>
-            </div>
-            <div class="ribbon-item">
-                <div class="ribbon-img-wrapper"><img src="{{ url_for('static', filename='img/images/veena-kashappanavar.webp') }}"
-                        alt="Women's Wing President" loading="lazy"></div>
-                <div class="ribbon-info"><strong>Women's Wing President</strong><span>Veena Kashappanavar</span></div>
-            </div>
-            <!-- Round 2 for seamless loop -->
-            <div class="ribbon-item">
-                <div class="ribbon-img-wrapper"><img src="{{ url_for('static', filename='img/images/jagadguru-renukacharya.webp') }}"
-                        alt="Adi Jagadguru Shri Renukacharya" loading="lazy"></div>
-                <div class="ribbon-info"><strong>Adi Jagadguru</strong><span>Shri Renukacharya</span></div>
-            </div>
-            <div class="ribbon-item">
-                <div class="ribbon-img-wrapper"><img src="{{ url_for('static', filename='img/images/vishwaguru-basavanna.webp') }}"
-                        alt="Jagajyoti Vishwaguru" loading="lazy"></div>
-                <div class="ribbon-info"><strong>Jagajyoti Vishwaguru</strong><span>Bhakti Bhandari
-                        Basaveshwara</span></div>
-            </div>
-            <div class="ribbon-item">
-                <div class="ribbon-img-wrapper"><img src="{{ url_for('static', filename='img/images/shivayogi hanagal kumarswamy.webp') }}"
-                        alt="Hanagal Shri Kumara" loading="lazy"></div>
-                <div class="ribbon-info"><strong>Hanagal</strong><span>Shri Kumara Shivayogi</span></div>
-            </div>
-            <div class="ribbon-item">
-                <div class="ribbon-img-wrapper"><img src="{{ url_for('static', filename='img/images/eshwar-kandre.webp') }}" alt="National President"
-                        loading="lazy"></div>
-                <div class="ribbon-info"><strong>National President</strong><span>Shri Eshwar Khandre</span></div>
-            </div>
-            <div class="ribbon-item">
-                <div class="ribbon-img-wrapper"><img src="{{ url_for('static', filename='img/images/bheemanna-kandre.webp') }}" alt="Honorary President"
-                        loading="lazy"></div>
-                <div class="ribbon-info"><strong>Honorary President</strong><span>Dr. Bheemanna Khandre</span></div>
-            </div>
-            <div class="ribbon-item">
-                <div class="ribbon-img-wrapper"><img src="{{ url_for('static', filename='img/images/veena-kashappanavar.webp') }}"
-                        alt="Women's Wing President" loading="lazy"></div>
-                <div class="ribbon-info"><strong>Women's Wing President</strong><span>Veena Kashappanavar</span></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Page Spacer -->
-    <div id="page-spacer"></div>
-
-    <main>
-        {% block content %}{% endblock %}
-    </main>
+    <!-- Page Spacer (Ensures content starts below the fixed Header stack) --><div id="page-spacer"></div>{% block ribbon %}{% endblock %}<main>{% block content %}{% endblock %}</main>
 
     <!-- Footer -->
     <footer>
@@ -240,6 +165,9 @@
             <i class="fas fa-chevron-up"></i>
         </button>
     </div>
+
+    <!-- Lightbox Block -->
+    {% block lightbox %}{% endblock %}
 
     <!-- JS -->
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>

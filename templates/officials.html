@@ -2,220 +2,277 @@
 
 {% block title %}Officials | Akhila Bharata Veerashaiva Mahasabha (AIVMM){% endblock %}
 
+{% block body_class %}officials-page-body{% endblock %}
+
+{% block extra_css %}
+{% endblock %}
+
 {% block content %}
 <!-- Page Hero (SYNCED WITH ABOUT PAGE) -->
-<section class="page-hero section-padding">
+<section class="page-hero">
     <div class="container" data-aos="fade-up">
-        <nav class="breadcrumbs" data-aos="fade-down">
-            <a href="{{ url_for('web.index') }}">Home</a> / <span>Our Officials</span>
-        </nav>
-        <h2 data-aos="fade-up">Leadership & Officials</h2>
+        <div class="header-divider"></div>
+        <h2 data-aos="fade-up">LEADERS OF ALL INDIA VEERASHAIVA MAHASABHA</h2>
         <p data-aos="fade-up" data-aos-delay="100">Guiding the Akhila Bharata Veerashaiva Mahasabha with vision and devotion.</p>
     </div>
 </section>
 
 <!-- Filter System -->
-<section class="filter-section section-padding-sm">
+<section class="filter-section">
     <div class="container">
-        <div class="filter-card shadow-lg" data-aos="fade-up">
-            <div class="filter-grid">
-                <div class="filter-group">
-                    <label><i class="fas fa-map-marker-alt"></i> Select State</label>
-                    <select id="stateFilter" class="form-select">
-                        <option value="">Select State (All)</option>
+        <div class="filter-form">
+            <div class="filter-grid-new">
+                <div class="filter-field">
+                    <select id="stateFilter" class="form-control-custom">
+                        <option value="">Select State</option>
                         <option value="Karnataka">Karnataka</option>
                         <option value="Kerala">Kerala</option>
                         <option value="TamilNadu">Tamil Nadu</option>
                         <option value="Telangana">Telangana</option>
                     </select>
                 </div>
-                <div class="filter-group">
-                    <label><i class="fas fa-city"></i> Select District</label>
-                    <select id="districtFilter" class="form-select" disabled>
+                <div class="filter-field">
+                    <select id="districtFilter" class="form-control-custom" disabled>
                         <option value="">Select District</option>
                     </select>
                 </div>
-                <div class="filter-group">
-                    <label><i class="fas fa-landmark"></i> Select Taluk</label>
-                    <select id="talukFilter" class="form-select" disabled>
+                <div class="filter-field">
+                    <select id="talukFilter" class="form-control-custom" disabled>
                         <option value="">Select Taluk</option>
                     </select>
                 </div>
-                <div class="filter-group action-group">
-                    <button id="searchBtn" class="btn btn-primary w-100"><i class="fas fa-search"></i> Search</button>
+                <!-- New Search Input replacing "Search" button -->
+                <div class="filter-field search-field">
+                    <input type="text" id="nameSearch" class="form-control-custom" placeholder="Random Search (Name...)" list="officialsNames" autocomplete="off">
+                    <datalist id="officialsNames">
+                        <!-- Names injected via JS -->
+                    </datalist>
+                    <button class="search-icon-btn"><i class="fas fa-search"></i></button>
                 </div>
             </div>
-            <div id="filterMessage" class="filter-message"></div>
+            </div>
         </div>
     </div>
 </section>
 
 <!-- Main Content Section -->
-<div class="section-padding-sm">
+<div class="section-padding" style="padding-top: 20px;"> <!-- Reduced from default 70px -->
     <div class="container">
         
-        <!-- Leaders Section -->
-        <div class="officials-category" data-aos="fade-up">
-            <h2 class="category-title">Leaders of Veerashaiva Mahasabha</h2>
-            <div class="officials-grid central">
-                <div class="official-card featured" data-aos="zoom-in">
-                    <div class="card-img-wrapper">
-                        <img src="{{ url_for('static', filename='img/presidents/p20.webp') }}" alt="Dr. Shamanur Shivashankarappa">
-                    </div>
-                    <div class="card-info-content">
-                        <div class="official-badge president">President</div>
-                        <h3>Dr. Shamanur Shivashankarappa</h3>
-                        <span class="official-region">Karnataka, India</span>
-                        <p class="official-msg">Visionary leader championing industry, health, and academic excellence within the Veerashaiva community for decades.</p>
-                    </div>
+        
+        <!-- Dynamic Leadership Heading -->
+        <div class="dynamic-heading-container text-center">
+            <h2 id="leadershipHeading" class="leadership-body-title">
+                <span id="stateName">NATIONAL</span> EXECUTIVE LEADERSHIP
+            </h2>
+        </div>
+
+        
+        <!-- President Section (Image Left, Message Right) -->
+        <div class="president-section">
+            <div class="official-card-leadership" data-name="Dr. Shamanur Shivashankarappa" data-state="Karnataka">
+                <div class="official-img-square-box">
+                    <img src="{{ url_for('static', filename='img/presidents/p20.webp') }}" alt="Dr. Shamanur Shivashankarappa">
+                </div>
+                <div class="leadership-message-box">
+                    <div class="role-badge-box">President</div>
+                    <h3 class="leadership-name">Dr. Shamanur Shivashankarappa</h3>
+                    <span class="leadership-designation">Ex-Minister & MLA</span>
+                    <p class="leadership-bio">
+                        Dr. Shamanur Shivashankarappa is a visionary leader who has transformed the infrastructure of the Veerashaiva community. Under his guidance, the Mahasabha has achieved unprecedented growth in educational and medical sectors. His commitment to social welfare has fostered numerous high-impact institutions serving the community across Karnataka. As an industrialist and seasoned statesman, he brings a unique blend of strategic vision and compassionate governance to the organization. His lifelong mission continues to be the preservation of our spiritual core while embracing technological advancement. He has been a stalwart in promoting Vachana Sahitya among the youth, ensuring that the timeless wisdom of Basavanna remains a guiding light for future generations. His influence extends beyond the Mahasabha, shaping the cultural and political landscape of the state with integrity and devotion.
+                    </p>
                 </div>
             </div>
         </div>
 
-        <!-- Secretary General Section -->
-        <div class="officials-category" data-aos="fade-up">
-            <h2 class="category-title">Secretary General</h2>
-            <div class="officials-grid central">
-                <div class="official-card secondary" data-aos="zoom-in">
-                    <div class="card-img-wrapper">
-                        <img src="{{ url_for('static', filename='img/images/eshwar-kandre.webp') }}" alt="Shri Eshwar Khandre">
-                    </div>
-                    <div class="card-info-content">
-                        <div class="official-badge sec-gen">Secretary General</div>
-                        <h3>Shri Eshwar Khandre</h3>
-                        <span class="official-region">Karnataka, India</span>
-                        <p class="official-msg">Leading administrative initiatives and organizational reforms to empower every member of our global community.</p>
-                    </div>
+        <!-- Secretary General Section (Image Right, Message Left) -->
+        <div class="secretary-section">
+            <h2 class="leadership-main-title">Secretary General</h2>
+            <div class="official-card-leadership" data-name="Shri Eshwar Khandre" data-state="Karnataka">
+                <div class="official-img-square-box">
+                    <img src="{{ url_for('static', filename='img/images/eshwar-kandre.webp') }}" alt="Shri Eshwar Khandre">
+                </div>
+                <div class="leadership-message-box">
+                    <div class="role-badge-box">Secretary General</div>
+                    <h3 class="leadership-name">Shri Eshwar Khandre</h3>
+                    <span class="leadership-designation">Cabinet Minister, Govt. of Karnataka</span>
+                    <p class="leadership-bio">
+                        Shri Eshwar Khandre provides dynamic administrative leadership to the Mahasabha's global network. Known for his commitment to social justice, he has spearheaded numerous initiatives aimed at youth empowerment and rural development. His acumen ensures that the organization operates with transparency and efficiency to foster community growth. Driven by a deep passion for service, he effectively bridges the gap between traditional heritage and modern aspirations. His leadership is pivotal in maintaining the administrative excellence and unity of the Mahasabha in a global context. He is a strong advocate for the digital transformation of the organization, aiming to connect every community member through a centralized digital platform. His focus on inclusive growth ensures that the benefits of the Mahasabha's initiatives reach the most remote corners of the community.
+                    </p>
                 </div>
             </div>
         </div>
 
         <!-- Vice Presidents Section -->
-        <div class="officials-category" data-aos="fade-up">
-            <h2 class="category-title">Vice-Presidents</h2>
-            <div class="officials-grid">
-                <!-- Vice Presidents List -->
-                <div class="official-card" data-aos="fade-up">
-                    <div class="card-img-wrapper">
+        <div class="vp-section">
+            <h2 class="leadership-main-title">Vice-Presidents</h2>
+            <div class="vp-grid">
+                
+                <!-- Vice President 1 -->
+                <div class="vp-modular-card" data-name="Prabhakar Kore" data-state="Karnataka" data-district="Belagavi">
+                    <div class="vp-portrait">
                         <img src="{{ url_for('static', filename='img/images/prabhakar-kore.webp') }}" alt="Prabhakar Kore">
                     </div>
-                    <div class="card-info-content">
-                        <div class="official-badge vp">Vice-President</div>
-                        <h3>Prabhakar Kore</h3>
-                        <span class="official-region">Belagavi, Karnataka</span>
-                        <p class="official-msg">Advancing educational standards and institutional development across standard regions.</p>
+                    <div class="vp-content-box">
+                        <span class="vp-badge">VICE-PRESIDENT</span>
+                        <h4 class="vp-name">Prabhakar Kore</h4>
+                        <span class="vp-district">Belagavi, Karnataka</span>
+                        <p class="vp-bio">
+                            Shri Prabhakar Kore is a distinguished educationalist who has transformed the academic landscape of North Karnataka. As a Vice-President, he brings decades of experience in institutional management and social reform to the Mahasabha. His vision of accessible education has been instrumental in establishing world-class medical and engineering institutions. He has also been a pioneer in bringing modern healthcare facilities to rural sectors, ensuring that the community's welfare is prioritized through advanced professional networking and academic collaboration. His mentorship continues to guide countless youth towards reaching global excellence.
+                        </p>
                     </div>
                 </div>
-                <div class="official-card" data-aos="fade-up">
-                    <div class="card-img-wrapper">
+
+                <!-- Vice President 2 -->
+                <div class="vp-modular-card" data-name="A.S. Veeranna" data-state="Karnataka" data-district="Tumakuru">
+                    <div class="vp-portrait">
                         <img src="{{ url_for('static', filename='img/images/as-veeranna.webp') }}" alt="A.S. Veeranna">
                     </div>
-                    <div class="card-info-content">
-                        <div class="official-badge vp">Vice-President</div>
-                        <h3>A.S. Veeranna</h3>
-                        <span class="official-region">Davangere, Karnataka</span>
-                        <p class="official-msg">Dedicated to social welfare and community housing project coordination.</p>
+                    <div class="vp-content-box">
+                        <span class="vp-badge">VICE-PRESIDENT</span>
+                        <h4 class="vp-name">A.S. Veeranna</h4>
+                        <span class="vp-district">Tumakuru, Karnataka</span>
+                        <p class="vp-bio">
+                            Shri A.S. Veeranna is a seasoned leader committed to social welfare and grassroots community building. In his capacity as Vice-President, he has focused extensively on housing projects for the underprivileged and organizing large-scale spiritual conventions. He remains a bridge between the spiritual gurus and the administrative wing of the Mahasabha, fostering a unified direction. His expertise in cooperative societies has helped build a strong economic foundation for rural community members, providing them with necessary mentorship and modern logistical support. He is a strong advocate for the preservation of our traditional local heritage.
+                        </p>
                     </div>
                 </div>
-                <div class="official-card" data-aos="fade-up">
-                    <div class="card-img-wrapper">
-                        <img src="{{ url_for('static', filename='img/images/guramma-siddareddy.webp') }}" alt="Guramma Siddareddy">
+
+                <!-- Vice President 3 -->
+                <div class="vp-modular-card" data-name="Guramma Siddareddy" data-state="Karnataka">
+                    <div class="vp-portrait">
+                        <img src="{{ url_for('static', filename='img/presidents/p1.webp') }}" alt="Guramma Siddareddy">
                     </div>
-                    <div class="card-info-content">
-                        <div class="official-badge vp">Vice-President</div>
-                        <h3>Guramma Siddareddy</h3>
-                        <span class="official-region">Ballari, Karnataka</span>
-                        <p class="official-msg">Empowering women through vocational training and localized community networks.</p>
-                    </div>
-                </div>
-                <div class="official-card" data-aos="fade-up">
-                    <div class="card-img-wrapper">
-                        <img src="{{ url_for('static', filename='img/images/anaberu-rajanna.webp') }}" alt="Anaberu Rajanna">
-                    </div>
-                    <div class="card-info-content">
-                        <div class="official-badge vp">Vice-President</div>
-                        <h3>Anaberu Rajanna</h3>
-                        <span class="official-region">Davangere, Karnataka</span>
-                        <p class="official-msg">Focusing on youth leadership programs and cultural preservation initiatives.</p>
+                    <div class="vp-content-box">
+                        <span class="vp-badge">VICE-PRESIDENT</span>
+                        <h4 class="vp-name">Guramma Siddareddy</h4>
+                        <span class="vp-district">Karnataka, India</span>
+                        <p class="vp-bio">
+                            Smt. Guramma Siddareddy is a dedicated advocate for women's empowerment and rural development. She has been pivotal in organizing self-help groups for women across Northern Karnataka, creating economic stability and self-reliance. Her vision includes a robust support system for orphanages and senior citizen homes, ensuring that the most vulnerable members are cared for with dignity. Her work in providing higher education opportunities for the girl child has transformed thousands of families, creating a new generation of educated women leaders. She continues to inspire through her tireless social activism and community health initiatives.
+                        </p>
                     </div>
                 </div>
-                <div class="official-card" data-aos="fade-up">
-                    <div class="card-img-wrapper">
-                        <img src="{{ url_for('static', filename='img/images/baburao-thumba.webp') }}" alt="Baburao Thumba">
+
+                <!-- Vice President 4 -->
+                <div class="vp-modular-card" data-name="Anaberu Rajanna" data-state="Karnataka">
+                    <div class="vp-portrait">
+                        <img src="{{ url_for('static', filename='img/presidents/p2.webp') }}" alt="Anaberu Rajanna">
                     </div>
-                    <div class="card-info-content">
-                        <div class="official-badge vp">Vice-President</div>
-                        <h3>Baburao Thumba</h3>
-                        <span class="official-region">Bidar, Karnataka</span>
-                        <p class="official-msg">Strengthening regional chapters and logistical support systems for the Mahasabha.</p>
-                    </div>
-                </div>
-                <div class="official-card" data-aos="fade-up">
-                    <div class="card-img-wrapper">
-                        <img src="{{ url_for('static', filename='img/images/shankar-bidari.webp') }}" alt="Shankar Bidari">
-                    </div>
-                    <div class="card-info-content">
-                        <div class="official-badge vp">Vice-President</div>
-                        <h3>Shankar Bidari</h3>
-                        <span class="official-region">Bangalore, Karnataka</span>
-                        <p class="official-msg">Providing strategic oversight for legal and institutional security matters.</p>
+                    <div class="vp-content-box">
+                        <span class="vp-badge">VICE-PRESIDENT</span>
+                        <h4 class="vp-name">Anaberu Rajanna</h4>
+                        <span class="vp-district">Karnataka, India</span>
+                        <p class="vp-bio">
+                            Shri Anaberu Rajanna is a dynamic leader known for his expertise in agricultural reforms and community mobilization. He has worked tirelessly to protect the interests of farmers and ensure their prosperous participation in growth. He is passionate about modernizing outreach through digital transformation and youth engagement, aiming to make the Mahasabha more accessible to the digital generation. His focus on introducing modern farming techniques and irrigation reforms has significantly improved the livelihoods of rural members. He remains an influential voice in regional policies aimed at communal unity and youth-led social transformation.
+                        </p>
                     </div>
                 </div>
-                <div class="official-card" data-aos="fade-up">
-                    <div class="card-img-wrapper">
-                        <img src="{{ url_for('static', filename='img/images/venkataraddy-mudnal.webp') }}" alt="Venkataraddy Mudnal">
+
+                <!-- Vice President 5 -->
+                <div class="vp-modular-card" data-name="Baburao Thumba" data-state="Karnataka">
+                    <div class="vp-portrait">
+                        <img src="{{ url_for('static', filename='img/presidents/p3.webp') }}" alt="Baburao Thumba">
                     </div>
-                    <div class="card-info-content">
-                        <div class="official-badge vp">Vice-President</div>
-                        <h3>Venkataraddy Mudnal</h3>
-                        <span class="official-region">Yadgir, Karnataka</span>
-                        <p class="official-msg">Leading agricultural literacy and rural development programs for community farmers.</p>
-                    </div>
-                </div>
-                <div class="official-card" data-aos="fade-up">
-                    <div class="card-img-wrapper">
-                        <img src="{{ url_for('static', filename='img/images/sachidananda-murthy.webp') }}" alt="B.S. Sachidananda Murthy">
-                    </div>
-                    <div class="card-info-content">
-                        <div class="official-badge vp">Vice-President</div>
-                        <h3>B.S. Sachidananda Murthy</h3>
-                        <span class="official-region">Bangalore, Karnataka</span>
-                        <p class="official-msg">Coordinating spiritual events and literature publication for global distribution.</p>
+                    <div class="vp-content-box">
+                        <span class="vp-badge">VICE-PRESIDENT</span>
+                        <h4 class="vp-name">Baburao Thumba</h4>
+                        <span class="vp-district">Karnataka, India</span>
+                        <p class="vp-bio">
+                            Shri Baburao Thumba is a veteran administrator focused on institutional infrastructure and heritage asset management. He has successfully preserved historical community venues and guided the construction of modern hostels. His focus on sustainable architecture ensures that the legacy of the Mahasabha is protected for future generations. As a legal expert, he provides critical guidance on asset management and institutional governance, ensuring that the community's properties are utilized for the highest public good. He has also been instrumental in documenting our architectural history for a globally connected archive.
+                        </p>
                     </div>
                 </div>
-                <div class="official-card" data-aos="fade-up">
-                    <div class="card-img-wrapper">
-                        <img src="{{ url_for('static', filename='img/images/veeranna-charanthimath.webp') }}" alt="Veeranna Charanthimath">
+
+                <!-- Vice President 6 -->
+                <div class="vp-modular-card" data-name="Shankar Bidari" data-state="Karnataka">
+                    <div class="vp-portrait">
+                        <img src="{{ url_for('static', filename='img/presidents/p4.webp') }}" alt="Shankar Bidari">
                     </div>
-                    <div class="card-info-content">
-                        <div class="official-badge vp">Vice-President</div>
-                        <h3>Veeranna Charanthimath</h3>
-                        <span class="official-region">Bagalkot, Karnataka</span>
-                        <p class="official-msg">Promoting health awareness and affordable medical insurance for members.</p>
-                    </div>
-                </div>
-                <div class="official-card" data-aos="fade-up">
-                    <div class="card-img-wrapper">
-                        <img src="{{ url_for('static', filename='img/images/ss-ganesh.webp') }}" alt="S.S. Ganesh">
-                    </div>
-                    <div class="card-info-content">
-                        <div class="official-badge vp">Vice-President</div>
-                        <h3>S.S. Ganesh</h3>
-                        <span class="official-region">Bangalore, Karnataka</span>
-                        <p class="official-msg">Driving digital transformation and online membership reach for the next generation.</p>
+                    <div class="vp-content-box">
+                        <span class="vp-badge">VICE-PRESIDENT</span>
+                        <h4 class="vp-name">Shankar Bidari</h4>
+                        <span class="vp-district">Karnataka, India</span>
+                        <p class="vp-bio">
+                            Shri Shankar Bidari brings a disciplined and strategic approach to the Mahasabha's leadership. Focusing on community safety and organizational coordination, he has mentored countless youths in preparing for prestigious civil services. He advocates for the use of technology in preserving and disseminating Vachana literature among the masses. His dedication to maintaining communal peace and order has made him a respected figure across the state, guiding the youth through career coaching and leadership training. He believes that the principles of Basavanna provide the ultimate blueprint for any modern, harmonious society and organizational excellence.
+                        </p>
                     </div>
                 </div>
-                <div class="official-card" data-aos="fade-up">
-                    <div class="card-img-wrapper">
-                        <img src="{{ url_for('static', filename='img/images/geetha-mahadevaprasad.webp') }}" alt="Geetha Mahadevaprasad">
+
+                <!-- Vice President 7 -->
+                <div class="vp-modular-card" data-name="Venkataraddy Mudnal" data-state="Karnataka">
+                    <div class="vp-portrait">
+                        <img src="{{ url_for('static', filename='img/presidents/p5.webp') }}" alt="Venkataraddy Mudnal">
                     </div>
-                    <div class="card-info-content">
-                        <div class="official-badge vp">Vice-President</div>
-                        <h3>Geetha Mahadevaprasad</h3>
-                        <span class="official-region">Chamarajanagar, Karnataka</span>
-                        <p class="official-msg">Preserving traditional values while adapting to evolving social needs of the community.</p>
+                    <div class="vp-content-box">
+                        <span class="vp-badge">VICE-PRESIDENT</span>
+                        <h4 class="vp-name">Venkataraddy Mudnal</h4>
+                        <span class="vp-district">Karnataka, India</span>
+                        <p class="vp-bio">
+                            Shri Venkataraddy Mudnal is a seasoned leader dedicated to the upliftment of the Hyderabad-Karnataka region. His advocacy for irrigation projects and bridge-building between rural farmers and urban industries has transformed thousands of lives. He remains a strong voice for the preservation of Kannada language and Veerashaiva culture in neighboring states. His leadership during regional crises has provided immediate relief to thousands, and his focus on regional sports festivals continues to bring the community together. He remains a key strategist in ensuring the cultural and economic interests of the border region are strongly represented.
+                        </p>
                     </div>
                 </div>
+
+                <!-- Vice President 8 -->
+                <div class="vp-modular-card" data-name="B.S. Sachidananda Murthy" data-state="Karnataka">
+                    <div class="vp-portrait">
+                        <img src="{{ url_for('static', filename='img/presidents/p6.webp') }}" alt="B.S. Sachidananda Murthy">
+                    </div>
+                    <div class="vp-content-box">
+                        <span class="vp-badge">VICE-PRESIDENT</span>
+                        <h4 class="vp-name">B.S. Sachidananda Murthy</h4>
+                        <span class="vp-district">Karnataka, India</span>
+                        <p class="vp-bio">
+                            Shri B.S. Sachidananda Murthy is a visionary focused on communal harmony and spiritual education. He has been instrumental in the digital archiving of Vachana manuscripts and publishing simplified philosophy for children. His efforts ensure that authentic community traditions are preserved for global audiences through modern educational archival systems. His focus on spiritual mindfulness has seen several meditation and research centers being established in remote chapters. He believes that an ethically grounded community is the strongest pillar of our nation's progress and continues to write extensively on modern spiritual ethics.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Vice President 9 -->
+                <div class="vp-modular-card" data-name="Veeranna Charanthimath" data-state="Karnataka">
+                    <div class="vp-portrait">
+                        <img src="{{ url_for('static', filename='img/presidents/p7.webp') }}" alt="Veeranna Charanthimath">
+                    </div>
+                    <div class="vp-content-box">
+                        <span class="vp-badge">VICE-PRESIDENT</span>
+                        <h4 class="vp-name">Veeranna Charanthimath</h4>
+                        <span class="vp-district">Karnataka, India</span>
+                        <p class="vp-bio">
+                            Shri Veeranna Charanthimath is a prominent leader and educationalist who has transformed the Bagalkot region. His focus on industrial training and cooperative movements has significantly improved employment rates among rural youth. He remains committed to the principles of equality and social justice as taught by the Sharanas, promoting a self-sufficient village economy. His hands-on leadership style in establishing large-scale educational cooperatives has provided a model for several other districts to follow. He continues to advocate for the modernization of rural infrastructure and the financial emancipation of the labor class within the community.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Vice President 10 -->
+                <div class="vp-modular-card" data-name="S.S. Ganesh" data-state="Karnataka">
+                    <div class="vp-portrait">
+                        <img src="{{ url_for('static', filename='img/presidents/p8.webp') }}" alt="S.S. Ganesh">
+                    </div>
+                    <div class="vp-content-box">
+                        <span class="vp-badge">VICE-PRESIDENT</span>
+                        <h4 class="vp-name">S.S. Ganesh</h4>
+                        <span class="vp-district">Karnataka, India</span>
+                        <p class="vp-bio">
+                            Shri S.S. Ganesh is a dynamic industrialist with a vision for global networking and economic empowerment. He has built an exclusive professional networking platform for community entrepreneurs and mentored many budding businesses. His leadership provides strategic direction for the Mahasabha’s health infrastructure and medical institutions. Through his guidance, many SMEs within the community have reached international markets, and his focus on high-quality medical aid has saved thousands of lives. He advocates for the active participation of our global diaspora in local social welfare projects to ensure a globally connected and resilient community.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Vice President 11 -->
+                <div class="vp-modular-card" data-name="Geetha Mahadevaprasad" data-state="Karnataka">
+                    <div class="vp-portrait">
+                        <img src="{{ url_for('static', filename='img/presidents/p9.webp') }}" alt="Geetha Mahadevaprasad">
+                    </div>
+                    <div class="vp-content-box">
+                        <span class="vp-badge">VICE-PRESIDENT</span>
+                        <h4 class="vp-name">Geetha Mahadevaprasad</h4>
+                        <span class="vp-district">Karnataka, India</span>
+                        <p class="vp-bio">
+                            Smt. Geetha Mahadevaprasad is a compassionate leader focused on rural education and women's rights in the Chamarajanagar region. Her work in providing higher education for girls from economically backward families has been transformative. She remains a respected figure advocating for the community's social welfare, continuing the legacy of selfless service. Her maternal approach to solving member grievances and her focus on environmental sustainability have earned her widespread admiration. She is instrumental in organizing mass marriages and healthcare camps that directly benefit the underprivileged sectors of our community on a large scale.
+                        </p>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -253,7 +310,98 @@
     const stateSelect = document.getElementById('stateFilter');
     const districtSelect = document.getElementById('districtFilter');
     const talukSelect = document.getElementById('talukFilter');
-    const filterMessage = document.getElementById('filterMessage');
+    const nameSearch = document.getElementById('nameSearch');
+    const leadershipHeading = document.getElementById('leadershipHeading');
+    const stateNameSpan = document.getElementById('stateName');
+    const filterStatus = document.getElementById('filterStatus');
+    const datalist = document.getElementById('officialsNames');
+
+
+    // Official names for datalist
+    const officials = [
+        "Dr. Shamanur Shivashankarappa",
+        "Shri Eshwar Khandre",
+        "Prabhakar Kore",
+        "A.S. Veeranna",
+        "Guramma Siddareddy",
+        "Anaberu Rajanna",
+        "Baburao Thumba",
+        "Shankar Bidari",
+        "Venkataraddy Mudnal",
+        "B.S. Sachidananda Murthy",
+        "Veeranna Charanthimath",
+        "S.S. Ganesh",
+        "Geetha Mahadevaprasad"
+    ];
+
+    // Populate datalist
+    officials.forEach(name => {
+        const option = document.createElement('option');
+        option.value = name;
+        datalist.appendChild(option);
+    });
+
+    const updateStatus = () => {
+        const state = stateSelect.value;
+        const district = districtSelect.value;
+        const taluk = talukSelect.value;
+        const name = nameSearch.value.toLowerCase();
+
+        let msg = "Current View: ";
+        if (name) msg = `Searching for "**${nameSearch.value}**"`;
+        else if (taluk) msg += `District > **${district}** > Taluk > **${taluk}**`;
+        else if (district) msg += `State > **${state}** > District > **${district}**`;
+        else if (state) msg += `State > **${state}**`;
+        else msg = "Showing all National & Provincial level officials.";
+
+        filterStatus.innerHTML = `<i class="fas fa-check-circle"></i> ${msg}`;
+        filterStatus.style.opacity = '0.5';
+        setTimeout(() => filterStatus.style.opacity = '1', 300);
+
+        // Update Dynamic Heading Text
+        if (state) {
+            stateNameSpan.textContent = state.toUpperCase();
+        } else {
+            stateNameSpan.textContent = "NATIONAL";
+        }
+
+
+        // FILTER THE CARDS
+        const cards = document.querySelectorAll('.official-card');
+        const categories = document.querySelectorAll('.officials-category');
+
+        cards.forEach(card => {
+            const cardName = (card.getAttribute('data-name') || "").toLowerCase();
+            const cardState = card.getAttribute('data-state') || "";
+            const cardDistrict = card.getAttribute('data-district') || "";
+            const cardTaluk = card.getAttribute('data-taluk') || "";
+
+            let matches = true;
+
+            if (name && !cardName.includes(name)) matches = false;
+            if (state && cardState !== state) matches = false;
+            if (district && cardDistrict !== district) matches = false;
+            if (taluk && cardTaluk !== taluk) matches = false;
+
+            if (matches) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+
+        // Hide categories if empty
+        categories.forEach(cat => {
+            const visibleCards = cat.querySelectorAll('.official-card[style*="display: flex"]');
+            if (visibleCards.length === 0) {
+                cat.style.display = 'none';
+            } else {
+                cat.style.display = 'block';
+            }
+        });
+        
+        if (window.AOS) AOS.refresh();
+    };
 
     stateSelect.addEventListener('change', function() {
         const state = this.value;
@@ -272,6 +420,7 @@
         } else {
             districtSelect.disabled = true;
         }
+        updateStatus();
     });
 
     districtSelect.addEventListener('change', function() {
@@ -290,33 +439,11 @@
         } else {
             talukSelect.disabled = true;
         }
+        updateStatus();
     });
 
-    document.getElementById('searchBtn').addEventListener('click', function() {
-        const state = stateSelect.value;
-        const district = districtSelect.value;
-        const taluk = talukSelect.value;
-        
-        let msg = "Showing results for: ";
-        if(!state) msg = "Showing all National & State level officials.";
-        else msg += `**${state}**`;
-        
-        if(district) msg += ` > **${district}**`;
-        if(taluk) msg += ` > **${taluk}**`;
+    talukSelect.addEventListener('change', updateStatus);
+    nameSearch.addEventListener('input', updateStatus);
 
-        filterMessage.innerHTML = `<i class="fas fa-info-circle"></i> ${msg}`;
-        filterMessage.style.display = 'block';
-
-        // Visual feedback for search
-        this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Searching...';
-        this.style.opacity = '0.7';
-        
-        setTimeout(() => {
-            this.innerHTML = '<i class="fas fa-search"></i> Search';
-            this.style.opacity = '1';
-            // AOS refresh to trigger animations on filtered content if any
-            if(window.AOS) AOS.refresh();
-        }, 800);
-    });
 </script>
 {% endblock %}

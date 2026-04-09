@@ -2,6 +2,80 @@
 
 {% block title %}Akhila Bharata Veerashaiva Mahasabha (AIVMM) | Official Redesign{% endblock %}
 
+{% block ribbon %}
+<!-- Leadership Ribbon -->
+<div class="leadership-ribbon">
+    <div class="ribbon-track">
+        <!-- Slot 1 -->
+        <div class="ribbon-item">
+            <div class="ribbon-img-wrapper">
+                <img class="primary" src="{{ url_for('static', filename='img/images/jagadguru-renukacharya.webp') }}"
+                    alt="Adi Jagadguru Shri Renukacharya" loading="lazy">
+            </div>
+            <div class="ribbon-info">
+                <div class="info-primary"><strong>Adi Jagadguru</strong><span>Shri Renukacharya</span></div>
+            </div>
+        </div>
+
+        <!-- Slot 2 -->
+        <div class="ribbon-item">
+            <div class="ribbon-img-wrapper">
+                <img class="primary" src="{{ url_for('static', filename='img/images/vishwaguru-basavanna.webp') }}"
+                    alt="Jagajyoti Vishwaguru" loading="lazy">
+            </div>
+            <div class="ribbon-info">
+                <div class="info-primary"><strong>Jagajyoti Vishwaguru</strong><span>Basaveshwara</span></div>
+            </div>
+        </div>
+
+        <!-- Slot 3 -->
+        <div class="ribbon-item">
+            <div class="ribbon-img-wrapper">
+                <img class="primary"
+                    src="{{ url_for('static', filename='img/images/shivayogi-hanagal-kumarswamy.webp') }}"
+                    alt="Hanagal Shri Kumara" loading="lazy">
+            </div>
+            <div class="ribbon-info">
+                <div class="info-primary"><strong>Hanagal</strong><span>Shri Kumara Shivayogi</span></div>
+            </div>
+        </div>
+
+        <!-- Slot 4 -->
+        <div class="ribbon-item">
+            <div class="ribbon-img-wrapper">
+                <img class="primary" src="{{ url_for('static', filename='img/images/eshwar-kandre.webp') }}"
+                    alt="National President" loading="lazy">
+            </div>
+            <div class="ribbon-info">
+                <div class="info-primary"><strong>National President</strong><span>Shri Eshwar Khandre</span></div>
+            </div>
+        </div>
+
+        <!-- Slot 5 -->
+        <div class="ribbon-item">
+            <div class="ribbon-img-wrapper">
+                <img class="primary" src="{{ url_for('static', filename='img/images/bheemanna-kandre.webp') }}"
+                    alt="Honorary President" loading="lazy">
+            </div>
+            <div class="ribbon-info">
+                <div class="info-primary"><strong>Honorary President</strong><span>Dr. Bheemanna Khandre</span></div>
+            </div>
+        </div>
+
+        <!-- Slot 6 -->
+        <div class="ribbon-item">
+            <div class="ribbon-img-wrapper">
+                <img class="primary" src="{{ url_for('static', filename='img/images/veena-kashappanavar.webp') }}"
+                    alt="Women's Wing President" loading="lazy">
+            </div>
+            <div class="ribbon-info">
+                <div class="info-primary"><strong>Women's Wing President</strong><span>Veena Kashappanavar</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
 {% block content %}
 <!-- Hero Slider (Immersive) -->
 <section class="hero-slider">
@@ -9,7 +83,8 @@
         <!-- Slide 1 -->
         <div class="slide active">
             <div class="slide-bg">
-                <img src="{{ url_for('static', filename='img/gallery/g8.webp') }}" alt="Ancient Indian temple heritage" loading="lazy">
+                <img src="{{ url_for('static', filename='img/gallery/g8.webp') }}" alt="Ancient Indian temple heritage"
+                    loading="lazy">
             </div>
             <div class="slide-content container">
                 <div class="text-reveal">
@@ -26,7 +101,8 @@
         <!-- Slide 2 -->
         <div class="slide">
             <div class="slide-bg">
-                <img src="{{ url_for('static', filename='img/gallery/g9.webp') }}" alt="Community gathering and unity" loading="lazy">
+                <img src="{{ url_for('static', filename='img/gallery/g9.webp') }}" alt="Community gathering and unity"
+                    loading="lazy">
             </div>
             <div class="slide-content container">
                 <div class="text-reveal">
@@ -42,7 +118,8 @@
         <!-- Slide 3 -->
         <div class="slide">
             <div class="slide-bg">
-                <img src="{{ url_for('static', filename='img/gallery/g10.webp') }}" alt="Spiritual enlightenment and wisdom" loading="lazy">
+                <img src="{{ url_for('static', filename='img/gallery/g10.webp') }}"
+                    alt="Spiritual enlightenment and wisdom" loading="lazy">
             </div>
             <div class="slide-content container">
                 <div class="text-reveal">
@@ -69,9 +146,9 @@
 <section class="highlights section-padding bg-cream">
     <div class="container">
         <div class="section-header text-center" data-aos>
-            <div class="badge" style="opacity: 1 !important; visibility: visible !important;">OUR MISSION</div>
-            <h2>Core Pillars of <span>Our Society</span></h2>
-            <p>Dedicated to the preservation and progress of the Veerashaiva Lingayath community.</p>
+            <div class="badge">About US</div>
+            <h2 style="margin-bottom: 10px;">Core Pillars of <span>Our Society</span></h2>
+            <p style="margin-top: 5px;">Dedicated to the preservation and progress of the Veerashaiva Lingayath community.</p>
         </div>
         <div class="items-grid">
             <div class="item-card section-fade" data-aos>
@@ -93,6 +170,9 @@
                     living.</p>
             </div>
         </div>
+        <div class="text-center" style="margin-top: 40px;">
+            <a href="{{ url_for('web.about') }}" class="btn btn-primary">Read More</a>
+        </div>
     </div>
 </section>
 
@@ -105,7 +185,8 @@
                 style="background: rgba(255,255,255,0.15); color:#fff; border: 1px solid rgba(255,255,255,0.4);">
                 AIVMM IMPACT</div>
             <h2 style="color:#fff;">Our Community</h2>
-            <p style="color: rgba(255,255,255,0.85); font-size: 1.1rem;">Building a stronger, more united, and globally progressive Veerashaiva Lingayath community.</p>
+            <p style="color: rgba(255,255,255,0.85); font-size: 1.1rem;">Building a stronger, more united, and globally
+                progressive Veerashaiva Lingayath community.</p>
         </div>
         <div class="stats-grid">
             <div class="stat-item section-fade" data-aos>
@@ -132,7 +213,9 @@
 <section class="vision-mission-section section-padding">
     <div class="container" style="position:relative; z-index:2;">
         <div class="section-header text-center vm-header" data-aos>
-            <h2>Vision & Mission</h2>
+            <div class="badge">OUR VALUES & VISION</div>
+            <h2 style="margin-bottom: 10px;">Vision & Mission</h2>
+            <p style="margin-top: 5px;">Charting our journey toward spiritual and community excellence.</p>
         </div>
         <div class="vision-mission-grid">
             <div class="vm-card vision-card" data-aos>
@@ -184,27 +267,32 @@
             <div class="leaders-slider-track-wrap">
                 <div class="leaders-slider-track" id="leadersTrack">
                     <div class="leader-card active" data-leader-index="0">
-                        <img loading="lazy" src="{{ url_for('static', filename='img/presidents/p1.webp') }}" alt="Leader 1">
+                        <img loading="lazy" src="{{ url_for('static', filename='img/presidents/p1.webp') }}"
+                            alt="Leader 1">
                         <h4>Sri B.S. Yediyurappa</h4>
                         <span>Chief Patron</span>
                     </div>
                     <div class="leader-card" data-leader-index="1">
-                        <img loading="lazy" src="{{ url_for('static', filename='img/presidents/p2.webp') }}" alt="Leader 2">
+                        <img loading="lazy" src="{{ url_for('static', filename='img/presidents/p2.webp') }}"
+                            alt="Leader 2">
                         <h4>Sri Basavaraj Bommai</h4>
                         <span>Co-Patron</span>
                     </div>
                     <div class="leader-card" data-leader-index="2">
-                        <img loading="lazy" src="{{ url_for('static', filename='img/presidents/p3.webp') }}" alt="Leader 3">
+                        <img loading="lazy" src="{{ url_for('static', filename='img/presidents/p3.webp') }}"
+                            alt="Leader 3">
                         <h4>Sri Jagadish Shettar</h4>
                         <span>Senior Advisor</span>
                     </div>
-                    <div class="leader-card" data-leader-index="4">
-                        <img loading="lazy" src="{{ url_for('static', filename='img/presidents/p4.webp') }}" alt="Leader 4">
+                    <div class="leader-card" data-leader-index="3">
+                        <img loading="lazy" src="{{ url_for('static', filename='img/presidents/p4.webp') }}"
+                            alt="Leader 4">
                         <h4>Dr. S. S. Badrinath</h4>
                         <span>Honorary President</span>
                     </div>
                     <div class="leader-card" data-leader-index="4">
-                        <img loading="lazy" src="{{ url_for('static', filename='img/presidents/p5.webp') }}" alt="Leader 5">
+                        <img loading="lazy" src="{{ url_for('static', filename='img/presidents/p5.webp') }}"
+                            alt="Leader 5">
                         <h4>Sri V. Somanna</h4>
                         <span>Executive Member</span>
                     </div>
@@ -242,7 +330,8 @@
             <div class="mosaic-item" data-aos="fade-right">
                 <div class="mosaic-media">
                     <div class="image-offset-frame">
-                        <img loading="lazy" src="{{ url_for('static', filename='img/gallery/g1.webp') }}" alt="Cultural Preservation Award">
+                        <img loading="lazy" src="{{ url_for('static', filename='img/gallery/g1.webp') }}"
+                            alt="Cultural Preservation Award">
                     </div>
                 </div>
                 <div class="mosaic-content">
@@ -275,7 +364,8 @@
             <div class="mosaic-item" data-aos="fade-right">
                 <div class="mosaic-media">
                     <div class="image-offset-frame">
-                        <img loading="lazy" src="{{ url_for('static', filename='img/gallery/g3.webp') }}" alt="Scholarship Milestone">
+                        <img loading="lazy" src="{{ url_for('static', filename='img/gallery/g3.webp') }}"
+                            alt="Scholarship Milestone">
                     </div>
                 </div>
                 <div class="mosaic-content">

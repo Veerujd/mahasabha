@@ -1,14 +1,13 @@
 {% extends "base.html" %}
 
 {% block title %}Gallery | Akhila Bharata Veerashaiva Mahasabha (AIVMM){% endblock %}
+{% block body_class %}gallery-page{% endblock %}
 
 {% block content %}
 <!-- Page Hero -->
 <section class="page-hero">
     <div class="container">
-        <nav class="breadcrumbs">
-            <a href="{{ url_for('web.index') }}">Home</a> / <span>Gallery</span>
-        </nav>
+        <div class="header-divider"></div>
         <h2 data-aos>Moments of Legacy</h2>
         <p data-aos>A visual records of our journey, cultural celebrations, and community initiatives.</p>
     </div>
@@ -17,124 +16,189 @@
 <!-- Gallery Tabs Section -->
 <section class="section-padding" style="padding-bottom: 0;">
     <div class="container">
-        <div class="gallery-tabs" data-aos>
-            <button class="tab-btn active" data-category="all">All Moments</button>
-            <button class="tab-btn" data-category="events">Events</button>
-            <button class="tab-btn" data-category="heritage">Heritage</button>
-            <button class="tab-btn" data-category="community">Community</button>
+        <div class="gallery-filter-bar" data-aos>
+            <!-- Single Filter Row: Category Tabs + Year Filter -->
+            <div class="gallery-tabs">
+                <div class="filter-category-group">
+                    <button class="tab-btn active" data-category="all">All Moments</button>
+                    <button class="tab-btn" data-category="events">Events</button>
+                    <button class="tab-btn" data-category="heritage">Heritage</button>
+                    <button class="tab-btn" data-category="community">Community</button>
+                </div>
+                
+                <div class="filter-divider-vertical"></div>
+
+                <div class="filter-year-group">
+                    <button class="year-btn active" data-year="all">All History</button>
+                    <button class="year-btn" data-year="2026">2026</button>
+                    <button class="year-btn" data-year="2025">2025</button>
+                    <button class="year-btn" data-year="2024">2024</button>
+                </div>
+            </div>
         </div>
     </div>
+</section>
 </section>
 
 <!-- Gallery Grid -->
 <section class="section-padding">
     <div class="container">
         <div class="gallery-grid" id="main-gallery">
-            <div class="gallery-item heritage" data-aos>
-                <img src="{{ url_for('static', filename='img/gallery/g1.webp') }}" alt="Historical Bhavan" loading="lazy">
+            <!-- Heritage: Veerashaiva Bhavan -->
+            <div class="gallery-item heritage" data-aos data-full-date="2025-10-12"
+                data-images='["{{ url_for("static", filename="img/gallery/g1.webp") }}", "{{ url_for("static", filename="img/gallery/g2.webp") }}", "{{ url_for("static", filename="img/gallery/g3.webp") }}", "{{ url_for("static", filename="img/gallery/g10.webp") }}", "{{ url_for("static", filename="img/gallery/g15.webp") }}", "{{ url_for("static", filename="img/gallery/g6.webp") }}", "{{ url_for("static", filename="img/gallery/g11.webp") }}"]'
+                data-titles='["Main View", "Interior", "Committee Room", "Pillar Detail", "Night View", "Back Garden", "New Wing"]'
+                data-descs='["Our historical landmark established in Bangalore.", "A view of the main hall during a spiritual event.", "The executive room where community decisions are made.", "Intricate stone carvings detailing historical events.", "Golden lights illuminating the majestic entrance.", "Lush greenery surrounding the historical venue.", "Modern addition to the heritage structure."]'>
+                <img src="{{ url_for('static', filename='img/gallery/g1.webp') }}" alt="Historical Bhavan"
+                    loading="lazy">
                 <div class="gallery-overlay">
-                    <h4>Veerashaiva Bhavan</h4>
-                    <p>Our historical landmark established in Bangalore.</p>
+                    <div class="overlay-content">
+                        <h4 class="overlay-title">Veerashaiva Bhavan</h4>
+                        <p class="overlay-date">Oct 12, 2025</p>
+                    </div>
                 </div>
             </div>
-            <div class="gallery-item events" data-aos>
+
+            <!-- Events: Spiritual Discourse -->
+            <div class="gallery-item events" data-aos data-full-date="2025-05-05"
+                data-images='["{{ url_for("static", filename="img/gallery/g2.webp") }}", "{{ url_for("static", filename="img/gallery/g4.webp") }}", "{{ url_for("static", filename="img/gallery/g5.webp") }}", "{{ url_for("static", filename="img/gallery/g12.webp") }}", "{{ url_for("static", filename="img/gallery/g7.webp") }}", "{{ url_for("static", filename="img/gallery/g15.webp") }}"]'
+                data-titles='["Main Discourse", "Audience Engagement", "Basava Jayanti", "Community Prayer", "Vachana Patha", "Closing Ceremony"]'
+                data-descs='["Ancient wisdom for modern times.", "Youth participating in the discussion.", "Grand celebration of 12th century values.", "Gathered in silence for global peace.", "Reading sacred vachanas together.", "Candlelight vigil at the end of the event."]'>
                 <img src="{{ url_for('static', filename='img/gallery/g2.webp') }}" alt="Cultural Event" loading="lazy">
                 <div class="gallery-overlay">
-                    <h4>Spiritual Discourse</h4>
-                    <p>Ancient wisdom for modern times.</p>
+                    <div class="overlay-content">
+                        <h4 class="overlay-title">Spiritual Discourse</h4>
+                        <p class="overlay-date">May 05, 2025</p>
+                    </div>
                 </div>
             </div>
-            <div class="gallery-item community" data-aos>
-                <img src="{{ url_for('static', filename='img/gallery/g3.webp') }}" alt="Community Meeting" loading="lazy">
+
+            <!-- Community: Executive Committee -->
+            <div class="gallery-item community" data-aos data-full-date="2025-01-18"
+                data-images='["{{ url_for("static", filename="img/gallery/g3.webp") }}", "{{ url_for("static", filename="img/gallery/g1.webp") }}", "{{ url_for("static", filename="img/gallery/g12.webp") }}", "{{ url_for("static", filename="img/gallery/g14.webp") }}", "{{ url_for("static", filename="img/gallery/g11.webp") }}"]'
+                data-titles='["Executive Body", "Historical Hall", "Strategy Meeting", "Annual Report", "Member Group"]'
+                data-descs='["Leading the path to community empowerment.", "The hall where legacies are preserved.", "Planning the next phase of community growth.", "Reviewing the achievements of the previous fiscal year.", "Dignitaries gathered for the annual meet."]'>
+                <img src="{{ url_for('static', filename='img/gallery/g3.webp') }}" alt="Community Meeting"
+                    loading="lazy">
                 <div class="gallery-overlay">
-                    <h4>Executive Committee</h4>
-                    <p>Leading the path to community empowerment.</p>
+                    <div class="overlay-content">
+                        <h4 class="overlay-title">Executive Committee</h4>
+                        <p class="overlay-date">Jan 18, 2025</p>
+                    </div>
                 </div>
             </div>
-            <div class="gallery-item community" data-aos>
-                <img src="{{ url_for('static', filename='img/gallery/g4.webp') }}" alt="Educational Support" loading="lazy">
+
+            <!-- Community: Scholarship Awards -->
+            <div class="gallery-item community" data-aos data-full-date="2024-12-01"
+                data-images='["{{ url_for("static", filename="img/gallery/g4.webp") }}", "{{ url_for("static", filename="img/gallery/g11.webp") }}", "{{ url_for("static", filename="img/gallery/g13.webp") }}", "{{ url_for("static", filename="img/gallery/g9.webp") }}", "{{ url_for("static", filename="img/gallery/g15.webp") }}"]'
+                data-titles='["Scholarship Distribution", "Community Hall", "Group Photo", "Award Ceremony", "Reception"]'
+                data-descs='["Supporting our future leaders.", "The venue for the awards ceremony.", "Students and dignitaries at the event.", "A special moment for the top student.", "Post-event celebration with parents."]'>
+                <img src="{{ url_for('static', filename='img/gallery/g4.webp') }}" alt="Educational Support"
+                    loading="lazy">
                 <div class="gallery-overlay">
-                    <h4>Scholarship Awards</h4>
-                    <p>Supporting our future leaders.</p>
+                    <div class="overlay-content">
+                        <h4 class="overlay-title">Scholarship Awards</h4>
+                        <p class="overlay-date">Dec 01, 2024</p>
+                    </div>
                 </div>
             </div>
-            <div class="gallery-item events" data-aos>
-                <img src="{{ url_for('static', filename='img/gallery/g5.webp') }}" alt="Festival Celebration" loading="lazy">
+
+            <!-- Events: Basava Jayanti 2025 -->
+            <div class="gallery-item events" data-aos data-full-date="2025-04-28"
+                data-images='["{{ url_for("static", filename="img/gallery/g5.webp") }}", "{{ url_for("static", filename="img/gallery/g6.webp") }}", "{{ url_for("static", filename="img/gallery/g7.webp") }}", "{{ url_for("static", filename="img/gallery/g2.webp") }}", "{{ url_for("static", filename="img/gallery/g8.webp") }}"]'
+                data-titles='["Basava Jayanti Parade", "Temple View", "Unity Prayer", "Chariot Procession", "Music Tribute"]'
+                data-descs='["Cultural splendor and devotion.", "Historical site preservation.", "Massive gathering for social harmony.", "The deity chariot moving through the city.", "Soulful instrumental music in the evening."]'>
+                <img src="{{ url_for('static', filename='img/gallery/g5.webp') }}" alt="Festival Celebration"
+                    loading="lazy">
                 <div class="gallery-overlay">
-                    <h4>Basava Jayanti 2025</h4>
-                    <p>Cultural splendor and devotion.</p>
+                    <div class="overlay-content">
+                        <h4 class="overlay-title">Basava Jayanti 2025</h4>
+                        <p class="overlay-date">Apr 28, 2025</p>
+                    </div>
                 </div>
             </div>
-            <div class="gallery-item heritage" data-aos>
-                <img src="{{ url_for('static', filename='img/gallery/g6.webp') }}" alt="Temple Architecture" loading="lazy">
+
+            <!-- Heritage: Historical Architecture -->
+            <div class="gallery-item heritage" data-aos data-full-date="2024-11-15"
+                data-images='["{{ url_for("static", filename="img/gallery/g6.webp") }}", "{{ url_for("static", filename="img/gallery/g14.webp") }}", "{{ url_for("static", filename="img/gallery/g1.webp") }}", "{{ url_for("static", filename="img/gallery/g9.webp") }}", "{{ url_for("static", filename="img/gallery/g10.webp") }}"]'
+                data-titles='["Architectural Detail", "Sacred Pillars", "Ceiling Art", "Scripture Vault", "Tower Base"]'
+                data-descs='["The intricate legacy of our ancestors.", "Preserved stone carvings from the medieval era.", "Traditional paintings in the temple ceiling.", "Archive room with original vachana leaves.", "Majestic stone base of the main Gopura."]'>
+                <img src="{{ url_for('static', filename='img/gallery/g6.webp') }}" alt="Temple Architecture"
+                    loading="lazy">
                 <div class="gallery-overlay">
-                    <h4>Historical Architecture</h4>
-                    <p>The intricate legacy of our ancestors.</p>
+                    <div class="overlay-content">
+                        <h4 class="overlay-title">Historical Architecture</h4>
+                        <p class="overlay-date">Nov 15, 2024</p>
+                    </div>
                 </div>
             </div>
-            <div class="gallery-item events" data-aos>
+
+            <!-- Events: Mass Prayer Session -->
+            <div class="gallery-item events" data-aos data-full-date="2025-03-10"
+                data-images='["{{ url_for("static", filename="img/gallery/g7.webp") }}", "{{ url_for("static", filename="img/gallery/g8.webp") }}", "{{ url_for("static", filename="img/gallery/g4.webp") }}", "{{ url_for("static", filename="img/gallery/g11.webp") }}"]'
+                data-titles='["Collective Meditation", "Musical Evening", "Youth Camp", "Closing Benediction"]'
+                data-descs='["Unity in devotion and peaceful coexistence.", "Bhajans being performed by local artists.", "Teaching vachanas to the younger generation.", "Pujari blessing the gathered devotees at the end."]'>
                 <img src="{{ url_for('static', filename='img/gallery/g7.webp') }}" alt="Group Prayer" loading="lazy">
                 <div class="gallery-overlay">
-                    <h4>Mass Prayer Session</h4>
-                    <p>Unity in devotion and peaceful coexistence.</p>
+                    <div class="overlay-content">
+                        <h4 class="overlay-title">Mass Prayer Session</h4>
+                        <p class="overlay-date">Mar 10, 2025</p>
+                    </div>
                 </div>
             </div>
-            <div class="gallery-item events" data-aos>
+
+            <!-- Events: Cultural Music Fest -->
+            <div class="gallery-item events" data-aos data-full-date="2025-02-22"
+                data-images='["{{ url_for("static", filename="img/gallery/g8.webp") }}", "{{ url_for("static", filename="img/gallery/g15.webp") }}", "{{ url_for("static", filename="img/gallery/g5.webp") }}", "{{ url_for("static", filename="img/gallery/g2.webp") }}"]'
+                data-titles='["Classical Performance", "Evening Ambiance", "Stage Close-up", "Audience View"]'
+                data-descs='["Celebrating our musical heritage through live performances.", "The lit-up stage at the Mahasabha grounds.", "Capturing the emotion of a soulful vachana rendition.", "Thousands of members gathered under the starlit sky."]'>
                 <img src="{{ url_for('static', filename='img/gallery/g8.webp') }}" alt="Music Festival" loading="lazy">
                 <div class="gallery-overlay">
-                    <h4>Cultural Music Fest</h4>
-                    <p>Celebrating our musical heritage through live performances.</p>
-                </div>
-            </div>
-            <div class="gallery-item heritage" data-aos>
-                <img src="{{ url_for('static', filename='img/gallery/g9.webp') }}" alt="Vachana Manuscripts" loading="lazy">
-                <div class="gallery-overlay">
-                    <h4>Vachana Scriptures</h4>
-                    <p>Digital archiving of 12th century literature.</p>
-                </div>
-            </div>
-            <div class="gallery-item heritage" data-aos>
-                <img src="{{ url_for('static', filename='img/gallery/g10.webp') }}" alt="Heritage Site" loading="lazy">
-                <div class="gallery-overlay">
-                    <h4>Heritage Site</h4>
-                    <p>Preserving our sacred sites for generations.</p>
-                </div>
-            </div>
-            <div class="gallery-item events" data-aos>
-                <img src="{{ url_for('static', filename='img/gallery/g11.webp') }}" alt="Community Event" loading="lazy">
-                <div class="gallery-overlay">
-                    <h4>Community Event</h4>
-                    <p>Gathering to celebrate our cultural roots.</p>
-                </div>
-            </div>
-            <div class="gallery-item community" data-aos>
-                <img src="{{ url_for('static', filename='img/gallery/g12.webp') }}" alt="Leadership meeting" loading="lazy">
-                <div class="gallery-overlay">
-                    <h4>Leadership meeting</h4>
-                    <p>Crafting vision for the Mahasabha.</p>
+                    <div class="overlay-content">
+                        <h4 class="overlay-title">Cultural Music Fest</h4>
+                        <p class="overlay-date">Feb 22, 2025</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<div class="lightbox multi-slider-lightbox" id="lightbox">
-    <span class="close-lightbox" id="close-lightbox">&times;</span>
-    <div class="lightbox-content">
-        <div class="lb-slider-container">
-            <button class="lb-nav-btn lb-prev" id="lb-prev"><i class="fas fa-chevron-left"></i></button>
-            <div class="lb-track-wrapper">
-                <div class="lb-track" id="lb-track">
-                    <!-- Example slider images will be injected via JS -->
-                </div>
-            </div>
-            <button class="lb-nav-btn lb-next" id="lb-next"><i class="fas fa-chevron-right"></i></button>
-            <div class="lb-dots" id="lb-dots"></div>
+{% endblock %}
+
+{% block lightbox %}
+<!-- Photosen-Style Minimalist Lightbox Profile -->
+<div class="lightbox" id="lightbox">
+    <div class="lightbox-overlay" id="close-lightbox-overlay"></div>
+
+    <!-- Top Controls: Close, Count, etc -->
+    <div class="lb-top-bar">
+        <div class="lb-counter" id="lb-counter">1 / 1</div>
+        <div class="lb-controls-right">
+            <div class="lb-icon-btn" id="close-lightbox"><i class="fas fa-times"></i></div>
         </div>
-        <div class="lightbox-caption" id="lightbox-caption">
-            <h4 id="lightbox-title"></h4>
-            <p id="lightbox-desc"></p>
-            <div class="lb-extra-info" id="lb-extra-info">This is an example event gallery. You can swipe or click through the collection of images above to relive these unforgettable historical moments.</div>
+    </div>
+
+    <div class="lb-main-stage">
+        <button class="lb-nav-arrow prev" id="lb-prev"><i class="fas fa-chevron-left"></i></button>
+        <div class="lb-current-image-wrapper">
+            <img id="lb-main-img" src="" alt="Gallery Featured">
+        </div>
+        <button class="lb-nav-arrow next" id="lb-next"><i class="fas fa-chevron-right"></i></button>
+    </div>
+
+    <!-- Caption: Centered between Image and Thumbnails -->
+    <div class="lb-bottom-section">
+        <div class="lb-caption">
+            <h3 id="lb-title">Collection Title</h3>
+            <p id="lb-desc">Description goes here.</p>
+        </div>
+
+        <!-- Thumbnail Strip: Matches Photosen exactly -->
+        <div class="lb-thumbnails-strip-wrapper">
+            <div class="lb-thumbnails-strip" id="lb-mini-slider">
+                <!-- Thumbnails injected here -->
+            </div>
         </div>
     </div>
 </div>

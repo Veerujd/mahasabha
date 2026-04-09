@@ -6,9 +6,7 @@
 <!-- Page Hero (SYNCED WITH ABOUT PAGE) -->
 <section class="page-hero section-padding">
     <div class="container" data-aos="fade-up">
-        <nav class="breadcrumbs" data-aos="fade-down">
-            <a href="{{ url_for('web.index') }}">Home</a> / <span>Membership</span>
-        </nav>
+        <div class="header-divider"></div>
         <h2 data-aos="fade-up">Join our Community</h2>
         <p data-aos="fade-up" data-aos-delay="100">A unified vision for the Veerashaiva Lingayath community. Join us in our journey of cultural excellence and empowerment.</p>
     </div>
@@ -27,122 +25,218 @@
         <div class="membership-grid-refined">
             
             <!-- 1. Paramadasohi -->
-            <div class="member-card-horizontal" data-aos="fade-up">
-                <div class="icon-box-refined"><i class="fas fa-gem"></i></div>
-                <div class="info-box">
-                    <h3>Paramadasohi</h3>
-                    <span class="fee-tag">₹ 1,00,000/-</span>
-                    <p>Leading patron of the organization with permanent national representative status and voting rights.</p>
+            <div class="m-card" data-aos="fade-up">
+                <div class="m-card-header">
+                    <div class="m-card-icon"><i class="fas fa-gem"></i></div>
+                    <h3 class="m-card-title">Paramadasohi</h3>
+                    <div class="m-card-price">₹ 1,00,000/-</div>
+                    <a href="{{ url_for('web.apply_membership') }}" class="m-card-badge">Apply Now</a>
+                </div>
+                <div class="m-card-body">
+                    <p class="m-card-text">Leading patron of the organization with permanent national representative status and voting rights.</p>
+                    <ul class="m-card-features">
+                        <li><i class="fas fa-check-circle"></i> Permanent National Status</li>
+                        <li><i class="fas fa-check-circle"></i> Full Voting Rights</li>
+                        <li><i class="fas fa-check-circle"></i> Exclusive Governance Access</li>
+                    </ul>
                 </div>
             </div>
 
             <!-- 2. Mahadasohi -->
-            <div class="member-card-horizontal" data-aos="fade-up" data-aos-delay="50">
-                <div class="icon-box-refined"><i class="fas fa-crown"></i></div>
-                <div class="info-box">
-                    <h3>Mahadasohi</h3>
-                    <span class="fee-tag">₹ 50,000/-</span>
-                    <p>Grand donor with a permanent seat in the Working Committee and active role in global community initiatives.</p>
+            <div class="m-card" data-aos="fade-up" data-aos-delay="50">
+                <div class="m-card-header">
+                    <div class="m-card-icon"><i class="fas fa-crown"></i></div>
+                    <h3 class="m-card-title">Mahadasohi</h3>
+                    <div class="m-card-price">₹ 50,000/-</div>
+                    <a href="{{ url_for('web.apply_membership') }}" class="m-card-badge">Apply Now</a>
+                </div>
+                <div class="m-card-body">
+                    <p class="m-card-text">Grand donor with a permanent seat in the Working Committee and active role in global community initiatives.</p>
+                    <ul class="m-card-features">
+                        <li><i class="fas fa-check-circle"></i> Working Committee Seat</li>
+                        <li><i class="fas fa-check-circle"></i> Global Project Leadership</li>
+                        <li><i class="fas fa-check-circle"></i> Permanent Membership</li>
+                    </ul>
                 </div>
             </div>
 
             <!-- 3. Dasohi -->
-            <div class="member-card-horizontal" data-aos="fade-up" data-aos-delay="100">
-                <div class="icon-box-refined"><i class="fas fa-gift"></i></div>
-                <div class="info-box">
-                    <h3>Dasohi</h3>
-                    <span class="fee-tag">₹ 25,000/-</span>
-                    <p>Honored donor category contributing towards major infrastructure and educational projects of the Mahasabha.</p>
+            <div class="m-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="m-card-header">
+                    <div class="m-card-icon"><i class="fas fa-gift"></i></div>
+                    <h3 class="m-card-title">Dasohi</h3>
+                    <div class="m-card-price">₹ 25,000/-</div>
+                    <a href="{{ url_for('web.apply_membership') }}" class="m-card-badge">Apply Now</a>
+                </div>
+                <div class="m-card-body">
+                    <p class="m-card-text">Honored donor category contributing towards major infrastructure and educational projects of the Mahasabha.</p>
+                    <ul class="m-card-features">
+                        <li><i class="fas fa-check-circle"></i> Infrastructure Support</li>
+                        <li><i class="fas fa-check-circle"></i> Education Visionary</li>
+                        <li><i class="fas fa-check-circle"></i> Priority Invitations</li>
+                    </ul>
                 </div>
             </div>
 
             <!-- 4. Danashiromani -->
-            <div class="member-card-horizontal" data-aos="fade-up" data-aos-delay="150">
-                <div class="icon-box-refined"><i class="fas fa-medal"></i></div>
-                <div class="info-box">
-                    <h3>Danashiromani</h3>
-                    <span class="fee-tag">₹ 10,000/-</span>
-                    <p>Distinguished member recognized at annual national conferences for significant service and support.</p>
+            <div class="m-card" data-aos="fade-up" data-aos-delay="150">
+                <div class="m-card-header">
+                    <div class="m-card-icon"><i class="fas fa-medal"></i></div>
+                    <h3 class="m-card-title">Danashiromani</h3>
+                    <div class="m-card-price">₹ 10,000/-</div>
+                    <a href="{{ url_for('web.apply_membership') }}" class="m-card-badge">Apply Now</a>
+                </div>
+                <div class="m-card-body">
+                    <p class="m-card-text">Distinguished member recognized at annual national conferences for significant service and support.</p>
+                    <ul class="m-card-features">
+                        <li><i class="fas fa-check-circle"></i> Annual Recognition</li>
+                        <li><i class="fas fa-check-circle"></i> Service Certificate</li>
+                        <li><i class="fas fa-check-circle"></i> Resource Voting</li>
+                    </ul>
                 </div>
             </div>
 
             <!-- 5. Mahadani -->
-            <div class="member-card-horizontal" data-aos="fade-up" data-aos-delay="200">
-                <div class="icon-box-refined"><i class="fas fa-hand-holding-heart"></i></div>
-                <div class="info-box">
-                    <h3>Mahadani</h3>
-                    <span class="fee-tag">₹ 5,000/-</span>
-                    <p>Major contributor focusing on regional scholarship programs and youth empowerment drives.</p>
+            <div class="m-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="m-card-header">
+                    <div class="m-card-icon"><i class="fas fa-hand-holding-heart"></i></div>
+                    <h3 class="m-card-title">Mahadani</h3>
+                    <div class="m-card-price">₹ 5,000/-</div>
+                    <a href="{{ url_for('web.apply_membership') }}" class="m-card-badge">Apply Now</a>
+                </div>
+                <div class="m-card-body">
+                    <p class="m-card-text">Major contributor focusing on regional scholarship programs and youth empowerment drives.</p>
+                    <ul class="m-card-features">
+                        <li><i class="fas fa-check-circle"></i> Scholarship Patron</li>
+                        <li><i class="fas fa-check-circle"></i> Youth Mentorship</li>
+                        <li><i class="fas fa-check-circle"></i> Regional Honor</li>
+                    </ul>
                 </div>
             </div>
 
             <!-- 6. Dani -->
-            <div class="member-card-horizontal" data-aos="fade-up" data-aos-delay="250">
-                <div class="icon-box-refined"><i class="fas fa-hand-holding-usd"></i></div>
-                <div class="info-box">
-                    <h3>Dani</h3>
-                    <span class="fee-tag">₹ 2,500/-</span>
-                    <p>Dedicated donor member supporting community development and social welfare programs.</p>
+            <div class="m-card" data-aos="fade-up" data-aos-delay="250">
+                <div class="m-card-header">
+                    <div class="m-card-icon"><i class="fas fa-hand-holding-usd"></i></div>
+                    <h3 class="m-card-title">Dani</h3>
+                    <div class="m-card-price">₹ 2,500/-</div>
+                    <a href="{{ url_for('web.apply_membership') }}" class="m-card-badge">Apply Now</a>
+                </div>
+                <div class="m-card-body">
+                    <p class="m-card-text">Dedicated donor member supporting community development and social welfare programs.</p>
+                    <ul class="m-card-features">
+                        <li><i class="fas fa-check-circle"></i> Social Welfare Support</li>
+                        <li><i class="fas fa-check-circle"></i> Community Access</li>
+                        <li><i class="fas fa-check-circle"></i> Member Certificate</li>
+                    </ul>
                 </div>
             </div>
 
             <!-- 7. Upaposhaka -->
-            <div class="member-card-horizontal" data-aos="fade-up" data-aos-delay="300">
-                <div class="icon-box-refined"><i class="fas fa-shield-alt"></i></div>
-                <div class="info-box">
-                    <h3>Upaposhaka</h3>
-                    <span class="fee-tag">₹ 1,000/-</span>
-                    <p>Patron member supporting administrative processing and regional office operations center.</p>
+            <div class="m-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="m-card-header">
+                    <div class="m-card-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h3 class="m-card-title">Upaposhaka</h3>
+                    <div class="m-card-price">₹ 1,000/-</div>
+                    <a href="{{ url_for('web.apply_membership') }}" class="m-card-badge">Apply Now</a>
+                </div>
+                <div class="m-card-body">
+                    <p class="m-card-text">Patron member supporting administrative processing and regional office operations center.</p>
+                    <ul class="m-card-features">
+                        <li><i class="fas fa-check-circle"></i> Operational Support</li>
+                        <li><i class="fas fa-check-circle"></i> Regional Voting</li>
+                        <li><i class="fas fa-check-circle"></i> Digital Credentials</li>
+                    </ul>
                 </div>
             </div>
 
             <!-- 8. Ashrayadatha -->
-            <div class="member-card-horizontal" data-aos="fade-up" data-aos-delay="350">
-                <div class="icon-box-refined"><i class="fas fa-hands-helping"></i></div>
-                <div class="info-box">
-                    <h3>Ashrayadatha</h3>
-                    <span class="fee-tag">₹ 500/-</span>
-                    <p>Supporter category prioritizing local culture and spiritual preservation initiatives.</p>
+            <div class="m-card" data-aos="fade-up" data-aos-delay="350">
+                <div class="m-card-header">
+                    <div class="m-card-icon"><i class="fas fa-hands-helping"></i></div>
+                    <h3 class="m-card-title">Ashrayadatha</h3>
+                    <div class="m-card-price">₹ 500/-</div>
+                    <a href="{{ url_for('web.apply_membership') }}" class="m-card-badge">Apply Now</a>
+                </div>
+                <div class="m-card-body">
+                    <p class="m-card-text">Supporter category prioritizing local culture and spiritual preservation initiatives.</p>
+                    <ul class="m-card-features">
+                        <li><i class="fas fa-check-circle"></i> Local Heritage Care</li>
+                        <li><i class="fas fa-check-circle"></i> Spiritual Support</li>
+                        <li><i class="fas fa-check-circle"></i> Community Access</li>
+                    </ul>
                 </div>
             </div>
 
             <!-- 9. Life Member -->
-            <div class="member-card-horizontal" data-aos="fade-up" data-aos-delay="400">
-                <div class="icon-box-refined"><i class="fas fa-infinity"></i></div>
-                <div class="info-box">
-                    <h3>Life Member</h3>
-                    <span class="fee-tag">₹ 1,000/-</span>
-                    <p>Permanent membership with active voting rights and lifetime engagement with the Mahasabha events.</p>
+            <div class="m-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="m-card-header">
+                    <div class="m-card-icon"><i class="fas fa-infinity"></i></div>
+                    <h3 class="m-card-title">Life Member</h3>
+                    <div class="m-card-price">₹ 1,000/-</div>
+                    <a href="{{ url_for('web.apply_membership') }}" class="m-card-badge">Apply Now</a>
+                </div>
+                <div class="m-card-body">
+                    <p class="m-card-text">Permanent membership with active voting rights and lifetime engagement with the Mahasabha events.</p>
+                    <ul class="m-card-features">
+                        <li><i class="fas fa-check-circle"></i> Lifetime Validity</li>
+                        <li><i class="fas fa-check-circle"></i> Full Voting Rights</li>
+                        <li><i class="fas fa-check-circle"></i> Event Access</li>
+                    </ul>
                 </div>
             </div>
 
             <!-- 10. Institutional Member -->
-            <div class="member-card-horizontal" data-aos="fade-up" data-aos-delay="450">
-                <div class="icon-box-refined"><i class="fas fa-university"></i></div>
-                <div class="info-box">
-                    <h3>Institutional Member</h3>
-                    <span class="fee-tag">Organizations</span>
-                    <p>Collaborative membership for Mutts, educational trusts, and socio-cultural institutions.</p>
+            <div class="m-card" data-aos="fade-up" data-aos-delay="450">
+                <div class="m-card-header">
+                    <div class="m-card-icon"><i class="fas fa-university"></i></div>
+                    <h3 class="m-card-title">Institutional</h3>
+                    <div class="m-card-price">Organizations</div>
+                    <a href="{{ url_for('web.apply_membership') }}" class="m-card-badge">Apply Now</a>
+                </div>
+                <div class="m-card-body">
+                    <p class="m-card-text">Collaborative membership for Mutts, educational trusts, and socio-cultural institutions.</p>
+                    <ul class="m-card-features">
+                        <li><i class="fas fa-check-circle"></i> Entity Recognition</li>
+                        <li><i class="fas fa-check-circle"></i> Strategic Partnership</li>
+                        <li><i class="fas fa-check-circle"></i> Corporate Voting</li>
+                    </ul>
                 </div>
             </div>
 
             <!-- 11. Honorary Member -->
-            <div class="member-card-horizontal" data-aos="fade-up" data-aos-delay="500">
-                <div class="icon-box-refined"><i class="fas fa-award"></i></div>
-                <div class="info-box">
-                    <h3>Honorary Member</h3>
-                    <span class="fee-tag">By Invitation</span>
-                    <p>Conferred upon distinguished personalities for their extraordinary social impact and community service.</p>
+            <div class="m-card" data-aos="fade-up" data-aos-delay="500">
+                <div class="m-card-header">
+                    <div class="m-card-icon"><i class="fas fa-award"></i></div>
+                    <h3 class="m-card-title">Honorary</h3>
+                    <div class="m-card-price">Invitation</div>
+                    <a href="{{ url_for('web.apply_membership') }}" class="m-card-badge">Apply Now</a>
+                </div>
+                <div class="m-card-body">
+                    <p class="m-card-text">Conferred upon distinguished personalities for their extraordinary social impact and community service.</p>
+                    <ul class="m-card-features">
+                        <li><i class="fas fa-check-circle"></i> Elite Recognition</li>
+                        <li><i class="fas fa-check-circle"></i> Advisory Status</li>
+                        <li><i class="fas fa-check-circle"></i> Lifetime Fellowship</li>
+                    </ul>
                 </div>
             </div>
 
             <!-- 12. Student Member -->
-            <div class="member-card-horizontal" data-aos="fade-up" data-aos-delay="550">
-                <div class="icon-box-refined"><i class="fas fa-user-graduate"></i></div>
-                <div class="info-box">
-                    <h3>Student Member</h3>
-                    <span class="fee-tag">Youth Wing</span>
-                    <p>Academic membership for students to connect with heritage and professional guidance networks.</p>
+            <div class="m-card" data-aos="fade-up" data-aos-delay="550">
+                <div class="m-card-header">
+                    <div class="m-card-icon"><i class="fas fa-user-graduate"></i></div>
+                    <h3 class="m-card-title">Student</h3>
+                    <div class="m-card-price">Youth Wing</div>
+                    <a href="{{ url_for('web.apply_membership') }}" class="m-card-badge">Apply Now</a>
+                </div>
+                <div class="m-card-body">
+                    <p class="m-card-text">Academic membership for students to connect with heritage and professional guidance networks.</p>
+                    <ul class="m-card-features">
+                        <li><i class="fas fa-check-circle"></i> Career Mentorship</li>
+                        <li><i class="fas fa-check-circle"></i> Youth Wing Access</li>
+                        <li><i class="fas fa-check-circle"></i> Project Portfolios</li>
+                    </ul>
                 </div>
             </div>
 
@@ -150,8 +244,7 @@
 
         <!-- Simple Apply Button (Decent & Clean) -->
         <div class="apply-footer-box section-padding text-center" data-aos="zoom-in">
-            <p>Are you ready to be a part of our legacy?</p>
-            <a href="{{ url_for('web.contact') }}" class="btn btn-primary btn-lg">Apply for Membership</a>
+            <a href="{{ url_for('web.apply_membership') }}" class="btn btn-primary btn-lg">Apply for Membership</a>
         </div>
     </div>
 </div>

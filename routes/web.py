@@ -42,6 +42,10 @@ def mission():
 def presidents():
     return render_template('presidents.html', active_page='officials')
 
+@web_bp.route('/apply-membership')
+def apply_membership():
+    return render_template('apply_membership.html', active_page='membership')
+
 @web_bp.route('/admin-login')
 def admin_login():
     return render_template('admin_login.html', active_page='home')

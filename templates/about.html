@@ -6,26 +6,431 @@
 <!-- Page Header -->
 <section class="page-hero">
     <div class="container">
-        <nav class="breadcrumbs">
-            <a href="{{ url_for('web.index') }}">Home</a> / <span>About Us</span>
-        </nav>
+        <div class="header-divider"></div>
         <h2 data-aos>Our Legacy</h2>
         <p data-aos>Since 1904, Akhila Bharata Veerashaiva Mahasabha has been at the forefront of community empowerment.</p>
     </div>
 </section>
 
-<!-- Vision & Mission Summary -->
-<section class="section-padding vision-section">
-    <div class="container grid-2 section-fade" data-aos>
-        <div class="content-box" data-aos>
-            <div class="badge">VISION</div>
-            <h3>Building a Stronger Community</h3>
-            <p>Establishing a united and progressive community that thrives on its cultural heritage while embracing modern opportunities for growth and excellence.</p>
+<!-- Introduction / About Veerashaiva Mahasabha -->
+<section class="section-padding intro-section" style="background: var(--white);">
+    <div class="container" data-aos>
+        <div class="section-header text-center" style="margin-bottom: 60px;">
+            <div class="badge">INTRODUCTION</div>
+            <h2 class="leadership-body-title">About Veerashaiva Mahasabha</h2>
         </div>
-        <div class="content-box" data-aos>
-            <div class="badge">MISSION</div>
-            <h3>Empowering Generations</h3>
-            <p>To preserve our unique traditions, promote education, provide social support, and create a legacy of service for the Veerashaiva Lingayath community globally.</p>
+        
+        <div class="intro-content-wrapper">
+            <div class="bio-text">
+                <p>The Lingayat people are known for wearing a linga, an object representing a god; in this case, Shiva. Lingayat are a numerous group in India, especially in the state of Karnataka.</p>
+                <p>This group formed in the 12th century by Basava Bagewadi (1134-1196), a philosopher and a social reformer. He taught against the caste system and its regulations. He envisioned a casteless society, though the resulting society eventually began drawing up lines of caste distinctions again, creating Lingayat own hierarchy of social status after Basava's death.</p>
+                <p>Basava consented to the marriage of a Brahmin woman and a man from an untouchable caste. This story reached the ears of King Bijjala who punished the couple by putting out Lingayat eyes and dragging them to Lingayat deaths behind an elephant. Basava saw this punishment as unacceptable and left Kayla. He moved on to Kudula Sangama where he died in 1167.</p>
+                
+                <h3 style="margin-top: 30px; color: var(--primary-color);">Where are Lingayat Located?</h3>
+                <p>Lingayat are found primarily in Karnataka, where Lingayat comprise a major population. Lingayat are also found in significant numbers in Maharashtra and Andrah Pradesh.</p>
+                
+                <h3 style="margin-top: 30px; color: var(--primary-color);">What are Lingayat Lives Like?</h3>
+                <p>The Lingayat are vegetarian and refrain from alcoholic drinks. Lingayat are known to be a progressive people and there are people from many walks of life and religious expression to be found among them. Most work in government service, but Lingayat are from many occupations, including artisans, cultivators and priests.</p>
+            </div>
+            
+            <div id="intro-full-content" class="full-content collapsed">
+                <h3 style="margin-top: 30px; color: var(--primary-color);">What are Lingayat Beliefs?</h3>
+                <p>Lingayat have a series of initiatory rites, including Lingadharane, the bestowing of the linga. This rite is usually performed within the first week of a child's life. From this day forward, the person will wear the stone as an act of worship of the god (Shiva), in a box around Lingayat neck. The linga is not seen as a mere representation of god, but rather god himself.</p>
+                <p>Lingayat adore Shiva, but Basava taught that his worshipers should worship him alone rather than numerous gods. Lingayats reject polytheism and the Vedas and follow the teachings of the Vachana sahitya instead.</p>
+                
+                <div class="future-content-placeholder" style="margin-top: 40px; padding-top: 10px;">
+                    <img src="{{ url_for('static', filename='img/images/community_india.jpg') }}" alt="Lingayat Community Cultural Representation" style="width: 100%; max-width: 800px; margin: 0 auto 20px; display: block; border-radius: 12px; box-shadow: var(--shadow-lg);">
+                </div>
+            </div>
+            
+            <div class="text-center mt-30">
+                <button id="toggle-intro-content" class="btn-read-more" style="margin: 0 auto;">Read More <i class="fas fa-chevron-down"></i></button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Founder Section -->
+<section class="section-padding founder-section" style="background: rgba(255, 153, 51, 0.03);">
+    <div class="container" data-aos>
+        <div class="section-header text-center" style="margin-bottom: 60px;">
+            <div class="badge">LEGACY FOUNDER</div>
+            <h2 class="leadership-body-title">Poojya Hanagalla Shri Kumara Swamigalu</h2>
+        </div>
+
+        <div class="founder-wrap-container">
+            <!-- Floated Image Container -->
+            <div class="founder-photo-container">
+                <div class="founder-frame">
+                    <img src="{{ url_for('static', filename='img/images/shivayogi-hanagal-kumarswamy.webp') }}" alt="Poojya Hanagalla Shri Kumara Swamigalu">
+                </div>
+                <div class="founder-title-badge">
+                    <h4>Founder of Mahasabha</h4>
+                </div>
+            </div>
+
+            <!-- Biographical Content (Wraps around image) -->
+            <div class="founder-bio">
+                <p><strong>Sri Kumara Swamigalu</strong> was born in 1867 AD at Joyisana Haralalli Village of Ranibannur Taluk of Dharwad District, Karnataka. His childhood name was Halayya.</p>
+                <p>The family of swamigalu was economically very poor. The family was a joint family. Two or three members of the family used to go for Kanthi begging to nearby villages for food. The swamigalu also was going for begging in some days.</p>
+                <p>Once a person told swamigalu to stop begging and to study some thing. And he decided to study.</p>
+                <p>He studied up to 3rd standard in his own village and then he shifted to Kajjari village and appeared for his matriculation. Although he was noted as a best student in the school, he failed to get pass in Matriculation. This shows destiny of each person. If he had passed metrics, he would be a teacher in his village, according to he wish. But God decided that he shall render his service to mankind.</p>
+                
+                <div id="founder-full-content" class="full-content collapsed">
+                    <p>When he failed in his metric, he left his village and went to Lingadalli Village and started a school there. By this time, his mother came to the village and put a marriage proposal infront of him. He told his mother that from that day, there will be no relation between him and his family. He gave some money to his mother before sending her back. Then he left the village and went to Siddaruda Mutt to study about Nijaguna Shivayogi.</p>
+                    <p>When he was in Hubballi, He discussed with the seer of Eradu etthu mutt about his doubts, but was not fully satisfied. As the advice of the seer, he went to Emmiganooru Jadasiddeshwara and got his doubts clarified. Later he came back to Hubli and continue visiting Siddarooda mutt. Later he became a disciple of Yediyur Basavalinga Swamiji.</p>
+                    <p>Hanagal Shri Kumaraswamiji’s mutt was very famous at that time. The then seer was searching for an eligible successor. At that time, he noticed Halayya and appointed him as his successor. </p>
+                </div>
+            </div>
+
+            <div class="read-more-wrapper">
+                <button id="toggle-founder-bio" class="btn-read-more">Read More <i class="fas fa-chevron-down"></i></button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Vision & Mission Summary -->
+<section class="section-padding vision-section" style="background: var(--accent-color); position: relative; overflow: hidden; color: white;">
+    <!-- Celestial Pattern Overlay -->
+    <div style="position: absolute; inset: 0; background-image: url('https://www.transparenttextures.com/patterns/cubes.png'); opacity: 0.15; pointer-events: none;"></div>
+    
+    <!-- Spiritual Glow Elements -->
+    <div style="position: absolute; top: -100px; right: -100px; width: 300px; height: 300px; background: radial-gradient(circle, rgba(255, 153, 51, 0.15) 0%, transparent 70%); border-radius: 50%;"></div>
+    <div style="position: absolute; bottom: -100px; left: -100px; width: 300px; height: 300px; background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 70%); border-radius: 50%;"></div>
+    
+    <div class="container grid-2" data-aos style="position: relative; z-index: 2;">
+        <div class="content-box dark-theme" data-aos>
+            <div class="badge" style="background: var(--primary-color); color: white; border: none;">VISION</div>
+            <h3 style="color: var(--primary-color); margin-top: 15px;">Building a Stronger Community</h3>
+            <p style="color: rgba(255, 255, 255, 0.9); font-size: 1.1rem; line-height: 1.8;">Establishing a united and progressive community that thrives on its cultural heritage while embracing
+                modern opportunities for growth and excellence.</p>
+        </div>
+        <div class="content-box dark-theme" data-aos>
+            <div class="badge" style="background: var(--secondary-color); color: white; border: none;">MISSION</div>
+            <h3 style="color: var(--secondary-color); margin-top: 15px;">Empowering Generations</h3>
+            <p style="color: rgba(255, 255, 255, 0.9); font-size: 1.1rem; line-height: 1.8;">To preserve our unique traditions, promote education, provide social support, and create a legacy of
+                service for the Veerashaiva Lingayath community globally.</p>
+        </div>
+    </div>
+</section>
+
+
+<!-- Past Presidents Timeline Section (Integrated from Presidents Page) -->
+<section class="past-presidents section-padding" style="background: var(--white);">
+    <div class="container">
+        <div class="section-header text-center" style="margin-bottom: 80px;">
+            <div class="badge">CHRONICLES</div>
+            <h2 class="leadership-body-title">Our Distinguished Presidents</h2>
+            <p data-aos="fade-up" data-aos-delay="100">Tracing the lineage of leadership that has guided the Mahasabha through more than a century of service.</p>
+        </div>
+        
+        <div class="timeline-container" id="about-presidents-timeline">
+            <!-- President 1 -->
+            <div class="timeline-item" data-aos="fade-up">
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">
+                    <img loading="lazy" src="{{ url_for('static', filename='img/presidents/p1.webp') }}" alt="Late Shri Sirasangi Lingaraj" class="timeline-img">
+                    <div class="timeline-info">
+                        <div class="timeline-date">1904 - 1906</div>
+                        <h3>Late Shri Sirasangi Lingaraj</h3>
+                        <p>Foundation visionary who established the Mahasabha's core principles and early unity.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- President 2 -->
+            <div class="timeline-item" data-aos>
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">
+                    <img loading="lazy" src="{{ url_for('static', filename='img/presidents/p2.webp') }}" alt="Late Sir K.P puttanna Chetty" class="timeline-img">
+                    <div class="timeline-info">
+                        <div class="timeline-date">1906 - 1907</div>
+                        <h3>Late Sir K.P puttanna Chetty</h3>
+                        <p>Distinguished administrator who modernized early organizational structures.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- President 3 -->
+            <div class="timeline-item" data-aos>
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">
+                    <img loading="lazy" src="{{ url_for('static', filename='img/presidents/p3.webp') }}" alt="Late Shri Rajalakhamana Gowda" class="timeline-img">
+                    <div class="timeline-info">
+                        <div class="timeline-date">1907 - 1909</div>
+                        <h3>Late Shri Rajalakhamana Gowda</h3>
+                        <p>Champion of cultural heritage and regional institutional growth.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- President 4 -->
+            <div class="timeline-item" data-aos>
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">
+                    <img loading="lazy" src="{{ url_for('static', filename='img/presidents/p4.webp') }}" alt="Late Shri Warad Mallappa" class="timeline-img">
+                    <div class="timeline-info">
+                        <div class="timeline-date">1909 - 1910</div>
+                        <h3>Late Shri Warad Mallappa</h3>
+                        <p>Promoted social welfare and spiritual inclusivity within the community.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- President 5 -->
+            <div class="timeline-item" data-aos>
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">
+                    <img loading="lazy" src="{{ url_for('static', filename='img/presidents/p5.webp') }}" alt="Late Shri Mamale Desai" class="timeline-img">
+                    <div class="timeline-info">
+                        <div class="timeline-date">1910 - 1911</div>
+                        <h3>Late Shri Mamale Desai</h3>
+                        <p>Strategist who strengthened the Mahasabha during its formative years.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- President 6 -->
+            <div class="timeline-item" data-aos>
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">
+                    <img loading="lazy" src="{{ url_for('static', filename='img/presidents/p6.webp') }}" alt="Late Shri Artal Rudragowda" class="timeline-img">
+                    <div class="timeline-info">
+                        <div class="timeline-date">1911 - 1917</div>
+                        <h3>Late Shri Artal Rudragowda</h3>
+                        <p>Educational reformer focused on youth empowerment and academic initiatives.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- More Presidents (Hidden by default, shown via JS) -->
+            <!-- President 7 -->
+            <div class="timeline-item load-more-item" style="display: none;">
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">
+                    <img loading="lazy" src="{{ url_for('static', filename='img/presidents/p7.webp') }}" alt="Late Sir K.P puttanna Chetty" class="timeline-img">
+                    <div class="timeline-info">
+                        <div class="timeline-date">1917 - 1918</div>
+                        <h3>Late Sir K.P puttanna Chetty</h3>
+                        <p>Returned for a second tenure to guide through post-war reorganization.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- President 8 -->
+            <div class="timeline-item load-more-item" style="display: none;">
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">
+                    <img loading="lazy" src="{{ url_for('static', filename='img/presidents/p8.webp') }}" alt="Late Shri Shanthaveerappa Menasinakai" class="timeline-img">
+                    <div class="timeline-info">
+                        <div class="timeline-date">1918 - 1921</div>
+                        <h3>Late Shri Shanthaveerappa Menasinakai</h3>
+                        <p>Led early political representation efforts for the Veerashaiva community.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- President 9 -->
+            <div class="timeline-item load-more-item" style="display: none;">
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">
+                    <img loading="lazy" src="{{ url_for('static', filename='img/presidents/p9.webp') }}" alt="Late Shri Siddappa Kambli" class="timeline-img">
+                    <div class="timeline-info">
+                        <div class="timeline-date">1921 - 1923</div>
+                        <h3>Late Shri Siddappa Kambli</h3>
+                        <p>Architect of legislative progress for the community in Mumbai-Karnataka.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- President 10 -->
+            <div class="timeline-item load-more-item" style="display: none;">
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">
+                    <img loading="lazy" src="{{ url_for('static', filename='img/presidents/p10.webp') }}" alt="Late Dr. Fakirappa Gurubasappa Halakatti" class="timeline-img">
+                    <div class="timeline-info">
+                        <div class="timeline-date">1923 - 1925</div>
+                        <h3>Late Dr. Fakirappa Gurubasappa Halakatti</h3>
+                        <p>Renowned scholar and the "Father of Vachana Literature" preservation.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- President 11 -->
+            <div class="timeline-item load-more-item" style="display: none;">
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">
+                    <img loading="lazy" src="{{ url_for('static', filename='img/presidents/p11.webp') }}" alt="Late Shri Siddappa Kambli" class="timeline-img">
+                    <div class="timeline-info">
+                        <div class="timeline-date">1925 - 1927</div>
+                        <h3>Late Shri Siddappa Kambli</h3>
+                        <p>Consolidated organizational influence in educational and legal domains.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- President 12 -->
+            <div class="timeline-item load-more-item" style="display: none;">
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">
+                    <img loading="lazy" src="{{ url_for('static', filename='img/presidents/p12.webp') }}" alt="Late Shri S.S. Basavanal" class="timeline-img">
+                    <div class="timeline-info">
+                        <div class="timeline-date">1927 - 1930</div>
+                        <h3>Late Shri S.S. Basavanal</h3>
+                        <p>Literary giant who institutionalized scholarly pursuit within the Mahasabha.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- President 13 -->
+            <div class="timeline-item load-more-item" style="display: none;">
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">
+                    <img loading="lazy" src="{{ url_for('static', filename='img/presidents/p13.webp') }}" alt="Late Shri M.S. Sardar" class="timeline-img">
+                    <div class="timeline-info">
+                        <div class="timeline-date">1930 - 1933</div>
+                        <h3>Late Shri M.S. Sardar</h3>
+                        <p>Integrated grassroots social work with the Mahasabha's central mission.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- President 14 -->
+            <div class="timeline-item load-more-item" style="display: none;">
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">
+                    <img loading="lazy" src="{{ url_for('static', filename='img/presidents/p14.webp') }}" alt="Late Shri C.C. Hulkoti" class="timeline-img">
+                    <div class="timeline-info">
+                        <div class="timeline-date">1933 - 1940</div>
+                        <h3>Late Shri C.C. Hulkoti</h3>
+                        <p>Extended organizational reach into rural districts with a focus on agriculture.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- President 15 -->
+            <div class="timeline-item load-more-item" style="display: none;">
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">
+                    <img loading="lazy" src="{{ url_for('static', filename='img/presidents/p15.webp') }}" alt="Late His Holiness Banthanal Sanganabasava Swamigalu" class="timeline-img">
+                    <div class="timeline-info">
+                        <div class="timeline-date">1940 - 1946</div>
+                        <h3>Late His Holiness Banthanal Sanganabasava Swamigalu</h3>
+                        <p>Spiritual leader who focused on value-based education and orphanage support.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- President 16 -->
+            <div class="timeline-item load-more-item" style="display: none;">
+                <div class="timeline-dot"></div>
+                <div class="timeline-card highlight-card">
+                    <img loading="lazy" src="{{ url_for('static', filename='img/presidents/p16.webp') }}" alt="Late Dr. D. C. Pavate" class="timeline-img">
+                    <div class="timeline-info">
+                        <div class="timeline-date">1946 - 1960</div>
+                        <h3>Late Dr. D. C. Pavate</h3>
+                        <p>Academic luminary who oversaw the formation of unified Karnataka initiatives.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- President 17 -->
+            <div class="timeline-item load-more-item" style="display: none;">
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">
+                    <img loading="lazy" src="{{ url_for('static', filename='img/presidents/p17.webp') }}" alt="Late His Holiness Banthanal Sanganabasava Swamigalu" class="timeline-img">
+                    <div class="timeline-info">
+                        <div class="timeline-date">1960 - 1969</div>
+                        <h3>Late His Holiness Banthanal Sanganabasava Swamigalu</h3>
+                        <p>Returned to lead during a critical phase of post-independence community building.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- President 18 -->
+            <div class="timeline-item load-more-item" style="display: none;">
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">
+                    <img loading="lazy" src="{{ url_for('static', filename='img/presidents/p18.webp') }}" alt="Late Shri J.B Mallaradhya" class="timeline-img">
+                    <div class="timeline-info">
+                        <div class="timeline-date">1969 - 1975</div>
+                        <h3>Late Shri J.B Mallaradhya</h3>
+                        <p>Focused on administrative excellence and legal protection of institutional assets.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- President 19 -->
+            <div class="timeline-item load-more-item" style="display: none;">
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">
+                    <img loading="lazy" src="{{ url_for('static', filename='img/presidents/p19.webp') }}" alt="Late Shri K.M. Nanjappa" class="timeline-img">
+                    <div class="timeline-info">
+                        <div class="timeline-date">1975 - 1980</div>
+                        <h3>Late Shri K.M. Nanjappa</h3>
+                        <p>Pioneered social justice initiatives and youth employment programs.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- President 20 -->
+            <div class="timeline-item load-more-item" style="display: none;">
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">
+                    <img loading="lazy" src="{{ url_for('static', filename='img/presidents/p20.webp') }}" alt="Late Shri Iswar Mallappa Magdum" class="timeline-img">
+                    <div class="timeline-info">
+                        <div class="timeline-date">1980 - 1985</div>
+                        <h3>Late Shri Iswar Mallappa Magdum</h3>
+                        <p>Technocratic approach to community management and engineering projects.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- President 21 -->
+            <div class="timeline-item load-more-item" style="display: none;">
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">
+                    <img loading="lazy" src="{{ url_for('static', filename='img/presidents/p20.webp') }}" alt="Poojya Dr. Sharanabasavappa Appa" class="timeline-img">
+                    <div class="timeline-info">
+                        <div class="timeline-date">1985 - 1999</div>
+                        <h3>Poojya Dr. Sharanabasavappa Appa</h3>
+                        <p>Spiritual colossus who expanded the Mahasabha into an international cultural force.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- President 22 -->
+            <div class="timeline-item load-more-item" style="display: none;">
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">
+                    <img loading="lazy" src="{{ url_for('static', filename='img/presidents/p19.webp') }}" alt="Dr. Bheemanna Khandre" class="timeline-img">
+                    <div class="timeline-info">
+                        <div class="timeline-date">1999 - 2012</div>
+                        <h3>Dr. Bheemanna Khandre</h3>
+                        <p>Modernized the membership system and integrated the community globally.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- President 23 (Current) -->
+            <div class="timeline-item load-more-item" style="display: none;">
+                <div class="timeline-dot active"></div>
+                <div class="timeline-card current-president">
+                    <img loading="lazy" src="{{ url_for('static', filename='img/presidents/p20.webp') }}" alt="Dr. Shamanur Shivashankarappa" class="timeline-img">
+                    <div class="timeline-info">
+                        <div class="timeline-date">2012 - Present</div>
+                        <h3>Dr. Shamanur Shivashankarappa</h3>
+                        <p>Current Visionary: Championing industry, health, and academic excellence in the new millennium.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-50">
+            <button id="btn-load-more-presidents" class="btn btn-primary" style="padding: 15px 40px; border-radius: 50px; font-weight: 700; letter-spacing: 1px;">
+                Load More <i class="fas fa-plus ml-10"></i>
+            </button>
         </div>
     </div>
 </section>
