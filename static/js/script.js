@@ -54,6 +54,16 @@ if (mobileToggle) {
         nav.classList.toggle('active', isOpen);
         if (mainHeader) mainHeader.classList.toggle('nav-open', isOpen);
         document.body.style.overflow = isOpen ? 'hidden' : '';
+
+        // Dynamically adjust nav padding-top to match actual header height
+        // This ensures the menu clears the header both at page-load (top-bar visible)
+        // and after scrolling (top-bar hidden, header compact)
+        if (isOpen && mainHeader) {
+            const hdrHeight = mainHeader.getBoundingClientRect().height;
+            nav.style.paddingTop = (hdrHeight + 20) + 'px';
+        } else {
+            nav.style.paddingTop = '';
+        }
     });
 
     // Close menu on link click
@@ -63,6 +73,7 @@ if (mobileToggle) {
             nav.classList.remove('active');
             if (mainHeader) mainHeader.classList.remove('nav-open');
             document.body.style.overflow = '';
+            nav.style.paddingTop = '';
         });
     });
 }
@@ -79,12 +90,13 @@ let lastScrolled = null;
 
 function updateSpacer() {
     if (!pageSpacer) return;
-    const headerBottom = header ? header.getBoundingClientRect().bottom : 0;
-    const tickerBottom = topBar ? topBar.getBoundingClientRect().bottom : 0;
-    const h = Math.max(headerBottom, tickerBottom);
-    // Subtracting 4px to ensure a definitive overlap with the navbar's bottom decorative border, 
-    // eliminating potential white-seams from sub-pixel browser rendering.
-    pageSpacer.style.setProperty('height', (Math.floor(h) - 4) + 'px', 'important');
+    const headerBottom = header ? header.getBoundingClientRect().height : 0;
+    const tickerHeight = (topBar && !topBar.classList.contains('hidden')) ? topBar.getBoundingClientRect().height : 0;
+    const h = headerBottom + tickerHeight;
+    
+    // We use height sum instead of bottom coordinates to be more resilient during transitions.
+    // Subtracting 2px to ensure overlap with the navbar bottom border.
+    pageSpacer.style.setProperty('height', Math.floor(h - 2) + 'px', 'important');
 }
 
 function positionRibbon() {
@@ -335,11 +347,13 @@ const initGallery = () => {
             lightbox.classList.add('active');
             updateLightbox(0);
             document.body.style.overflow = 'hidden';
+            document.body.classList.add('lightbox-open');
         };
 
         const closeLightbox = () => {
             lightbox.classList.remove('active');
             document.body.style.overflow = 'auto';
+            document.body.classList.remove('lightbox-open');
         };
 
         document.querySelectorAll('.gallery-item').forEach(item => {
@@ -607,4 +621,139 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+});
+
+/* ==========================================================================
+   DYNAMIC EVENTS CALENDAR WIDGET
+   ========================================================================== */
+document.addEventListener('DOMContentLoaded', () => {
+    const calendarDaysGrid = document.getElementById('calendar-days-grid');
+    if (!calendarDaysGrid) return; // Only run on Events page if grid exists
+
+    const monthYearTitle = document.getElementById('calendar-month-year');
+    const prevBtn = document.getElementById('cal-btn-prev');
+    const nextBtn = document.getElementById('cal-btn-next');
+    const eventsList = document.getElementById('calendar-upcoming-events-list');
+
+    // Mock Events Data across multiple months/years
+    const calendarEvents = [
+        { date: '2026-04-06', type: 'Festival', title: 'Sri Rama Navami', icon: 'fa-gift', bgClass: 'festival-bg', tagClass: 'festival-tag', dotClass: 'festival-dot' },
+        { date: '2026-04-20', type: 'Jayanthi', title: 'Basavanna Jayanthi', icon: 'fa-birthday-cake', bgClass: 'jayanthi-bg', tagClass: 'jayanthi-tag', dotClass: 'jayanthi-dot' },
+        { date: '2026-05-18', type: 'Festival', title: 'Global Mahasammelan', icon: 'fa-om', bgClass: 'festival-bg', tagClass: 'festival-tag', dotClass: 'festival-dot' },
+        { date: '2026-05-25', type: 'Vrata', title: 'Ekadashi Vrata', icon: 'fa-pray', bgClass: 'jayanthi-bg', tagClass: 'jayanthi-tag', dotClass: 'vrata-dot' }, 
+        { date: '2026-06-12', type: 'Festival', title: 'Start of Chaturmasya', icon: 'fa-cloud-sun', bgClass: 'festival-bg', tagClass: 'festival-tag', dotClass: 'festival-dot' },
+        { date: '2026-07-28', type: 'Vrata', title: 'Shravana Somavara Vrata', icon: 'fa-leaf', bgClass: 'jayanthi-bg', tagClass: 'jayanthi-tag', dotClass: 'vrata-dot' },
+        { date: '2026-08-15', type: 'Festival', title: 'Independence Day', icon: 'fa-flag', bgClass: 'festival-bg', tagClass: 'festival-tag', dotClass: 'festival-dot' },
+        { date: '2026-09-05', type: 'Jayanthi', title: 'Teachers Day', icon: 'fa-book-open', bgClass: 'jayanthi-bg', tagClass: 'jayanthi-tag', dotClass: 'jayanthi-dot' },
+        { date: '2026-10-21', type: 'Festival', title: 'Deepavali', icon: 'fa-fire', bgClass: 'festival-bg', tagClass: 'festival-tag', dotClass: 'festival-dot' },
+        { date: '2026-11-20', type: 'Jayanthi', title: 'Kanakadasa Jayanthi', icon: 'fa-music', bgClass: 'jayanthi-bg', tagClass: 'jayanthi-tag', dotClass: 'jayanthi-dot' },
+    ];
+
+    let currentDate = new Date(2026, 3, 1); // Start at April 2026 
+    let today = new Date(); 
+
+    function renderCalendar() {
+        calendarDaysGrid.innerHTML = '';
+        const month = currentDate.getMonth();
+        const year = currentDate.getFullYear();
+
+        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        monthYearTitle.innerText = `${monthNames[month]} ${year}`;
+
+        // Get first day of month index (0: Sun, 1: Mon, ..., 6: Sat)
+        const firstDay = new Date(year, month, 1).getDay();
+        // Adjust for Mon starting week
+        let blankDays = firstDay === 0 ? 6 : firstDay - 1;
+
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+        // Inject empty spaces
+        for (let i = 0; i < blankDays; i++) {
+            const emptySpan = document.createElement('span');
+            emptySpan.className = 'empty';
+            calendarDaysGrid.appendChild(emptySpan);
+        }
+
+        // Filter events for this month
+        const monthEvents = calendarEvents.filter(ev => {
+            const evDate = new Date(ev.date);
+            return evDate.getFullYear() === year && evDate.getMonth() === month;
+        });
+
+        // Inject days
+        for (let i = 1; i <= daysInMonth; i++) {
+            const daySpan = document.createElement('span');
+            daySpan.innerText = i;
+            daySpan.classList.add('cal-day');
+
+            // Format date string for matching: YYYY-MM-DD
+            const m = (month + 1).toString().padStart(2, '0');
+            const d = i.toString().padStart(2, '0');
+            const dateStr = `${year}-${m}-${d}`;
+
+            // Check if day has event
+            const dayEvents = monthEvents.filter(ev => ev.date === dateStr);
+            if (dayEvents.length > 0) {
+                daySpan.classList.add('event-day');
+                // Use the style of the first event if multiple
+                const mainEvent = dayEvents[0];
+                
+                const dot = document.createElement('span');
+                dot.className = `event-dot ${mainEvent.dotClass}`;
+                daySpan.appendChild(dot);
+            }
+
+            // Highlight chosen/today dates
+            if (year === 2026 && month === 3 && i === 10) {
+                daySpan.classList.add('selected-day');
+            } else if (today.getFullYear() === year && today.getMonth() === month && today.getDate() === i && (year !== 2026 || month !== 3)) {
+                 daySpan.classList.add('selected-day');
+            }
+
+            calendarDaysGrid.appendChild(daySpan);
+        }
+
+        renderUpcomingEvents(monthEvents);
+    }
+
+    function renderUpcomingEvents(events) {
+        eventsList.innerHTML = '';
+        
+        if (events.length === 0) {
+            eventsList.innerHTML = `<p style="text-align: center; color: #888; padding: 20px;">No upcoming events scheduled for this month.</p>`;
+            return;
+        }
+
+        events.forEach(ev => {
+            // Format nice date e.g., '6 Apr, 2026'
+            const dt = new Date(ev.date);
+            const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+            const formattedDate = `${dt.getDate()} ${monthNames[dt.getMonth()]}, ${dt.getFullYear()}`;
+
+            // Construct Card
+            const cardHTML = `
+                <div class="cal-event-card white-card" style="animation: fade-in 0.3s ease;">
+                    <div class="cal-event-icon ${ev.bgClass}"><i class="fas ${ev.icon}"></i></div>
+                    <div class="cal-event-details">
+                        <h5>${ev.title}</h5>
+                        <p><i class="far fa-calendar"></i> ${formattedDate} <span class="cal-tag ${ev.tagClass}">${ev.type}</span></p>
+                    </div>
+                </div>
+            `;
+            eventsList.innerHTML += cardHTML;
+        });
+    }
+
+    prevBtn.addEventListener('click', () => {
+        currentDate.setMonth(currentDate.getMonth() - 1);
+        renderCalendar();
+    });
+
+    nextBtn.addEventListener('click', () => {
+        currentDate.setMonth(currentDate.getMonth() + 1);
+        renderCalendar();
+    });
+
+    // Initialize display
+    renderCalendar();
 });

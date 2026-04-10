@@ -1435,8 +1435,8 @@ footer::before {
     height: 25px;
     position: relative;
     cursor: pointer;
-    z-index: 100001;
-    /* Extremely high to stay above everything */
+    z-index: 2000001 !important;
+    margin-left: 20px; /* Space from nav */
 }
 
 .mobile-toggle span {
@@ -1534,12 +1534,15 @@ header.scrolled .mobile-toggle span {
         right: -100%;
         width: 80%;
         height: 100vh;
-        background: var(--white);
-        padding: 100px 40px;
-        transition: var(--transition-bounce);
+        background: var(--bg-color);
+        /* padding-top is set dynamically by JS to match real header height.
+           The static value below is a safe fallback only. */
+        padding: 80px 40px 40px;
+        transition: var(--transition-smooth);
         box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
-        z-index: 100000;
-        /* Higher than ribbon and header stack */
+        z-index: 1000000 !important;
+        display: block !important;
+        overflow-y: auto; /* allow scrolling inside the menu on small screens */
     }
 
     #main-nav.active {
@@ -1569,7 +1572,8 @@ header.scrolled .mobile-toggle span {
     }
 
     .top-bar {
-        display: none;
+        height: 35px !important;
+        display: flex !important; /* Re-enable top-bar to stack upon navbar */
     }
 
     header {
@@ -4373,8 +4377,8 @@ h6,
 
 /* Sync Header & Ribbon z-indices for consistent stacking */
 header#main-header {
-    z-index: 100005 !important;
-    /* Extremely high core z-index */
+    z-index: 2000000 !important;
+    /* Elevated above the mobile menu to keep toggle visible */
 }
 
 .leadership-ribbon {
@@ -5965,7 +5969,7 @@ body.body-scrolled .top-bar {
     }
 
     header#main-header {
-        top: 0 !important;
+        top: 35px !important;
     }
 
     header#main-header.scrolled {
@@ -6064,8 +6068,8 @@ body.body-scrolled .top-bar {
     max-width: 1300px !important;
     margin: 0 auto !important;
     animation: none !important;
-    padding-top: 20px !important;
-    /* Increased from 10px to ensure a generous gap even when the top-bar is hidden/transitioning */
+    padding-top: 5px !important;
+    /* Reduced from 20px to eliminate the perceived gap below the navbar */
 }
 
 /* KILL ALL BORDERS, SHADOWS, AND ORNATE FRAMES */
@@ -6178,35 +6182,37 @@ body.body-scrolled .top-bar {
 @media screen and (max-width: 991px) {
     .leadership-ribbon {
         padding: 5px 0 !important;
+        margin-bottom: 5px !important; /* Reduced gap below ribbon */
     }
 
     .leadership-ribbon .ribbon-track {
-        gap: 2px !important;
-        justify-content: center !important;
-        /* CENTER ON MOBILE TOO */
+        gap: 4px !important;
+        justify-content: center !important; /* Center items statically */
+        overflow: hidden !important; /* Disable sliding/scroll */
+        padding-bottom: 5px !important;
     }
 
     .leadership-ribbon .ribbon-item {
+        flex: 0 0 16% !important; /* Exactly 1/6th for 6 items */
         flex-direction: column !important;
-        max-width: 14% !important;
-        /* Adjusted for 7 items */
         gap: 2px !important;
     }
 
     .leadership-ribbon .ribbon-img-wrapper {
-        width: 40px !important;
-        /* Reduced for mobile fit */
-        height: 40px !important;
+        width: 48px !important; /* Balanced size to fit 6 items statically */
+        height: 48px !important;
+        margin-bottom: 2px !important;
     }
 
     .leadership-ribbon .ribbon-info {
         height: auto !important;
-        min-height: 45px !important;
+        min-height: 35px !important;
     }
 
     .leadership-ribbon .ribbon-info strong {
-        font-size: 0.5rem !important; /* Reduced from 0.55rem */
-        word-break: break-all !important;
+        font-size: 0.55rem !important; /* Tighter font for 6-item fit */
+        line-height: 1.1 !important;
+        word-break: break-word !important;
     }
 
     .leadership-ribbon .ribbon-info span {
@@ -6447,16 +6453,22 @@ body.body-scrolled .top-bar {
 
 /* Dynamic Leadership Heading - PREMIUM BLUE & UNIQUE UNDERLINE */
 .leadership-body-title {
-    color: var(--accent-color) !important; /* Deep Royal Indigo */
+    color: var(--accent-color) !important;
     text-align: center;
     font-size: 2.5rem;
     font-weight: 800;
-    margin: 15px 0 40px; /* Reduced from 40px 0 60px */
+    margin: 15px 0 55px;
     text-transform: uppercase;
     letter-spacing: 2px;
     position: relative;
     display: inline-block;
     width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+    .leadership-body-title {
+        margin-bottom: 45px !important;
+    }
 }
 
 .leadership-body-title::after {
@@ -6578,9 +6590,9 @@ h2.leadership-main-title {
 
 .role-badge-box {
     display: inline-block;
-    width: fit-content; /* Sized to text content */
+    width: auto !important; /* Reverted to fit text content as requested */
     text-align: center;
-    padding: 8px 25px; /* Slightly more side padding for premium feel */
+    padding: 8px 25px;
     background: var(--primary-color);
     color: var(--white);
     font-weight: 800;
@@ -6705,10 +6717,20 @@ h2.leadership-main-title {
     }
     
     .vp-badge {
+        position: absolute;
         left: 50%;
         right: auto;
         transform: translateX(-50%);
         top: -15px;
+        font-size: 0.7rem !important; /* Smaller text */
+        padding: 5px 15px !important; /* Tighter padding */
+    }
+    .vp-name {
+        font-size: 1.25rem !important;
+    }
+    .vp-bio {
+        font-size: 0.9rem !important;
+        text-align: justify;
     }
 }
 
@@ -6816,15 +6838,38 @@ h2.leadership-main-title {
     .official-card-leadership {
         flex-direction: column !important;
         align-items: center;
+        text-align: center; /* Center text on mobile */
     }
     .official-img-square-box {
         width: 100%;
         height: 400px;
     }
     .leadership-message-box {
-        margin: -30px 0 0 0 !important;
-        padding: 50px 30px !important;
-        width: 100%;
+        margin: -40px 10px 0 10px !important; /* Wider box */
+        padding: 45px 20px 30px !important; /* Balanced padding */
+        width: calc(100% - 20px); /* Fill most of screen */
+        text-align: center;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    }
+    .leadership-name {
+        font-size: 1.55rem !important; /* Reduced for better fit */
+        margin-bottom: 8px;
+    }
+    .leadership-designation {
+        text-align: center !important;
+        font-size: 0.9rem !important;
+        margin-bottom: 20px;
+    }
+    .leadership-bio {
+        text-align: justify !important; /* Proper justification */
+        font-size: 0.95rem !important;
+        line-height: 1.7;
+    }
+    .role-badge-box {
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 0.75rem !important; /* Slimmer text */
+        padding: 6px 20px !important; /* Tighter padding */
     }
     .vp-card {
         flex-direction: column;
@@ -6981,3 +7026,279 @@ h2.leadership-main-title {
     }
 }
 
+/* ==========================================================================
+   RESPONSIVE FIXES: GALLERY FILTER, LIGHTBOX ICON, AND NAVBAR ON SCROLL
+   ========================================================================== */
+@media (max-width: 768px) {
+    /* Contact Page Responsive Fixes */
+    .spiritual-form {
+        padding: 30px 20px;
+    }
+    .benefit-box {
+        padding: 30px 20px;
+    }
+    .form-container {
+        gap: 20px;
+    }
+    
+    /* 1. Gallery Filter Area Responsive Adjustments */
+    .gallery-filter-bar {
+        margin-bottom: 20px;
+    }
+    .gallery-tabs {
+        padding: 15px;
+        gap: 15px;
+        flex-direction: column;
+        border-radius: 20px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .filter-category-group, .filter-year-group {
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+    }
+    .tab-btn, .year-btn {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+    }
+    .filter-divider-vertical {
+        width: 100%;
+        height: 1px;
+    }
+    
+    /* 2. Gallery Lightbox Close Icon Visibility */
+    .lb-top-bar {
+        padding: 15px 20px 5px !important;
+        position: relative;
+    }
+    .lb-icon-btn {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 1.8rem !important;
+        opacity: 1 !important;
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        border-radius: 50%;
+        width: 45px;
+        height: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+        z-index: 9999;
+        backdrop-filter: blur(5px);
+    }
+}
+
+/* 3. Mobile Navbar Menu After Scroll Display Issue */
+header#main-header.scrolled.nav-open {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: var(--bg-color) !important;
+}
+
+/* Hide header and top-bar when lightbox is open */
+body.lightbox-open #main-header,
+body.lightbox-open .top-bar {
+    display: none !important;
+}
+
+/* ==========================================================================
+   INTERACTIVE EVENTS CALENDAR
+   ========================================================================== */
+.calendar-widget-section {
+    max-width: 500px;
+    margin: 0 auto 50px;
+    background: transparent;
+    font-family: var(--font-body);
+}
+
+.calendar-widget-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.calendar-widget-header h3 {
+    font-size: 1.8rem;
+    color: #7b4c53; /* Deep maroon shade */
+    font-weight: 700;
+}
+
+.cal-nav {
+    display: flex;
+    gap: 10px;
+}
+
+.cal-nav-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: white;
+    border: none;
+    color: #7b4c53;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+}
+
+.cal-nav-btn:hover {
+    box-shadow: var(--shadow-md);
+    transform: scale(1.05);
+}
+
+.white-card {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+}
+
+.cal-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-weight: 700;
+    color: #b0aab0;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.cal-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px 5px;
+    text-align: center;
+}
+
+.cal-days span {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 45px;
+    font-weight: 700;
+    color: #333;
+    position: relative;
+    border-radius: 12px;
+    z-index: 1;
+}
+
+.cal-days span.empty {
+    visibility: hidden;
+}
+
+.cal-days span.selected-day {
+    background: #7b4c53;
+    color: white;
+    box-shadow: 0 4px 10px rgba(123, 76, 83, 0.4);
+}
+
+.cal-days span.event-day {
+    background: #fff3e0;
+}
+
+.event-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-top: 2px;
+}
+
+.festival-dot { background: #f39c12; }
+.vrata-dot { background: #9b59b6; }
+.jayanthi-dot { background: #3498db; }
+
+.calendar-legend {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 15px !important;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #555;
+}
+
+.calendar-upcoming-title {
+    margin: 30px 0 15px;
+}
+
+.calendar-upcoming-title h4 {
+    color: #7b4c53;
+    font-weight: 700;
+    font-size: 1.4rem;
+}
+
+.cal-event-card {
+    display: flex;
+    align-items: center;
+    padding: 20px !important;
+    gap: 15px;
+    transition: transform 0.3s ease;
+}
+
+.cal-event-card:hover {
+    transform: translateY(-3px);
+}
+
+.cal-event-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+}
+
+.festival-bg { background: #fdede2; color: #f39c12; }
+.jayanthi-bg { background: #eaf2f8; color: #3498db; }
+
+.cal-event-details h5 {
+    margin-bottom: 5px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #333;
+}
+
+.cal-event-details p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #888;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.cal-tag {
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.festival-tag { background: #fdede2; color: #f39c12; }
+.jayanthi-tag { background: #eaf2f8; color: #3498db; }
+
+@media screen and (max-width: 600px) {
+    .cal-days span {
+        height: 40px;
+    }
+}

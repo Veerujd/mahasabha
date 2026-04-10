@@ -4,50 +4,69 @@
 
 {% block extra_css %}
 <style>
-    .form-section {
+    :root {
+        --field-border: #e2e8f0;
+        --field-focus: var(--primary-color);
+        --field-bg: #ffffff;
+        --error-color: #ef4444;
+        --success-color: #10b981;
+    }
+
+    .membership-container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 40px 20px;
+    }
+
+    .form-card {
         background: #fff;
+        border-radius: 24px;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.08);
         padding: 40px;
-        border-radius: 20px;
-        box-shadow: 0 15px 40px rgba(0,0,0,0.05);
-        margin-bottom: 30px;
         border: 1px solid rgba(0,0,0,0.05);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .form-header {
+        margin-bottom: 40px;
+        text-align: center;
+    }
+
+    .type-selector-wrapper {
+        background: rgba(255, 153, 51, 0.05);
+        padding: 25px;
+        border-radius: 16px;
+        margin-bottom: 40px;
+        border: 1px dashed var(--primary-color);
+    }
+
+    .section-box {
+        margin-bottom: 40px;
+        animation: fadeIn 0.5s ease forwards;
     }
 
     .section-title {
         color: var(--secondary-color);
         font-family: var(--font-heading);
-        font-size: 1.5rem;
+        font-size: 1.4rem;
         font-weight: 800;
-        margin-bottom: 30px;
+        margin-bottom: 25px;
         display: flex;
         align-items: center;
-        gap: 15px;
-        border-bottom: 2px solid #f0f0f0;
-        padding-bottom: 15px;
+        gap: 12px;
+        letter-spacing: -0.5px;
     }
 
     .section-title i {
         color: var(--primary-color);
-        background: rgba(255, 153, 51, 0.1);
-        width: 45px;
-        height: 45px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 12px;
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
 
     .form-grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        gap: 25px;
-    }
-
-    @media (max-width: 768px) {
-        .form-grid {
-            grid-template-columns: 1fr;
-        }
+        gap: 20px;
     }
 
     .field-group {
@@ -56,72 +75,135 @@
         gap: 8px;
     }
 
+    .field-group.full-width {
+        grid-column: span 2;
+    }
+
     .field-group label {
         font-weight: 700;
         font-size: 0.9rem;
-        color: #444;
+        color: #4b5563;
+        display: flex;
+        justify-content: space-between;
     }
 
-    .form-input {
-        padding: 12px 18px;
-        border: 2px solid #eee;
-        border-radius: 10px;
+    .required-mark {
+        color: var(--error-color);
+        font-size: 0.8rem;
+    }
+
+    .form-control {
+        padding: 14px 18px;
+        border: 2px solid var(--field-border);
+        border-radius: 12px;
         font-family: inherit;
         font-size: 1rem;
-        transition: all 0.3s ease;
-        background: #fafafa;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        background: var(--field-bg);
+        color: #1f2937;
     }
 
-    .form-input:focus {
-        border-color: var(--primary-color);
-        background: #fff;
+    .form-control:focus {
+        border-color: var(--field-focus);
         outline: none;
-        box-shadow: 0 0 10px rgba(255, 153, 51, 0.1);
+        box-shadow: 0 0 0 4px rgba(255, 153, 51, 0.1);
+        transform: translateY(-1px);
     }
 
-    .dynamic-section {
-        display: block; /* Always show all fields */
-        padding-top: 20px;
-        border-top: 1px dashed #eee;
-        margin-top: 30px;
-    }
-    
-    .subsection-label {
-        font-size: 1.1rem;
-        color: var(--primary-color);
-        font-weight: 700;
-        margin-bottom: 20px;
-        text-transform: uppercase;
-        letter-spacing: 1px;
+    .form-control::placeholder {
+        color: #9ca3af;
     }
 
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
+    select.form-control {
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%234b5563'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 15px center;
+        background-size: 18px;
+        padding-right: 45px;
+    }
+
+    .vocation-section {
+        display: none;
+        background: #fdfaf7;
+        padding: 30px;
+        border-radius: 16px;
+        border: 1px solid #f973161a;
+        margin-top: 20px;
+    }
+
+    .vocation-section.active {
+        display: block;
+        animation: slideDown 0.4s ease-out;
+    }
+
+    @keyframes slideDown {
+        from { opacity: 0; transform: translateY(-10px); }
         to { opacity: 1; transform: translateY(0); }
     }
 
-    .submit-container {
-        text-align: center;
-        margin-top: 50px;
-        padding-bottom: 80px;
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
     }
 
-    .btn-submit {
-        background: var(--primary-color);
+    .submit-area {
+        margin-top: 50px;
+        text-align: center;
+        padding-top: 30px;
+        border-top: 1px solid #eee;
+    }
+
+    .btn-apply {
+        background: linear-gradient(135deg, var(--primary-color), #ff7b00);
         color: white;
-        padding: 18px 50px;
+        padding: 18px 60px;
         border-radius: 50px;
         font-weight: 800;
         font-size: 1.1rem;
         border: none;
         cursor: pointer;
-        transition: var(--transition-bounce);
+        transition: all 0.3s ease;
         box-shadow: 0 10px 30px rgba(255, 153, 51, 0.3);
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
     }
 
-    .btn-submit:hover {
-        transform: translateY(-5px);
+    .btn-apply:hover {
+        transform: translateY(-3px) scale(1.02);
         box-shadow: 0 15px 40px rgba(255, 153, 51, 0.4);
+    }
+
+    .btn-apply:active {
+        transform: translateY(0);
+    }
+
+    .validation-msg {
+        color: var(--error-color);
+        font-size: 0.8rem;
+        margin-top: 4px;
+        display: none;
+    }
+
+    .field-group.error .form-control {
+        border-color: var(--error-color);
+    }
+
+    .field-group.error .validation-msg {
+        display: block;
+    }
+
+    @media (max-width: 768px) {
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+        .field-group.full-width {
+            grid-column: span 1;
+        }
+        .form-card {
+            padding: 25px;
+        }
     }
 </style>
 {% endblock %}
@@ -131,38 +213,55 @@
     <div class="container" data-aos="fade-up">
         <div class="header-divider"></div>
         <h2>Membership Application</h2>
-        <p>Complete the form below to apply for official membership in the Akhila Bharata Veerashaiva Mahasabha.</p>
+        <p>Join the oldest and most prestigious organization of the Veerashaiva Lingayath community.</p>
     </div>
 </section>
 
-<div class="section-padding" style="background: #f8faff;">
-    <div class="container" style="max-width: 900px;">
-        <form id="membershipForm" action="#" method="POST">
+<div class="membership-container">
+    <div class="form-card" data-aos="fade-up">
+        <form id="membershipForm" novalidate>
             
-            <!-- 1. COMMON FIELDS -->
-            <div class="form-section" data-aos="fade-up">
-                <h3 class="section-title"><i class="fas fa-user"></i> Personal Details</h3>
+            <!-- TYPE SELECTION -->
+            <div class="type-selector-wrapper">
+                <div class="field-group">
+                    <label>Select Membership Category <span class="required-mark">*</span></label>
+                    <select id="userType" class="form-control" required>
+                        <option value="">-- Choose Category --</option>
+                        <option value="student">Student</option>
+                        <option value="professional">Professional</option>
+                        <option value="business">Business</option>
+                        <option value="self_employed">Self Employed</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- COMMON FIELDS -->
+            <div class="section-box">
+                <h3 class="section-title"><i class="fas fa-user-circle"></i> Personal Information</h3>
                 <div class="form-grid">
                     <div class="field-group">
-                        <label>First Name</label>
-                        <input type="text" class="form-input" placeholder="Enter first name" required>
+                        <label>First Name <span class="required-mark">*</span></label>
+                        <input type="text" name="firstName" class="form-control" placeholder="Enter first name" required>
+                        <span class="validation-msg">First name is required</span>
                     </div>
                     <div class="field-group">
-                        <label>Last Name</label>
-                        <input type="text" class="form-input" placeholder="Enter last name" required>
+                        <label>Last Name <span class="required-mark">*</span></label>
+                        <input type="text" name="lastName" class="form-control" placeholder="Enter last name" required>
+                        <span class="validation-msg">Last name is required</span>
                     </div>
                     <div class="field-group">
-                        <label>Gender</label>
-                        <select class="form-input" required>
+                        <label>Gender <span class="required-mark">*</span></label>
+                        <select name="gender" class="form-control" required>
                             <option value="">Select Gender</option>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                            <option value="other">Other</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
                         </select>
+                        <span class="validation-msg">Please select gender</span>
                     </div>
                     <div class="field-group">
-                        <label>Blood Group</label>
-                        <select class="form-input" required>
+                        <label>Blood Group <span class="required-mark">*</span></label>
+                        <select name="bloodGroup" class="form-control" required>
                             <option value="">Select Blood Group</option>
                             <option value="A+">A+</option>
                             <option value="A-">A-</option>
@@ -173,173 +272,198 @@
                             <option value="AB+">AB+</option>
                             <option value="AB-">AB-</option>
                         </select>
+                        <span class="validation-msg">Please select blood group</span>
                     </div>
                     <div class="field-group">
-                        <label>Mobile Number</label>
-                        <input type="tel" class="form-input" placeholder="+91 00000 00000" required>
+                        <label>Mobile Number <span class="required-mark">*</span></label>
+                        <input type="tel" id="mobileNumber" name="mobile" class="form-control" placeholder="10-digit mobile number" maxlength="10" required>
+                        <span class="validation-msg">Enter a valid 10-digit mobile number</span>
                     </div>
                     <div class="field-group">
-                        <label>WhatsApp Number</label>
-                        <input type="tel" class="form-input" placeholder="+91 00000 00000">
+                        <label>WhatsApp Number <span class="required-mark">*</span></label>
+                        <input type="tel" name="whatsapp" class="form-control" placeholder="WhatsApp number" required>
+                        <span class="validation-msg">WhatsApp number is required</span>
                     </div>
                     <div class="field-group">
-                        <label>Email Address</label>
-                        <input type="email" class="form-input" placeholder="email@example.com" required>
+                        <label>Email Address <span class="required-mark">*</span></label>
+                        <input type="email" id="emailAddress" name="email" class="form-control" placeholder="example@domain.com" required>
+                        <span class="validation-msg">Enter a valid email address</span>
                     </div>
                     <div class="field-group">
-                        <label>Qualification</label>
-                        <input type="text" class="form-input" placeholder="e.g. B.E, M.Tech, MBBS" required>
+                        <label>Qualification <span class="required-mark">*</span></label>
+                        <input type="text" name="qualification" class="form-control" placeholder="Highest qualification" required>
+                        <span class="validation-msg">Qualification is required</span>
+                    </div>
+                    <div class="field-group">
+                        <label>Caste <span class="required-mark">*</span></label>
+                        <input type="text" name="caste" class="form-control" value="Veerashaiva Lingayath" readonly required>
+                    </div>
+                    <div class="field-group">
+                        <label>Sub-Caste <span class="required-mark">*</span></label>
+                        <input type="text" name="subCaste" class="form-control" placeholder="Enter sub-caste" required>
+                        <span class="validation-msg">Sub-caste is required</span>
                     </div>
                 </div>
             </div>
 
-            <!-- 2. ADDRESS DETAILS -->
-            <div class="form-section" data-aos="fade-up">
-                <h3 class="section-title"><i class="fas fa-home"></i> Address Details</h3>
+            <!-- ADDRESS FIELDS -->
+            <div class="section-box">
+                <h3 class="section-title"><i class="fas fa-map-marker-alt"></i> Residential Address</h3>
                 <div class="form-grid">
                     <div class="field-group">
-                        <label>House Name</label>
-                        <input type="text" class="form-input" placeholder="Name of house/apartment">
+                        <label>House Name <span class="required-mark">*</span></label>
+                        <input type="text" name="houseName" class="form-control" placeholder="Apartment/House name" required>
+                        <span class="validation-msg">Field required</span>
                     </div>
                     <div class="field-group">
-                        <label>House Number</label>
-                        <input type="text" class="form-input" placeholder="Door No / Villa No" required>
+                        <label>House Number <span class="required-mark">*</span></label>
+                        <input type="text" name="houseNumber" class="form-control" placeholder="Door/Plot no." required>
+                        <span class="validation-msg">Field required</span>
                     </div>
                     <div class="field-group">
-                        <label>Main (Street)</label>
-                        <input type="text" class="form-input" placeholder="Main road / Street name" required>
+                        <label>Main Street <span class="required-mark">*</span></label>
+                        <input type="text" name="mainStreet" class="form-control" placeholder="Main road/street" required>
+                        <span class="validation-msg">Field required</span>
                     </div>
                     <div class="field-group">
-                        <label>Cross (Street)</label>
-                        <input type="text" class="form-input" placeholder="Cross No / Street extension">
+                        <label>Cross Street <span class="required-mark">*</span></label>
+                        <input type="text" name="crossStreet" class="form-control" placeholder="Cross/Extension" required>
+                        <span class="validation-msg">Field required</span>
                     </div>
                     <div class="field-group">
-                        <label>Landmark</label>
-                        <input type="text" class="form-input" placeholder="Near church / school / park">
+                        <label>Landmark <span class="required-mark">*</span></label>
+                        <input type="text" name="landmark" class="form-control" placeholder="Nearby landmark" required>
+                        <span class="validation-msg">Field required</span>
                     </div>
                     <div class="field-group">
-                        <label>Pincode</label>
-                        <input type="text" class="form-input" placeholder="6-digit code" required>
+                        <label>Pincode <span class="required-mark">*</span></label>
+                        <input type="text" name="pincode" class="form-control" placeholder="6-digit ZIP code" maxlength="6" required>
+                        <span class="validation-msg">Field required</span>
                     </div>
                     <div class="field-group">
-                        <label>Area</label>
-                        <input type="text" class="form-input" placeholder="Locality / Area name" required>
+                        <label>Area <span class="required-mark">*</span></label>
+                        <input type="text" name="area" class="form-control" placeholder="Locality/Area" required>
+                        <span class="validation-msg">Field required</span>
                     </div>
                     <div class="field-group">
-                        <label>District</label>
-                        <input type="text" class="form-input" placeholder="District name" required>
+                        <label>District <span class="required-mark">*</span></label>
+                        <input type="text" name="district" class="form-control" placeholder="District" required>
+                        <span class="validation-msg">Field required</span>
                     </div>
-                    <div class="field-group" style="grid-column: span 2;">
-                        <label>State</label>
-                        <input type="text" class="form-input" placeholder="State name" required>
+                    <div class="field-group full-width">
+                        <label>State <span class="required-mark">*</span></label>
+                        <input type="text" name="state" class="form-control" placeholder="State" required>
+                        <span class="validation-msg">Field required</span>
                     </div>
                 </div>
             </div>
 
-            <!-- 3. ADDITIONAL DETAILS -->
-            <div class="form-section" data-aos="fade-up">
-                <h3 class="section-title"><i class="fas fa-dna"></i> Community Identity</h3>
-                <div class="form-grid">
-                    <div class="field-group">
-                        <label>Caste</label>
-                        <input type="text" class="form-input" value="Veerashaiva Lingayath" readonly>
-                    </div>
-                    <div class="field-group">
-                        <label>Sub-Caste</label>
-                        <input type="text" class="form-input" placeholder="Enter sub-caste" required>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 4. OCCUPATIONAL DETAILS (Unified) -->
-            <div class="form-section" data-aos="fade-up">
-                <h3 class="section-title"><i class="fas fa-briefcase"></i> Occupational Details</h3>
-
-                <!-- STUDENT SECTION -->
-                <div class="dynamic-section">
-                    <div class="subsection-label">Student Information</div>
+            <!-- TYPE-SPECIFIC SECTIONS -->
+            <div id="vocationContainer">
+                <!-- STUDENT -->
+                <div id="section_student" class="vocation-section">
+                    <h3 class="section-title"><i class="fas fa-graduation-cap"></i> Student Information</h3>
                     <div class="form-grid">
                         <div class="field-group">
-                            <label>Course</label>
-                            <input type="text" class="form-input" placeholder="e.g. B.Com, PUC II">
+                            <label>Course <span class="required-mark">*</span></label>
+                            <input type="text" name="course" class="form-control" placeholder="e.g. B.Tech / MBA">
+                            <span class="validation-msg">Course is required</span>
                         </div>
                         <div class="field-group">
-                            <label>College Name</label>
-                            <input type="text" class="form-input" placeholder="Full name of college">
+                            <label>College Name <span class="required-mark">*</span></label>
+                            <input type="text" name="collegeName" class="form-control" placeholder="Full college name">
+                            <span class="validation-msg">College name is required</span>
                         </div>
-                        <div class="field-group" style="grid-column: span 2;">
-                            <label>College Address</label>
-                            <textarea class="form-input" rows="2" placeholder="Full address of the institution"></textarea>
+                        <div class="field-group full-width">
+                            <label>College Address <span class="required-mark">*</span></label>
+                            <textarea name="collegeAddress" class="form-control" rows="3" placeholder="College location address"></textarea>
+                            <span class="validation-msg">College address is required</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- PROFESSIONAL SECTION -->
-                <div class="dynamic-section">
-                    <div class="subsection-label">Professional Information</div>
+                <!-- PROFESSIONAL -->
+                <div id="section_professional" class="vocation-section">
+                    <h3 class="section-title"><i class="fas fa-user-tie"></i> Professional Details</h3>
                     <div class="form-grid">
                         <div class="field-group">
-                            <label>Profession Type</label>
-                            <input type="text" class="form-input" placeholder="e.g. IT, Healthcare, Education">
+                            <label>Profession Type <span class="required-mark">*</span></label>
+                            <input type="text" name="professionType" class="form-control" placeholder="e.g. IT, Medical, Law">
+                            <span class="validation-msg">Profession type is required</span>
                         </div>
                         <div class="field-group">
-                            <label>Designation</label>
-                            <input type="text" class="form-input" placeholder="e.g. Manager, Senior Dev">
+                            <label>Designation <span class="required-mark">*</span></label>
+                            <input type="text" name="designation" class="form-control" placeholder="Your current role">
+                            <span class="validation-msg">Designation is required</span>
                         </div>
-                        <div class="field-group" style="grid-column: span 2;">
-                            <label>Work Address</label>
-                            <textarea class="form-input" rows="2" placeholder="Office / Workplace address"></textarea>
+                        <div class="field-group full-width">
+                            <label>Professional Address <span class="required-mark">*</span></label>
+                            <textarea name="professionalAddress" class="form-control" rows="3" placeholder="Office / Workplace address"></textarea>
+                            <span class="validation-msg">Address is required</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- BUSINESS SECTION -->
-                <div class="dynamic-section">
-                    <div class="subsection-label">Business Information</div>
+                <!-- BUSINESS -->
+                <div id="section_business" class="vocation-section">
+                    <h3 class="section-title"><i class="fas fa-building"></i> Business Details</h3>
                     <div class="form-grid">
                         <div class="field-group">
-                            <label>Business Name</label>
-                            <input type="text" class="form-input" placeholder="Company / Firm name">
+                            <label>Business Name <span class="required-mark">*</span></label>
+                            <input type="text" name="businessName" class="form-control" placeholder="Full business name">
+                            <span class="validation-msg">Business name is required</span>
                         </div>
                         <div class="field-group">
-                            <label>Business Type</label>
-                            <input type="text" class="form-input" placeholder="e.g. Retail, Manufacturing">
+                            <label>Business Type <span class="required-mark">*</span></label>
+                            <input type="text" name="businessType" class="form-control" placeholder="e.g. Retail, Service, MFG">
+                            <span class="validation-msg">Business type is required</span>
                         </div>
                         <div class="field-group">
-                            <label>Designation</label>
-                            <input type="text" class="form-input" placeholder="e.g. Founder, CEO, Partner">
+                            <label>Designation <span class="required-mark">*</span></label>
+                            <input type="text" name="businessDesignation" class="form-control" placeholder="e.g. CEO, Partner">
+                            <span class="validation-msg">Designation is required</span>
                         </div>
-                        <div class="field-group" style="grid-column: span 2;">
-                            <label>Business Address</label>
-                            <textarea class="form-input" rows="2" placeholder="Registered business address"></textarea>
+                        <div class="field-group full-width">
+                            <label>Business Address <span class="required-mark">*</span></label>
+                            <textarea name="businessAddress" class="form-control" rows="3" placeholder="Registered office address"></textarea>
+                            <span class="validation-msg">Business address is required</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- SELF EMPLOYED SECTION -->
-                <div class="dynamic-section" style="border-bottom: none;">
-                    <div class="subsection-label">Self-Employed / Freelance Details</div>
+                <!-- SELF EMPLOYED -->
+                <div id="section_self_employed" class="vocation-section">
+                    <h3 class="section-title"><i class="fas fa-tools"></i> Self Employed Details</h3>
                     <div class="form-grid">
                         <div class="field-group">
-                            <label>Work Type</label>
-                            <input type="text" class="form-input" placeholder="e.g. Freelancer, Consultant">
+                            <label>Work Type <span class="required-mark">*</span></label>
+                            <input type="text" name="workType" class="form-control" placeholder="Nature of work">
+                            <span class="validation-msg">Work type is required</span>
                         </div>
                         <div class="field-group">
-                            <label>Designation</label>
-                            <input type="text" class="form-input" placeholder="e.g. Owner, Specialist">
+                            <label>Designation <span class="required-mark">*</span></label>
+                            <input type="text" name="selfDesignation" class="form-control" placeholder="e.g. Founder, Specialist">
+                            <span class="validation-msg">Designation is required</span>
                         </div>
-                        <div class="field-group" style="grid-column: span 2;">
-                            <label>Office Address</label>
-                            <textarea class="form-input" rows="2" placeholder="Work location / Home office address"></textarea>
+                        <div class="field-group full-width">
+                            <label>Work Address <span class="required-mark">*</span></label>
+                            <textarea name="selfAddress" class="form-control" rows="3" placeholder="Work location address"></textarea>
+                            <span class="validation-msg">Work address is required</span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="submit-container" data-aos="zoom-in">
-                <button type="submit" class="btn-submit">Submit Application</button>
-                <p style="margin-top: 15px; color: #777; font-size: 0.85rem;"><i class="fas fa-lock"></i> Your data is processed securely.</p>
+            <div class="submit-area">
+                <button type="submit" class="btn-apply">
+                    <span>Submit Membership Application</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+                <p style="margin-top: 20px; color: #6b7280; font-size: 0.9rem;">
+                    <i class="fas fa-shield-alt"></i> We respect your privacy. Your data is encrypted and secure.
+                </p>
             </div>
+
         </form>
     </div>
 </div>
@@ -348,13 +472,149 @@
 {% block extra_js %}
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // Simple Form Submission feedback
+        const typeSelect = document.getElementById('userType');
+        const vocationSections = document.querySelectorAll('.vocation-section');
         const form = document.getElementById('membershipForm');
+
+        // Function to manage required attributes
+        const updateRequiredFields = (activeSectionId) => {
+            // First, remove required from all vocation fields
+            vocationSections.forEach(section => {
+                const fields = section.querySelectorAll('input, textarea');
+                fields.forEach(f => {
+                    f.required = false;
+                    f.closest('.field-group').classList.remove('error');
+                });
+            });
+
+            // If a section is active, make its fields required
+            if (activeSectionId) {
+                const activeSection = document.getElementById(activeSectionId);
+                if (activeSection) {
+                    const fields = activeSection.querySelectorAll('input, textarea');
+                    fields.forEach(f => {
+                        f.required = true;
+                    });
+                }
+            }
+        };
+
+        // Handle Type Change
+        typeSelect.addEventListener('change', (e) => {
+            const val = e.target.value;
+            
+            // Hide all
+            vocationSections.forEach(s => s.classList.remove('active'));
+
+            if (val) {
+                const targetId = `section_${val}`;
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) {
+                    targetSection.classList.add('active');
+                    updateRequiredFields(targetId);
+                }
+            } else {
+                updateRequiredFields(null);
+            }
+        });
+
+        // Validation Logic
+        const validateEmail = (email) => {
+            return String(email)
+                .toLowerCase()
+                .match(
+                    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                );
+        };
+
+        const validateMobile = (mobile) => {
+            return /^\d{10}$/.test(mobile);
+        };
+
+        const showError = (field, msg) => {
+            const group = field.closest('.field-group');
+            group.classList.add('error');
+            if (msg) {
+                const msgEl = group.querySelector('.validation-msg');
+                if (msgEl) msgEl.textContent = msg;
+            }
+        };
+
+        const clearError = (field) => {
+            field.closest('.field-group').classList.remove('error');
+        };
+
+        // Real-time input cleaning
+        form.addEventListener('input', (e) => {
+            if (e.target.required && e.target.value.trim() !== '') {
+                clearError(e.target);
+            }
+            
+            // Mobile specific
+            if (e.target.id === 'mobileNumber') {
+                e.target.value = e.target.value.replace(/\D/g, '');
+                if (validateMobile(e.target.value)) clearError(e.target);
+            }
+
+            // Email specific
+            if (e.target.id === 'emailAddress') {
+                if (validateEmail(e.target.value)) clearError(e.target);
+            }
+        });
+
+        // Form Submission
         form.addEventListener('submit', (e) => {
             e.preventDefault();
-            alert('Thank you for your application! Our administrative team will review your details and contact you shortly.');
-            form.reset();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            let isValid = true;
+
+            // Check category selection
+            if (!typeSelect.value) {
+                showError(typeSelect, "Please select a membership category");
+                typeSelect.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                isValid = false;
+            } else {
+                clearError(typeSelect);
+            }
+
+            // Standard HTML5 validation + Custom checks
+            const inputs = form.querySelectorAll('input[required], select[required], textarea[required]');
+            
+            inputs.forEach(input => {
+                if (!input.value.trim()) {
+                    showError(input);
+                    isValid = false;
+                } else if (input.id === 'mobileNumber' && !validateMobile(input.value)) {
+                    showError(input, "Enter valid 10-digit number");
+                    isValid = false;
+                } else if (input.id === 'emailAddress' && !validateEmail(input.value)) {
+                    showError(input, "Enter valid email address");
+                    isValid = false;
+                } else {
+                    clearError(input);
+                }
+            });
+
+            if (isValid) {
+                const btn = form.querySelector('.btn-apply');
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+
+                // Mocking API call
+                setTimeout(() => {
+                    alert('Success! Your membership application has been submitted successfully. We will review your details and get back to you soon.');
+                    form.reset();
+                    vocationSections.forEach(s => s.classList.remove('active'));
+                    btn.disabled = false;
+                    btn.innerHTML = '<span>Submit Membership Application</span><i class="fas fa-arrow-right"></i>';
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }, 1500);
+            } else {
+                // Focus first error
+                const firstError = form.querySelector('.field-group.error');
+                if (firstError) {
+                    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
         });
     });
 </script>

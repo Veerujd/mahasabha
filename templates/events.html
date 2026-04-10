@@ -15,6 +15,40 @@
 <!-- Content -->
 <section class="section-padding">
     <div class="container">
+        <!-- Interactive Events Calendar -->
+        <div class="calendar-widget-section" data-aos="fade-up">
+            <div class="calendar-widget-header">
+                <h3 id="calendar-month-year">April 2026</h3>
+                <div class="cal-nav">
+                    <button class="cal-nav-btn" id="cal-btn-prev"><i class="fas fa-chevron-left"></i></button>
+                    <button class="cal-nav-btn" id="cal-btn-next"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+            
+            <div class="calendar-widget-body white-card">
+                <div class="cal-weekdays">
+                    <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+                </div>
+                <div class="cal-days" id="calendar-days-grid">
+                    <!-- JS injects days here -->
+                </div>
+            </div>
+            
+            <div class="calendar-legend white-card">
+                <div class="legend-item"><span class="event-dot festival-dot"></span> Festival</div>
+                <div class="legend-item"><span class="event-dot vrata-dot"></span> Vrata</div>
+                <div class="legend-item"><span class="event-dot jayanthi-dot"></span> Jayanthi</div>
+            </div>
+            
+            <div class="calendar-upcoming-title">
+                <h4>Upcoming Events</h4>
+            </div>
+            
+            <div class="calendar-upcoming-events" id="calendar-upcoming-events-list">
+                <!-- JS injects events here -->
+            </div>
+        </div>
+
         <!-- Featured Event Card -->
         <div class="featured-event-card section-fade" data-aos="fade-up">
             <div class="featured-img-container">
