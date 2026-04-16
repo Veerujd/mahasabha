@@ -5,204 +5,430 @@
 {% block extra_css %}
 <style>
     :root {
-        --field-border: #e2e8f0;
-        --field-focus: var(--primary-color);
+        --field-border: #cbd5e1;
+        --field-focus: var(--primary-color, #ff9933);
         --field-bg: #ffffff;
         --error-color: #ef4444;
         --success-color: #10b981;
+        --form-border: #94a3b8;
     }
 
     .membership-container {
-        max-width: 1000px;
+        max-width: 1100px;
         margin: 0 auto;
         padding: 40px 20px;
     }
 
     .form-card {
         background: #fff;
-        border-radius: 24px;
-        box-shadow: 0 20px 50px rgba(0,0,0,0.08);
-        padding: 40px;
-        border: 1px solid rgba(0,0,0,0.05);
+        border-radius: 8px; /* Classic formal document look */
+        box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+        padding: 50px;
+        border: 2px solid var(--form-border);
         position: relative;
         overflow: hidden;
     }
 
-    .form-header {
-        margin-bottom: 40px;
+    /* Language Toggle */
+    .language-toggle-wrapper {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin-bottom: 25px;
+        gap: 15px;
+        font-family: var(--font-heading, 'Inter', sans-serif);
+    }
+    .lang-label {
+        font-weight: 700;
+        color: #4b5563;
+        font-size: 1.1rem;
+        transition: color 0.3s ease;
+    }
+    .lang-label.active {
+        color: var(--primary-color, #f97316);
+    }
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+    }
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #f97316;
+        transition: .4s;
+        border-radius: 34px;
+    }
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        transition: .4s;
+        border-radius: 50%;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    input:checked + .slider {
+        background-color: #2563eb;
+    }
+    input:checked + .slider:before {
+        transform: translateX(26px);
+    }
+
+    /* Form Header */
+    .form-doc-header {
         text-align: center;
+        border-bottom: 3px double #1f2937;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
     }
-
-    .type-selector-wrapper {
-        background: rgba(255, 153, 51, 0.05);
-        padding: 25px;
-        border-radius: 16px;
-        margin-bottom: 40px;
-        border: 1px dashed var(--primary-color);
+    .maintitle {
+        font-family: var(--font-heading, 'Inter', sans-serif);
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: #1f2937;
+        margin-bottom: 5px;
     }
-
-    .section-box {
-        margin-bottom: 40px;
-        animation: fadeIn 0.5s ease forwards;
+    .subtitle {
+        font-size: 1rem;
+        color: #4b5563;
+        margin-bottom: 10px;
     }
-
-    .section-title {
-        color: var(--secondary-color);
-        font-family: var(--font-heading);
+    .form-doc-title {
+        display: inline-block;
+        border: 2px solid #1f2937;
+        padding: 5px 20px;
         font-size: 1.4rem;
         font-weight: 800;
-        margin-bottom: 25px;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        letter-spacing: -0.5px;
+        margin-top: 15px;
     }
 
-    .section-title i {
-        color: var(--primary-color);
-        font-size: 1.1rem;
-    }
-
-    .form-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-    }
-
-    .field-group {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-    }
-
-    .field-group.full-width {
-        grid-column: span 2;
-    }
-
-    .field-group label {
-        font-weight: 700;
-        font-size: 0.9rem;
-        color: #4b5563;
+    .top-meta {
         display: flex;
         justify-content: space-between;
+        margin-bottom: 30px;
+        align-items: flex-start;
     }
 
-    .required-mark {
-        color: var(--error-color);
-        font-size: 0.8rem;
+    .meta-box {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .app-no {
+        font-weight: 700;
+        font-size: 1.1rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .app-no input {
+        border: none;
+        border-bottom: 2px dashed #9ca3af;
+        width: 150px;
+        font-size: 1.1rem;
+        font-weight: 700;
+        outline: none;
+        background: transparent;
     }
 
-    .form-control {
-        padding: 14px 18px;
-        border: 2px solid var(--field-border);
-        border-radius: 12px;
+    .photo-box {
+        width: 130px;
+        height: 160px;
+        border: 2px dashed #9ca3af;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        color: #6b7280;
+        font-size: 0.9rem;
+        background: #fdfdfd;
+        position: relative;
+        cursor: pointer;
+        overflow: hidden;
+    }
+    .photo-box img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: none;
+    }
+    .photo-box input[type="file"] {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    .declaration {
+        font-weight: 600;
+        font-size: 1.1rem;
+        color: #1f2937;
+        margin-bottom: 30px;
+        line-height: 1.6;
+        border-left: 4px solid var(--primary-color, #f97316);
+        padding-left: 15px;
+        background: #fafaf9;
+        padding: 15px;
+        border-radius: 4px;
+    }
+
+    /* Tabular Form Layout */
+    .form-grid-table {
+        display: grid;
+        grid-template-columns: 280px 1fr;
+        border: 1px solid var(--form-border);
+        border-bottom: none;
+    }
+    
+    .grid-row {
+        display: contents;
+    }
+    
+    .grid-label, .grid-input {
+        padding: 15px 20px;
+        border-bottom: 1px solid var(--form-border);
+    }
+    
+    .grid-label {
+        background: #f8fafc;
+        font-weight: 700;
+        color: #334155;
+        border-right: 1px solid var(--form-border);
+        display: flex;
+        align-items: center;
+    }
+    
+    .grid-input {
+        background: #ffffff;
+    }
+
+    .form-control-minimal {
+        width: 100%;
+        border: none;
+        outline: none;
         font-family: inherit;
         font-size: 1rem;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        background: var(--field-bg);
+        background: transparent;
         color: #1f2937;
     }
+    .form-control-minimal:focus {
+        background: #fdf8f5;
+    }
 
-    .form-control:focus {
-        border-color: var(--field-focus);
+    /* Specialized Input Layouts */
+    .multi-col-input {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    
+    .field-combo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .aadhaar-boxes {
+        display: flex;
+        gap: 5px;
+    }
+    .aadhaar-box {
+        width: 35px;
+        height: 40px;
+        border: 1px solid #94a3b8;
+        text-align: center;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 4px;
+    }
+    .aadhaar-box:focus {
+        border-color: #2563eb;
         outline: none;
-        box-shadow: 0 0 0 4px rgba(255, 153, 51, 0.1);
-        transform: translateY(-1px);
+        box-shadow: 0 0 0 2px rgba(37,99,235,0.2);
     }
 
-    .form-control::placeholder {
-        color: #9ca3af;
+    .sub-table {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        border: 1px solid #cbd5e1;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+    .sub-th, .sub-td {
+        padding: 8px;
+        text-align: center;
+        border-right: 1px solid #cbd5e1;
+        border-bottom: 1px solid #cbd5e1;
+    }
+    .sub-th {
+        background: #f1f5f9;
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: #475569;
+    }
+    .sub-td:last-child, .sub-th:last-child {
+        border-right: none;
+    }
+    .sub-input {
+        width: 100%;
+        border: none;
+        text-align: center;
+        outline: none;
+        font-size: 1rem;
     }
 
-    select.form-control {
-        appearance: none;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%234b5563'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
-        background-repeat: no-repeat;
-        background-position: right 15px center;
-        background-size: 18px;
-        padding-right: 45px;
+    /* Address Box */
+    .address-areatextarea {
+        width: 100%;
+        resize: vertical;
+        border: none;
+        border-bottom: 1px dashed #cbd5e1;
+        outline: none;
+        font-family: inherit;
+        margin-bottom: 10px;
     }
 
-    .vocation-section {
-        display: none;
-        background: #fdfaf7;
-        padding: 30px;
-        border-radius: 16px;
-        border: 1px solid #f973161a;
-        margin-top: 20px;
+    /* Electoral Table */
+    .electoral-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+        margin-top: 15px;
+    }
+    .electoral-item {
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+        overflow: hidden;
+        transition: all 0.2s;
+    }
+    .electoral-item:focus-within {
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+    }
+    .electoral-header {
+        background: #f8fafc;
+        padding: 8px 12px;
+        font-size: 0.9rem;
+        font-weight: 700;
+        border-bottom: 1px solid #cbd5e1;
+        text-align: center;
+    }
+    .electoral-item input {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        outline: none;
+        text-align: center;
+        font-family: inherit;
     }
 
-    .vocation-section.active {
-        display: block;
-        animation: slideDown 0.4s ease-out;
+    /* Signature Section */
+    .signature-area {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 50px;
+        padding-top: 30px;
     }
-
-    @keyframes slideDown {
-        from { opacity: 0; transform: translateY(-10px); }
-        to { opacity: 1; transform: translateY(0); }
+    .sig-box {
+        text-align: center;
+        width: 250px;
     }
-
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
+    .sig-line {
+        border-top: 2px dashed var(--form-border);
+        margin-top: 60px;
+        padding-top: 10px;
+        font-weight: 700;
+        color: #334155;
     }
 
     .submit-area {
         margin-top: 50px;
         text-align: center;
-        padding-top: 30px;
-        border-top: 1px solid #eee;
     }
-
+    
     .btn-apply {
-        background: linear-gradient(135deg, var(--primary-color), #ff7b00);
+        background: linear-gradient(135deg, var(--primary-color, #f97316), #ea580c);
         color: white;
-        padding: 18px 60px;
+        padding: 16px 50px;
         border-radius: 50px;
         font-weight: 800;
         font-size: 1.1rem;
         border: none;
         cursor: pointer;
         transition: all 0.3s ease;
-        box-shadow: 0 10px 30px rgba(255, 153, 51, 0.3);
-        display: inline-flex;
-        align-items: center;
-        gap: 12px;
+        box-shadow: 0 10px 20px rgba(249, 115, 22, 0.3);
     }
-
     .btn-apply:hover {
-        transform: translateY(-3px) scale(1.02);
-        box-shadow: 0 15px 40px rgba(255, 153, 51, 0.4);
+        transform: translateY(-2px);
+        box-shadow: 0 15px 30px rgba(249, 115, 22, 0.4);
     }
 
-    .btn-apply:active {
-        transform: translateY(0);
-    }
-
-    .validation-msg {
-        color: var(--error-color);
-        font-size: 0.8rem;
-        margin-top: 4px;
-        display: none;
-    }
-
-    .field-group.error .form-control {
-        border-color: var(--error-color);
-    }
-
-    .field-group.error .validation-msg {
-        display: block;
-    }
-
-    @media (max-width: 768px) {
-        .form-grid {
+    @media (max-width: 900px) {
+        .form-grid-table {
             grid-template-columns: 1fr;
         }
-        .field-group.full-width {
-            grid-column: span 1;
+        .grid-label {
+            border-right: none;
+            border-bottom: none;
+            padding-bottom: 5px;
+            background: #e2e8f0;
+        }
+        .grid-input {
+            padding-top: 10px;
+            border-top: none;
+        }
+        .electoral-grid {
+            grid-template-columns: 1fr 1fr;
         }
         .form-card {
             padding: 25px;
+        }
+        .top-meta {
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+        .signature-area {
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+        }
+        .aadhaar-boxes {
+            flex-wrap: wrap;
+        }
+        .sub-table {
+            grid-template-columns: 1fr 1fr;
+        }
+        .sub-th, .sub-td {
+            border-bottom: 1px solid #cbd5e1;
+        }
+        /* Mobile specific adjustments for subtable */
+        .sub-th:nth-child(2), .sub-td:nth-child(6) {
+           border-right: none; 
+        }
+    }
+    @media (max-width: 600px) {
+        .electoral-grid {
+            grid-template-columns: 1fr;
         }
     }
 </style>
@@ -212,507 +438,442 @@
 <section class="page-hero section-padding">
     <div class="container" data-aos="fade-up">
         <div class="header-divider"></div>
-        <h2>Membership Application</h2>
-        <p>Join the oldest and most prestigious organization of the Veerashaiva Lingayath community.</p>
+        <h2 class="lang-text" data-en="Membership Application" data-kn="ಸದಸ್ಯತ್ವದ ಅರ್ಜಿ">ಸದಸ್ಯತ್ವದ ಅರ್ಜಿ</h2>
+        <p class="lang-text" data-en="Join the prestigious organization" data-kn="ಪ್ರತಿಷ್ಠಿತ ಸಂಸ್ಥೆಗೆ ಸೇರಿ">ಪ್ರತಿಷ್ಠಿತ ಸಂಸ್ಥೆಗೆ ಸೇರಿ</p>
     </div>
 </section>
 
 <div class="membership-container">
-    <div class="form-card" data-aos="fade-up">
-        <form id="membershipForm" novalidate>
+    
+    <!-- Language Toggle -->
+    <div class="language-toggle-wrapper" data-aos="fade-up">
+        <span class="lang-label label-kn active">ಕನ್ನಡ</span>
+        <label class="switch">
+            <input type="checkbox" id="langToggle">
+            <span class="slider"></span>
+        </label>
+        <span class="lang-label label-en">English</span>
+    </div>
+
+    <div class="form-card" data-aos="fade-up" data-aos-delay="100">
+        <form id="membershipForm" action="/api/submit_membership" method="POST" enctype="multipart/form-data">
             
-
-            <!-- COMMON FIELDS -->
-            <div class="section-box">
-                <h3 class="section-title"><i class="fas fa-user-circle"></i> Personal Information</h3>
-                <div class="form-grid">
-                    <div class="field-group">
-                        <label>First Name <span class="required-mark">*</span></label>
-                        <input type="text" name="firstName" class="form-control" placeholder="Enter first name" required>
-                        <span class="validation-msg">First name is required</span>
-                    </div>
-                    <div class="field-group">
-                        <label>Last Name <span class="required-mark">*</span></label>
-                        <input type="text" name="lastName" class="form-control" placeholder="Enter last name" required>
-                        <span class="validation-msg">Last name is required</span>
-                    </div>
-                    <div class="field-group">
-                        <label>Gender <span class="required-mark">*</span></label>
-                        <select name="gender" class="form-control" required>
-                            <option value="">Select Gender</option>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                            <option value="Other">Other</option>
-                        </select>
-                        <span class="validation-msg">Please select gender</span>
-                    </div>
-                    <div class="field-group">
-                        <label>Blood Group <span class="required-mark">*</span></label>
-                        <select name="bloodGroup" class="form-control" required>
-                            <option value="">Select Blood Group</option>
-                            <option value="A+">A+</option>
-                            <option value="A-">A-</option>
-                            <option value="B+">B+</option>
-                            <option value="B-">B-</option>
-                            <option value="O+">O+</option>
-                            <option value="O-">O-</option>
-                            <option value="AB+">AB+</option>
-                            <option value="AB-">AB-</option>
-                        </select>
-                        <span class="validation-msg">Please select blood group</span>
-                    </div>
-                    <div class="field-group">
-                        <label>Mobile Number <span class="required-mark">*</span></label>
-                        <input type="tel" id="mobileNumber" name="mobile" class="form-control" placeholder="10-digit mobile number" maxlength="10" required>
-                        <span class="validation-msg">Enter a valid 10-digit mobile number</span>
-                    </div>
-                    <div class="field-group">
-                        <label>WhatsApp Number <span class="required-mark">*</span></label>
-                        <input type="tel" name="whatsapp" class="form-control" placeholder="WhatsApp number" required>
-                        <span class="validation-msg">WhatsApp number is required</span>
-                    </div>
-                    <div class="field-group">
-                        <label>Email Address <span class="required-mark">*</span></label>
-                        <input type="email" id="emailAddress" name="email" class="form-control" placeholder="example@domain.com" required>
-                        <span class="validation-msg">Enter a valid email address</span>
-                    </div>
-                    <div class="field-group">
-                        <label>Qualification <span class="required-mark">*</span></label>
-                        <input type="text" name="qualification" class="form-control" placeholder="Highest qualification" required>
-                        <span class="validation-msg">Qualification is required</span>
-                    </div>
-                    <div class="field-group">
-                        <label>Caste <span class="required-mark">*</span></label>
-                        <input type="text" name="caste" class="form-control" value="Veerashaiva Lingayath" readonly required>
-                    </div>
-                    <div class="field-group">
-                        <label>Sub-Caste <span class="required-mark">*</span></label>
-                        <input type="text" name="subCaste" class="form-control" placeholder="Enter sub-caste" required>
-                        <span class="validation-msg">Sub-caste is required</span>
-                    </div>
+            <!-- Document Header -->
+            <div class="form-doc-header">
+                <div class="maintitle lang-text" data-en="AKHILA BHARATA VEERASHAIVA LINGAYATA MAHASABHA (R.)" data-kn="ಅಖಿಲ ಭಾರತ ವೀರಶೈವ ಲಿಂಗಾಯತ ಮಹಾಸಭಾ (ರಿ.)">
+                    ಅಖಿಲ ಭಾರತ ವೀರಶೈವ ಲಿಂಗಾಯತ ಮಹಾಸಭಾ (ರಿ.)
+                </div>
+                <div class="subtitle lang-text" data-en='No. 17/4, "Veerashaiva-Lingayata Bhavan", Ramana Maharshi Raste, Sadashivanagar, Bengaluru-560080' data-kn='ನಂ. 17/4, "ವೀರಶೈವ-ಲಿಂಗಾಯತ ಭವನ", ರಮಣಮಹರ್ಷಿರಸ್ತೆ, ಸದಾಶಿವನಗರ, ಬೆಂಗಳೂರು-560080'>
+                    ನಂ. 17/4, "ವೀರಶೈವ-ಲಿಂಗಾಯತ ಭವನ", ರಮಣಮಹರ್ಷಿರಸ್ತೆ, ಸದಾಶಿವನಗರ, ಬೆಂಗಳೂರು-560080
+                </div>
+                <div class="subtitle">
+                    Ph: 080-23618400, 23602177/78 | e-mail: info@veerashaivamahasabha.com | www.veerashaivamahasabha.org.in
+                </div>
+                
+                <div class="form-doc-title lang-text" data-en="MEMBERSHIP APPLICATION" data-kn="ಸದಸ್ಯತ್ವದ ಅರ್ಜಿ">
+                    ಸದಸ್ಯತ್ವದ ಅರ್ಜಿ
                 </div>
             </div>
 
-            <!-- ADDRESS FIELDS -->
-            <div class="section-box">
-                <h3 class="section-title"><i class="fas fa-map-marker-alt"></i> Residential Address</h3>
-                <div class="form-grid">
-                    <div class="field-group">
-                        <label>House Name <span class="required-mark">*</span></label>
-                        <input type="text" name="houseName" class="form-control" placeholder="Apartment/House name" required>
-                        <span class="validation-msg">Field required</span>
+            <!-- Top Meta: Application Number & Photo -->
+            <div class="top-meta">
+                <div class="meta-box">
+                    <div class="app-no">
+                        <span class="lang-text" data-en="Application No :" data-kn="ಅರ್ಜಿ ಸಂಖ್ಯೆ :">ಅರ್ಜಿ ಸಂಖ್ಯೆ :</span>
+                        <input type="text" name="applicationNo" readonly value="H-" style="width: 100px;">
                     </div>
-                    <div class="field-group">
-                        <label>House Number <span class="required-mark">*</span></label>
-                        <input type="text" name="houseNumber" class="form-control" placeholder="Door/Plot no." required>
-                        <span class="validation-msg">Field required</span>
+                    <div style="margin-top: 15px; max-width: 350px;">
+                        <strong class="lang-text" data-en="To The President," data-kn="ಅಧ್ಯಕ್ಷರಿಗೆ">ಅಧ್ಯಕ್ಷರಿಗೆ</strong><br>
+                        <span class="lang-text" data-en="Akhila Bharata Veerashaiva Lingayata Mahasabha (R.), Bengaluru" data-kn="ಅಖಿಲ ಭಾರತ ವೀರಶೈವ ಲಿಂಗಾಯತ ಮಹಾಸಭಾ(ರಿ.), ಬೆಂಗಳೂರು">ಅಖಿಲ ಭಾರತ ವೀರಶೈವ ಲಿಂಗಾಯತ ಮಹಾಸಭಾ(ರಿ.), ಬೆಂಗಳೂರು</span>
                     </div>
-                    <div class="field-group">
-                        <label>Main Street <span class="required-mark">*</span></label>
-                        <input type="text" name="mainStreet" class="form-control" placeholder="Main road/street" required>
-                        <span class="validation-msg">Field required</span>
+                </div>
+
+                <div class="photo-box">
+                    <div id="photoPlaceholder">
+                        <i class="fas fa-camera" style="font-size: 24px; margin-bottom: 8px;"></i><br>
+                        <span class="lang-text" data-en="Passport Size Photo" data-kn="ಪಾಸ್‌ಪೋರ್ಟ್ ಸೈಜಿನ ಫೋಟೋ">ಪಾಸ್‌ಪೋರ್ಟ್ ಸೈಜಿನ ಫೋಟೋ</span>
                     </div>
-                    <div class="field-group">
-                        <label>Cross Street <span class="required-mark">*</span></label>
-                        <input type="text" name="crossStreet" class="form-control" placeholder="Cross/Extension" required>
-                        <span class="validation-msg">Field required</span>
-                    </div>
-                    <div class="field-group">
-                        <label>Landmark <span class="required-mark">*</span></label>
-                        <input type="text" name="landmark" class="form-control" placeholder="Nearby landmark" required>
-                        <span class="validation-msg">Field required</span>
-                    </div>
-                    <div class="field-group">
-                        <label>Pincode <span class="required-mark">*</span></label>
-                        <input type="text" name="pincode" class="form-control" placeholder="6-digit ZIP code" maxlength="6" required>
-                        <span class="validation-msg">Field required</span>
-                    </div>
-                    <div class="field-group">
-                        <label>Area <span class="required-mark">*</span></label>
-                        <input type="text" name="area" class="form-control" placeholder="Locality/Area" required>
-                        <span class="validation-msg">Field required</span>
-                    </div>
-                    <div class="field-group">
-                        <label>District <span class="required-mark">*</span></label>
-                        <input type="text" name="district" class="form-control" placeholder="District" required>
-                        <span class="validation-msg">Field required</span>
-                    </div>
-                    <div class="field-group full-width">
-                        <label>State <span class="required-mark">*</span></label>
-                        <input type="text" name="state" class="form-control" placeholder="State" required>
-                        <span class="validation-msg">Field required</span>
-                    </div>
+                    <img id="photoPreview" src="" alt="Photo Preview">
+                    <input type="file" id="applicantPhoto" name="photo" accept="image/*" required>
                 </div>
             </div>
 
-            <!-- VOCATION SELECTION -->
-            <div class="field-group full-width" style="margin-top: 25px; margin-bottom: 25px; background: #fdfaf6; padding: 25px; border-radius: 16px; border: 1px dashed var(--primary-color);">
-                <label style="font-size: 1.1rem; margin-bottom: 15px;">Employment Status (Triggers additional fields) <span class="required-mark">*</span></label>
-                <select id="userType" class="form-control">
-                    <option value="">-- Choose Status --</option>
-                    <option value="student">Student</option>
-                    <option value="professional">Professional</option>
-                    <option value="business">Business</option>
-                    <option value="self_employed">Self Employed</option>
-                </select>
+            <!-- Declaration -->
+            <div class="declaration lang-text" data-en="Sir, I agree to the rules and regulations of the Akhila Bharata Veerashaiva Lingayata Mahasabha and request you to grant me membership." data-kn="ಮಾನ್ಯರೇ, ನಾನು ಅಖಿಲ ಭಾರತ ವೀರಶೈವ ಲಿಂಗಾಯತ ಮಹಾಸಭೆಯ ನಿಯಮ, ನಿಬಂಧನೆಗಳಿಗೆ ಒಪ್ಪಿ ಸದಸ್ಯತ್ವ ನೀಡಲು ಕೋರುತ್ತೇನೆ.">
+                ಮಾನ್ಯರೇ, ನಾನು ಅಖಿಲ ಭಾರತ ವೀರಶೈವ ಲಿಂಗಾಯತ ಮಹಾಸಭೆಯ ನಿಯಮ, ನಿಬಂಧನೆಗಳಿಗೆ ಒಪ್ಪಿ ಸದಸ್ಯತ್ವ ನೀಡಲು ಕೋರುತ್ತೇನೆ.
             </div>
 
+            <!-- Main Form Grid -->
+            <div class="form-grid-table">
+                
+                <!-- Applicant Name -->
+                <div class="grid-row">
+                    <div class="grid-label lang-text" data-en="Applicant Name" data-kn="ಅರ್ಜಿದಾರರ ಹೆಸರು">ಅರ್ಜಿದಾರರ ಹೆಸರು</div>
+                    <div class="grid-input">
+                        <input type="text" name="applicantName" class="form-control-minimal" required>
+                    </div>
+                </div>
 
-
-            <!-- TYPE-SPECIFIC SECTIONS -->
-            <div id="vocationContainer">
-                <!-- STUDENT -->
-                <div id="section_student" class="vocation-section">
-                    <h3 class="section-title"><i class="fas fa-graduation-cap"></i> Student Information</h3>
-                    <div class="form-grid">
-                        <div class="field-group">
-                            <label>Course <span class="required-mark">*</span></label>
-                            <input type="text" name="course" class="form-control" placeholder="e.g. B.Tech / MBA">
-                            <span class="validation-msg">Course is required</span>
-                        </div>
-                        <div class="field-group">
-                            <label>College Name <span class="required-mark">*</span></label>
-                            <input type="text" name="collegeName" class="form-control" placeholder="Full college name">
-                            <span class="validation-msg">College name is required</span>
-                        </div>
-                        <div class="field-group full-width">
-                            <label>College Address <span class="required-mark">*</span></label>
-                            <textarea name="collegeAddress" class="form-control" rows="3" placeholder="College location address"></textarea>
-                            <span class="validation-msg">College address is required</span>
+                <!-- Aadhaar -->
+                <div class="grid-row">
+                    <div class="grid-label lang-text" data-en="Aadhaar Number" data-kn="ಆಧಾರ್ ಸಂಖ್ಯೆ">ಆಧಾರ್ ಸಂಖ್ಯೆ</div>
+                    <div class="grid-input">
+                        <div class="aadhaar-boxes" id="aadhaarInputs">
+                            {% for i in range(12) %}
+                            <input type="text" class="aadhaar-box" maxlength="1" required data-index="{{ loop.index0 }}">
+                            {% endfor %}
+                            <input type="hidden" name="aadhaarFull" id="aadhaarHidden">
                         </div>
                     </div>
                 </div>
 
-                <!-- PROFESSIONAL -->
-                <div id="section_professional" class="vocation-section">
-                    <h3 class="section-title"><i class="fas fa-user-tie"></i> Professional Details</h3>
-                    <div class="form-grid">
-                        <div class="field-group">
-                            <label>Profession Type <span class="required-mark">*</span></label>
-                            <input type="text" name="professionType" class="form-control" placeholder="e.g. IT, Medical, Law">
-                            <span class="validation-msg">Profession type is required</span>
+                <!-- Father/Husband Name -->
+                <div class="grid-row">
+                    <div class="grid-label lang-text" data-en="Father/Husband Name" data-kn="ತಂದೆ/ಗಂಡನ ಹೆಸರು">ತಂದೆ/ಗಂಡನ ಹೆಸರು</div>
+                    <div class="grid-input">
+                        <input type="text" name="fatherHusbandName" class="form-control-minimal" required>
+                    </div>
+                </div>
+
+                <!-- Mother's Name -->
+                <div class="grid-row">
+                    <div class="grid-label lang-text" data-en="Mother's Name" data-kn="ತಾಯಿಯ ಹೆಸರು">ತಾಯಿಯ ಹೆಸರು</div>
+                    <div class="grid-input">
+                        <input type="text" name="motherName" class="form-control-minimal" required>
+                    </div>
+                </div>
+
+                <!-- DOB & Gender -->
+                <div class="grid-row">
+                    <div class="grid-label lang-text" data-en="Date of Birth & Gender" data-kn="ಹುಟ್ಟಿದ ದಿನಾಂಕ ಮತ್ತು ಲಿಂಗ">ಹುಟ್ಟಿದ ದಿನಾಂಕ ಮತ್ತು ಲಿಂಗ</div>
+                    <div class="grid-input multi-col-input">
+                        <div class="field-combo">
+                            <input type="date" name="dob" class="form-control-minimal" style="border: 1px solid #cbd5e1; padding: 5px; border-radius: 4px;" required>
                         </div>
-                        <div class="field-group">
-                            <label>Designation <span class="required-mark">*</span></label>
-                            <input type="text" name="designation" class="form-control" placeholder="Your current role">
-                            <span class="validation-msg">Designation is required</span>
-                        </div>
-                        <div class="field-group full-width">
-                            <label>Professional Address <span class="required-mark">*</span></label>
-                            <textarea name="professionalAddress" class="form-control" rows="3" placeholder="Office / Workplace address"></textarea>
-                            <span class="validation-msg">Address is required</span>
+                        <div style="width: 1px; height: 30px; background: #cbd5e1; margin: 0 10px;"></div>
+                        <div class="field-combo">
+                            <strong class="lang-text" style="color:#64748b" data-en="Gender:" data-kn="ಲಿಂಗ:">ಲಿಂಗ:</strong>
+                            <label style="cursor:pointer; display:flex; align-items:center; gap:4px;">
+                                <input type="radio" name="gender" value="Female" required> 
+                                <span class="lang-text" data-en="Female" data-kn="ಹೆಣ್ಣು">ಹೆಣ್ಣು</span>
+                            </label>
+                            <label style="cursor:pointer; display:flex; align-items:center; gap:4px; margin-left:10px;">
+                                <input type="radio" name="gender" value="Male" required> 
+                                <span class="lang-text" data-en="Male" data-kn="ಗಂಡು">ಗಂಡು</span>
+                            </label>
                         </div>
                     </div>
                 </div>
 
-                <!-- BUSINESS -->
-                <div id="section_business" class="vocation-section">
-                    <h3 class="section-title"><i class="fas fa-building"></i> Business Details</h3>
-                    <div class="form-grid">
-                        <div class="field-group">
-                            <label>Business Name <span class="required-mark">*</span></label>
-                            <input type="text" name="businessName" class="form-control" placeholder="Full business name">
-                            <span class="validation-msg">Business name is required</span>
-                        </div>
-                        <div class="field-group">
-                            <label>Business Type <span class="required-mark">*</span></label>
-                            <input type="text" name="businessType" class="form-control" placeholder="e.g. Retail, Service, MFG">
-                            <span class="validation-msg">Business type is required</span>
-                        </div>
-                        <div class="field-group">
-                            <label>Designation <span class="required-mark">*</span></label>
-                            <input type="text" name="businessDesignation" class="form-control" placeholder="e.g. CEO, Partner">
-                            <span class="validation-msg">Designation is required</span>
-                        </div>
-                        <div class="field-group full-width">
-                            <label>Business Address <span class="required-mark">*</span></label>
-                            <textarea name="businessAddress" class="form-control" rows="3" placeholder="Registered office address"></textarea>
-                            <span class="validation-msg">Business address is required</span>
+                <!-- Family Details & Blood Group -->
+                <div class="grid-row">
+                    <div class="grid-label lang-text" data-en="Family Details & Blood Group" data-kn="ಕುಟುಂಬದ ವಿವರ ಮತ್ತು ರಕ್ತದ ಗುಂಪು">ಕುಟುಂಬದ ವಿವರ ಮತ್ತು ರಕ್ತದ ಗುಂಪು</div>
+                    <div class="grid-input multi-col-input">
+                        <div class="sub-table" style="flex-grow: 1;">
+                            <div class="sub-th lang-text" data-en="Male Children" data-kn="ಗ.ಮಕ್ಕಳು">ಗ.ಮಕ್ಕಳು</div>
+                            <div class="sub-th lang-text" data-en="Female Children" data-kn="ಹೆ.ಮಕ್ಕಳು">ಹೆ.ಮಕ್ಕಳು</div>
+                            <div class="sub-th lang-text" data-en="Total" data-kn="ಒಟ್ಟು">ಒಟ್ಟು</div>
+                            <div class="sub-th lang-text" data-en="Blood Group" data-kn="ರಕ್ತದ ಗುಂಪು">ರಕ್ತದ ಗುಂಪು</div>
+                            
+                            <div class="sub-td"><input type="number" name="maleChildren" class="sub-input" min="0" value="0"></div>
+                            <div class="sub-td"><input type="number" name="femaleChildren" class="sub-input" min="0" value="0"></div>
+                            <div class="sub-td"><input type="number" name="totalChildren" class="sub-input" readonly value="0"></div>
+                            <div class="sub-td">
+                                <select name="bloodGroup" class="sub-input" required>
+                                    <option value="">-</option>
+                                    <option value="A+">A+</option>
+                                    <option value="A-">A-</option>
+                                    <option value="B+">B+</option>
+                                    <option value="B-">B-</option>
+                                    <option value="O+">O+</option>
+                                    <option value="O-">O-</option>
+                                    <option value="AB+">AB+</option>
+                                    <option value="AB-">AB-</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- SELF EMPLOYED -->
-                <div id="section_self_employed" class="vocation-section">
-                    <h3 class="section-title"><i class="fas fa-tools"></i> Self Employed Details</h3>
-                    <div class="form-grid">
-                        <div class="field-group">
-                            <label>Work Type <span class="required-mark">*</span></label>
-                            <input type="text" name="workType" class="form-control" placeholder="Nature of work">
-                            <span class="validation-msg">Work type is required</span>
+                <!-- Education & Occupation -->
+                <div class="grid-row">
+                    <div class="grid-label lang-text" data-en="Education & Occupation" data-kn="ವಿದ್ಯಾರ್ಹತೆ ಮತ್ತು ಉದ್ಯೋಗ">ವಿದ್ಯಾರ್ಹತೆ ಮತ್ತು ಉದ್ಯೋಗ</div>
+                    <div class="grid-input multi-col-input">
+                        <div class="field-combo" style="flex:1;">
+                            <span class="lang-text" style="color:#64748b; font-size: 0.9em; font-weight:700;" data-en="Edu:" data-kn="ವಿ:">ವಿ:</span>
+                            <input type="text" name="education" class="form-control-minimal" required>
                         </div>
-                        <div class="field-group">
-                            <label>Designation <span class="required-mark">*</span></label>
-                            <input type="text" name="selfDesignation" class="form-control" placeholder="e.g. Founder, Specialist">
-                            <span class="validation-msg">Designation is required</span>
+                        <div style="width: 1px; height: 30px; background: #cbd5e1; margin: 0 10px;"></div>
+                        <div class="field-combo" style="flex:1;">
+                            <span class="lang-text" style="color:#64748b; font-size: 0.9em; font-weight:700;" data-en="Occ:" data-kn="ಉದ್ಯೋಗ:">ಉದ್ಯೋಗ:</span>
+                            <input type="text" name="occupation" class="form-control-minimal" required>
                         </div>
-                        <div class="field-group full-width">
-                            <label>Work Address <span class="required-mark">*</span></label>
-                            <textarea name="selfAddress" class="form-control" rows="3" placeholder="Work location address"></textarea>
-                            <span class="validation-msg">Work address is required</span>
+                    </div>
+                </div>
+
+                <!-- Phone & Email -->
+                <div class="grid-row">
+                    <div class="grid-label lang-text" data-en="Telephone/Mobile & Email" data-kn="ದೂರವಾಣಿ/ಜಂಗಮವಾಣಿ ಮತ್ತು ಇ-ಮೇಲ್">ದೂರವಾಣಿ/ಜಂಗಮವಾಣಿ ಮತ್ತು ಇ-ಮೇಲ್</div>
+                    <div class="grid-input multi-col-input">
+                        <div class="field-combo" style="flex:1;">
+                            <i class="fas fa-phone-alt" style="color:#64748b; font-size: 0.9em;"></i>
+                            <input type="tel" name="phone" id="phoneInput" class="form-control-minimal" maxlength="10" required>
+                        </div>
+                        <div style="width: 1px; height: 30px; background: #cbd5e1; margin: 0 10px;"></div>
+                        <div class="field-combo" style="flex:1;">
+                            <i class="fas fa-envelope" style="color:#64748b; font-size: 0.9em;"></i>
+                            <input type="email" name="email" class="form-control-minimal" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Address -->
+                <div class="grid-row">
+                    <div class="grid-label lang-text" data-en="Address" data-kn="ವಿಳಾಸ">ವಿಳಾಸ</div>
+                    <div class="grid-input">
+                        <textarea name="address" class="address-areatextarea" rows="2" required></textarea>
+                        <div class="multi-col-input" style="gap: 15px;">
+                            <div class="field-combo" style="flex:1; border: 1px solid #cbd5e1; padding: 5px 10px; border-radius: 4px;">
+                                <span class="lang-text" style="color:#64748b; font-weight:600;" data-en="Taluk:" data-kn="ತಾ||:">ತಾ||:</span>
+                                <input type="text" name="taluk" class="form-control-minimal" required>
+                            </div>
+                            <div class="field-combo" style="flex:1; border: 1px solid #cbd5e1; padding: 5px 10px; border-radius: 4px;">
+                                <span class="lang-text" style="color:#64748b; font-weight:600;" data-en="Dist:" data-kn="ಜಿ :">ಜಿ :</span>
+                                <input type="text" name="district" class="form-control-minimal" required>
+                            </div>
+                            <div class="field-combo" style="flex:0.8; border: 1px solid #cbd5e1; padding: 5px 10px; border-radius: 4px;">
+                                <span class="lang-text" style="color:#64748b; font-weight:600;" data-en="PIN:" data-kn="ಪಿನ್‌ಕೋಡ್:">ಪಿನ್‌ಕೋಡ್:</span>
+                                <input type="text" name="pincode" maxlength="6" class="form-control-minimal" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Details -->
+                <div class="grid-row">
+                    <div class="grid-label lang-text" data-en="Payment Details" data-kn="ಪಾವತಿ ವಿವರ">ಪಾವತಿ ವಿವರ</div>
+                    <div class="grid-input" style="background:#fdfaf6;">
+                        <div class="multi-col-input" style="margin-bottom: 10px;">
+                            <div class="field-combo" style="flex:2;">
+                                <span class="lang-text" style="color:#64748b; font-size:0.85em; font-weight:600;" data-en="D.D./RTGS/NEFT/Q.R.CODE No:" data-kn="ಡಿ.ಡಿ./RTGS/NEFT/ Q.R.CODE No:">ಡಿ.ಡಿ./RTGS/NEFT/ Q.R.CODE No:</span>
+                                <input type="text" name="paymentRef" class="form-control-minimal" style="border-bottom: 1px solid #cbd5e1;">
+                            </div>
+                            <div class="field-combo" style="flex:1;">
+                                <span class="lang-text" style="color:#64748b; font-size:0.85em; font-weight:600;" data-en="Rs:" data-kn="ರೂ.">ರೂ.</span>
+                                <input type="number" name="paymentAmount" class="form-control-minimal" style="border-bottom: 1px solid #cbd5e1;" required id="feeAmount">
+                            </div>
+                        </div>
+                        <div class="multi-col-input">
+                            <div class="field-combo" style="flex:1;">
+                                <span class="lang-text" style="color:#64748b; font-size:0.85em; font-weight:600;" data-en="Classification:" data-kn="ವರ್ಗೀಕರಣ:">ವರ್ಗೀಕರಣ:</span>
+                                <select name="classification" id="classificationSelect" class="form-control-minimal" style="border-bottom:1px solid #cbd5e1;" required>
+                                    <option value="" class="lang-text" data-en="-- Select --" data-kn="-- ಆಯ್ಕೆಮಾಡಿ --">-- ಆಯ್ಕೆಮಾಡಿ --</option>
+                                    <option value="Paramadasohi" data-amount="100000" class="lang-text" data-en="Paramadasohi (₹1,00,000)" data-kn="ಪರಮದಾಸೋಹಿ (₹1,00,000)">ಪರಮದಾಸೋಹಿ (₹1,00,000)</option>
+                                    <option value="Mahadasohi" data-amount="50000" class="lang-text" data-en="Mahadasohi (₹50,000)" data-kn="ಮಹಾದಾಸೋಹಿ (₹50,000)">ಮಹಾದಾಸೋಹಿ (₹50,000)</option>
+                                    <option value="Dasohi" data-amount="25000" class="lang-text" data-en="Dasohi (₹25,000)" data-kn="ದಾಸೋಹಿ (₹25,000)">ದಾಸೋಹಿ (₹25,000)</option>
+                                    <option value="Danashiromani" data-amount="10000" class="lang-text" data-en="Danashiromani (₹10,000)" data-kn="ದಾನಶಿರೋಮಣಿ (₹10,000)">ದಾನಶಿರೋಮಣಿ (₹10,000)</option>
+                                    <option value="Mahadani" data-amount="5000" class="lang-text" data-en="Mahadani (₹5,000)" data-kn="ಮಹಾದಾನಿ (₹5,000)">ಮಹಾದಾನಿ (₹5,000)</option>
+                                    <option value="Dani" data-amount="2500" class="lang-text" data-en="Dani (₹2,500)" data-kn="ದಾನಿ (₹2,500)">ದಾನಿ (₹2,500)</option>
+                                    <option value="Upaposhaka" data-amount="1000" class="lang-text" data-en="Upaposhaka (₹1,000)" data-kn="ಉಪಪೋಷಕ (₹1,000)">ಉಪಪೋಷಕ (₹1,000)</option>
+                                    <option value="Ashrayadatha" data-amount="500" class="lang-text" data-en="Ashrayadatha (₹500)" data-kn="ಆಶ್ರಯದಾತ (₹500)">ಆಶ್ರಯದಾತ (₹500)</option>
+                                    <option value="Life Member" data-amount="1000" class="lang-text" data-en="Life Member (₹1,000)" data-kn="ಆಜೀವ ಸದಸ್ಯರು (₹1,000)">ಆಜೀವ ಸದಸ್ಯರು (₹1,000)</option>
+                                    <option value="Institutional" data-amount="" class="lang-text" data-en="Institutional" data-kn="ಸಂಸ್ಥೆಗಳು">ಸಂಸ್ಥೆಗಳು</option>
+                                </select>
+                            </div>
+                            <div class="field-combo" style="flex:1;">
+                                <span class="lang-text" style="color:#64748b; font-size:0.85em; font-weight:600;" data-en="Project/Program:" data-kn="ನಿರ್ದಿಷ್ಟ ಯೋಜನೆ/ಕಾರ್ಯಕ್ರಮಕ್ಕಾಗಿ:">ನಿರ್ದಿಷ್ಟ ಯೋಜನೆ/ಕಾರ್ಯಕ್ರಮಕ್ಕಾಗಿ:</span>
+                                <input type="text" name="specificProject" class="form-control-minimal" style="border-bottom: 1px solid #cbd5e1;">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- MEMBERSHIP TIER SELECTION -->
-            <div class="type-selector-wrapper" style="margin-top: 40px;">
-                <div class="field-group">
-                    <label>Select Membership Tier <span class="required-mark">*</span></label>
-                    <select id="membershipTier" class="form-control" required>
-                        <option value="">-- Choose Tier --</option>
-                        <option value="paramadasohi">Paramadasohi (₹ 1,00,000/-)</option>
-                        <option value="mahadasohi">Mahadasohi (₹ 50,000/-)</option>
-                        <option value="dasohi">Dasohi (₹ 25,000/-)</option>
-                        <option value="danashiromani">Danashiromani (₹ 10,000/-)</option>
-                        <option value="mahadani">Mahadani (₹ 5,000/-)</option>
-                        <option value="dani">Dani (₹ 2,500/-)</option>
-                        <option value="upaposhaka">Upaposhaka (₹ 1,000/-)</option>
-                        <option value="ashrayadatha">Ashrayadatha (₹ 500/-)</option>
-                        <option value="life_member">Life Member (₹ 1,000/-)</option>
-                        <option value="institutional">Institutional / Organizations</option>
-                        <option value="honorary">Honorary (Invitation Only)</option>
-                        <option value="student">Student / Youth Wing</option>
-                    </select>
+            <!-- Electoral Representation Table -->
+            <div style="margin-top: 30px;">
+                <h4 class="lang-text" data-en="Electoral Representation (Fill if applicable)" data-kn="ಚುನಾಯಿತ ಪ್ರತಿನಿಧಿ (ಅನ್ವಯಿಸಿದಲ್ಲಿ ಭರ್ತಿ ಮಾಡಿ)" style="color:#334155; margin-bottom: 15px; font-weight:800;">ಚುನಾಯಿತ ಪ್ರತಿನಿಧಿ (ಅನ್ವಯಿಸಿದಲ್ಲಿ ಭರ್ತಿ ಮಾಡಿ)</h4>
+                <div class="electoral-grid">
+                    <div class="electoral-item">
+                        <div class="electoral-header lang-text" data-en="Lokasabha" data-kn="ಲೋಕಸಭಾ">ಲೋಕಸಭಾ</div>
+                        <input type="text" name="repLokasabha" placeholder="-">
+                    </div>
+                    <div class="electoral-item">
+                        <div class="electoral-header lang-text" data-en="Corporation" data-kn="ಕಾರ್ಪೋರೇಷನ್">ಕಾರ್ಪೋರೇಷನ್</div>
+                        <input type="text" name="repCorporation" placeholder="-">
+                    </div>
+                    <div class="electoral-item">
+                        <div class="electoral-header lang-text" data-en="Vidhanasabha" data-kn="ವಿಧಾನಸಭಾ">ವಿಧಾನಸಭಾ</div>
+                        <input type="text" name="repVidhanasabha" placeholder="-">
+                    </div>
+                    <div class="electoral-item">
+                        <div class="electoral-header lang-text" data-en="C.M.C." data-kn="ಸಿ.ಎಂ.ಸಿ">ಸಿ.ಎಂ.ಸಿ</div>
+                        <input type="text" name="repCmc" placeholder="-">
+                    </div>
+                    <div class="electoral-item">
+                        <div class="electoral-header lang-text" data-en="T.M.C." data-kn="ಟಿ.ಎಂ.ಸಿ">ಟಿ.ಎಂ.ಸಿ</div>
+                        <input type="text" name="repTmc" placeholder="-">
+                    </div>
+                    <div class="electoral-item">
+                        <div class="electoral-header lang-text" data-en="Gram Panchayat" data-kn="ಗ್ರಾಮ ಪಂಚಾಯತ್">ಗ್ರಾಮ ಪಂಚಾಯತ್</div>
+                        <input type="text" name="repGramPanchayat" placeholder="-">
+                    </div>
                 </div>
             </div>
 
-            <!-- DYNAMIC FEE SUMMARY -->
-            <div id="feeDisplay" style="display: none; background: #fdfaf6; border: 1px dashed var(--primary-color); padding: 25px; border-radius: 16px; margin-top: 30px; text-align: center; box-shadow: 0 10px 20px rgba(255, 153, 51, 0.05);">
-                <h4 style="color: var(--secondary-color); margin: 0 0 15px 0; font-size: 1.3rem; font-family: var(--font-heading);">Membership Fee Summary</h4>
-                <div style="font-size: 1.1rem; color: #4b5563;">
-                    <div style="margin-bottom: 5px;">Selected Category: <strong id="summaryCategory" style="color: var(--primary-color);"></strong></div>
-                    <div>Amount Payable: <strong id="summaryAmount" style="font-size: 1.5rem; color: #10b981;"></strong></div>
+            <!-- Introducer & Signatures -->
+            <div style="margin-top: 40px; border-top: 2px solid var(--form-border); padding-top: 25px; background: #fafaf9; border-radius: 8px; padding: 25px;">
+                <div class="multi-col-input">
+                    <div class="field-combo" style="flex:2;">
+                        <span class="lang-text" style="color:#475569; font-weight:700;" data-en="Introducer Name:" data-kn="ಪ್ರೋತ್ಸಾಹ ನೀಡಿದವರ ಹೆಸರು :">ಪ್ರೋತ್ಸಾಹ ನೀಡಿದವರ ಹೆಸರು :</span>
+                        <input type="text" name="introducerName" class="form-control-minimal" style="border-bottom: 2px dashed #94a3b8; padding-bottom:4px;">
+                    </div>
+                    <div class="field-combo" style="flex:1;">
+                        <span class="lang-text" style="color:#475569; font-weight:700;" data-en="Membership No:" data-kn="ಸದಸ್ಯತ್ವದ ಸಂಖ್ಯೆ:">ಸದಸ್ಯತ್ವದ ಸಂಖ್ಯೆ:</span>
+                        <input type="text" name="introducerMemNo" class="form-control-minimal" style="border-bottom: 2px dashed #94a3b8; padding-bottom:4px;">
+                    </div>
                 </div>
             </div>
 
+            <div class="signature-area">
+                <div class="sig-box">
+                    <input type="date" name="applicationDate" class="form-control-minimal" style="border-bottom: 2px dashed var(--form-border); width: 180px; text-align: center; margin-bottom: 10px; padding-bottom:5px;" required>
+                    <div class="sig-line lang-text" data-en="Date" data-kn="ದಿನಾಂಕ">ದಿನಾಂಕ</div>
+                </div>
+                <div class="sig-box">
+                    <div class="sig-line lang-text" data-en="Applicant Signature" data-kn="ಅರ್ಜಿದಾರರ ಸಹಿ">ಅರ್ಜಿದಾರರ ಸಹಿ</div>
+                    <span style="font-size: 0.8rem; color: #64748b;" class="lang-text" data-en="(Sign on the printed copy)" data-kn="(ಮುದ್ರಿತ ಪ್ರತಿಯಲ್ಲಿ ಸಹಿ ಮಾಡಿ)">(ಮುದ್ರಿತ ಪ್ರತಿಯಲ್ಲಿ ಸಹಿ ಮಾಡಿ)</span>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
             <div class="submit-area">
                 <button type="submit" class="btn-apply">
-                    <span>Submit Membership Application</span>
-                    <i class="fas fa-arrow-right"></i>
+                    <span class="lang-text" data-en="Submit Application" data-kn="ಅರ್ಜಿ ಸಲ್ಲಿಸಿ">ಅರ್ಜಿ ಸಲ್ಲಿಸಿ</span>
+                    <i class="fas fa-check-circle" style="margin-left: 8px;"></i>
                 </button>
-                <p style="margin-top: 20px; color: #6b7280; font-size: 0.9rem;">
-                    <i class="fas fa-shield-alt"></i> We respect your privacy. Your data is encrypted and secure.
-                </p>
             </div>
-
+            
         </form>
     </div>
 </div>
 
-<!-- Success Modal -->
-<div id="apply-success-modal" class="modal">
-    <div class="modal-content" style="text-align: center; max-width: 480px; padding: 40px; border-radius: 20px;">
-        <div class="success-icon" style="animation: bounce 1s infinite;"><i class="fas fa-check-circle" style="font-size: 70px; color: #10B981; margin-bottom: 20px;"></i></div>
-        <h3 style="color: var(--secondary-color); font-family: var(--font-heading); margin-bottom: 15px;">Application Submitted!</h3>
-        <p style="color: var(--text-light); margin-bottom: 30px; font-size: 1.05rem;">Thank you for registering. Your membership application has been successfully submitted and is under review.</p>
-        <button class="btn btn-primary close-modal" style="width: 100%; border-radius: 50px;">Return to Home</button>
-    </div>
-</div>
 {% endblock %}
 
 {% block extra_js %}
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const typeSelect = document.getElementById('userType');
-        const vocationSections = document.querySelectorAll('.vocation-section');
-        const form = document.getElementById('membershipForm');
+document.addEventListener('DOMContentLoaded', () => {
+    // === LANGUAGE TOGGLE LOGIC ===
+    const langToggle = document.getElementById('langToggle');
+    const langLabels = document.querySelectorAll('.lang-label');
+    const langElements = document.querySelectorAll('.lang-text');
+    
+    // Default language is Kannada (toggle unchecked)
+    let currentLang = 'kn';
 
-        // Function to manage required attributes
-        const updateRequiredFields = (activeSectionId) => {
-            // First, remove required from all vocation fields
-            vocationSections.forEach(section => {
-                const fields = section.querySelectorAll('input, textarea');
-                fields.forEach(f => {
-                    f.required = false;
-                    f.closest('.field-group').classList.remove('error');
-                });
-            });
-
-            // If a section is active, make its fields required
-            if (activeSectionId) {
-                const activeSection = document.getElementById(activeSectionId);
-                if (activeSection) {
-                    const fields = activeSection.querySelectorAll('input, textarea');
-                    fields.forEach(f => {
-                        f.required = true;
-                    });
-                }
-            }
-        };
-
-        // Handle Vocation Change (Student, Business, etc.)
-        typeSelect.addEventListener('change', (e) => {
-            const val = e.target.value;
-            
-            // Hide all vocation sections
-            vocationSections.forEach(s => s.classList.remove('active'));
-
-            if (val) {
-                const targetId = `section_${val}`;
-                const targetSection = document.getElementById(targetId);
-                if (targetSection) {
-                    targetSection.classList.add('active');
-                    updateRequiredFields(targetId);
-                }
-            } else {
-                updateRequiredFields(null);
-            }
-        });
-
-        // Handle Membership Tier Change for Fee Display
-        const tierSelect = document.getElementById('membershipTier');
-        const feesList = {
-            'paramadasohi': { label: 'Paramadasohi', amount: '₹ 1,00,000/-' },
-            'mahadasohi': { label: 'Mahadasohi', amount: '₹ 50,000/-' },
-            'dasohi': { label: 'Dasohi', amount: '₹ 25,000/-' },
-            'danashiromani': { label: 'Danashiromani', amount: '₹ 10,000/-' },
-            'mahadani': { label: 'Mahadani', amount: '₹ 5,000/-' },
-            'dani': { label: 'Dani', amount: '₹ 2,500/-' },
-            'upaposhaka': { label: 'Upaposhaka', amount: '₹ 1,000/-' },
-            'ashrayadatha': { label: 'Ashrayadatha', amount: '₹ 500/-' },
-            'life_member': { label: 'Life Member', amount: '₹ 1,000/-' },
-            'institutional': { label: 'Institutional / Organizations', amount: 'Variable / Contact Admin' },
-            'honorary': { label: 'Honorary', amount: 'Invitation Only' },
-            'student': { label: 'Student / Youth Wing', amount: 'Special Category' }
-        };
-        const feeDisplay = document.getElementById('feeDisplay');
-        const summaryCategory = document.getElementById('summaryCategory');
-        const summaryAmount = document.getElementById('summaryAmount');
-
-        tierSelect.addEventListener('change', (e) => {
-            const val = e.target.value;
-            if (val && feesList[val]) {
-                const details = feesList[val];
-                summaryCategory.textContent = details.label;
-                summaryAmount.textContent = details.amount;
-                feeDisplay.style.display = 'block';
-                feeDisplay.style.animation = 'slideDown 0.4s ease-out';
-            } else {
-                feeDisplay.style.display = 'none';
-            }
-        });
-
-        // Auto-select from URL Parameter (Linking membership.html logic)
-        const urlParams = new URLSearchParams(window.location.search);
-        const tierParam = urlParams.get('tier');
-        if (tierParam) {
-            const options = Array.from(tierSelect.options);
-            const exists = options.some(opt => opt.value === tierParam);
-            if (exists) {
-                tierSelect.value = tierParam;
-                // Trigger change event to display fee properly automatically
-                tierSelect.dispatchEvent(new Event('change'));
-            }
+    function updateLanguage() {
+        if(langToggle.checked) {
+            currentLang = 'en';
+            document.querySelector('.label-en').classList.add('active');
+            document.querySelector('.label-kn').classList.remove('active');
+        } else {
+            currentLang = 'kn';
+            document.querySelector('.label-kn').classList.add('active');
+            document.querySelector('.label-en').classList.remove('active');
         }
 
-        // Validation Logic
-        const validateEmail = (email) => {
-            return String(email)
-                .toLowerCase()
-                .match(
-                    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-                );
-        };
-
-        const validateMobile = (mobile) => {
-            return /^\d{10}$/.test(mobile);
-        };
-
-        const showError = (field, msg) => {
-            const group = field.closest('.field-group');
-            group.classList.add('error');
-            if (msg) {
-                const msgEl = group.querySelector('.validation-msg');
-                if (msgEl) msgEl.textContent = msg;
-            }
-        };
-
-        const clearError = (field) => {
-            field.closest('.field-group').classList.remove('error');
-        };
-
-        // Real-time input cleaning
-        form.addEventListener('input', (e) => {
-            if (e.target.required && e.target.value.trim() !== '') {
-                clearError(e.target);
-            }
-            
-            // Mobile specific
-            if (e.target.id === 'mobileNumber') {
-                e.target.value = e.target.value.replace(/\D/g, '');
-                if (validateMobile(e.target.value)) clearError(e.target);
-            }
-
-            // Email specific
-            if (e.target.id === 'emailAddress') {
-                if (validateEmail(e.target.value)) clearError(e.target);
+        langElements.forEach(el => {
+            if(el.tagName.toLowerCase() === 'option') {
+                el.textContent = el.getAttribute(`data-${currentLang}`);
+            } else {
+                el.innerText = el.getAttribute(`data-${currentLang}`);
             }
         });
+    }
 
-        // Form Submission
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            let isValid = true;
+    langToggle.addEventListener('change', updateLanguage);
+    updateLanguage(); // Init
 
-            // Check category selection
-            if (!typeSelect.value) {
-                showError(typeSelect, "Please select a membership category");
-                typeSelect.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                isValid = false;
-            } else {
-                clearError(typeSelect);
+    // === AADHAAR INPUT LOGIC ===
+    const aadhaarInputs = document.querySelectorAll('.aadhaar-box');
+    const aadhaarHidden = document.getElementById('aadhaarHidden');
+
+    aadhaarInputs.forEach((input, index) => {
+        input.addEventListener('input', (e) => {
+            // Only allow numbers
+            e.target.value = e.target.value.replace(/\D/g, '');
+            if(e.target.value.length === 1 && index < aadhaarInputs.length - 1) {
+                aadhaarInputs[index + 1].focus();
             }
+            updateHiddenAadhaar();
+        });
 
-            // Standard HTML5 validation + Custom checks
-            const inputs = form.querySelectorAll('input[required], select[required], textarea[required]');
-            
-            inputs.forEach(input => {
-                if (!input.value.trim()) {
-                    showError(input);
-                    isValid = false;
-                } else if (input.id === 'mobileNumber' && !validateMobile(input.value)) {
-                    showError(input, "Enter valid 10-digit number");
-                    isValid = false;
-                } else if (input.id === 'emailAddress' && !validateEmail(input.value)) {
-                    showError(input, "Enter valid email address");
-                    isValid = false;
-                } else {
-                    clearError(input);
-                }
-            });
-
-            if (isValid) {
-                const btn = form.querySelector('.btn-apply');
-                btn.disabled = true;
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
-
-                // Mocking API call
-                setTimeout(() => {
-                    const modal = document.getElementById('apply-success-modal');
-                    const closeBtn = modal.querySelector('.close-modal');
-                    
-                    modal.classList.add('active');
-                    
-                    closeBtn.addEventListener('click', () => {
-                        modal.classList.remove('active');
-                        window.location.href = '/';
-                    });
-                    
-                    form.reset();
-                    vocationSections.forEach(s => s.classList.remove('active'));
-                    feeDisplay.style.display = 'none';
-                    btn.disabled = false;
-                    btn.innerHTML = '<span>Submit Membership Application</span><i class="fas fa-arrow-right"></i>';
-                }, 1500);
-            } else {
-                // Focus first error
-                const firstError = form.querySelector('.field-group.error');
-                if (firstError) {
-                    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
+        input.addEventListener('keydown', (e) => {
+            if(e.key === 'Backspace' && e.target.value === '' && index > 0) {
+                aadhaarInputs[index - 1].focus();
             }
         });
     });
+
+    function updateHiddenAadhaar() {
+        let val = '';
+        aadhaarInputs.forEach(i => val += i.value);
+        aadhaarHidden.value = val;
+    }
+
+    // === PHOTO PREVIEW LOGIC ===
+    const photoInput = document.getElementById('applicantPhoto');
+    const photoPreview = document.getElementById('photoPreview');
+    const photoPlaceholder = document.getElementById('photoPlaceholder');
+
+    photoInput.addEventListener('change', function() {
+        const file = this.files[0];
+        if(file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                photoPreview.src = e.target.result;
+                photoPreview.style.display = 'block';
+                photoPlaceholder.style.display = 'none';
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // === FAMILY DETAILS CALCULATION ===
+    const mChild = document.querySelector('input[name="maleChildren"]');
+    const fChild = document.querySelector('input[name="femaleChildren"]');
+    const tChild = document.querySelector('input[name="totalChildren"]');
+
+    function calcTotal() {
+        tChild.value = (parseInt(mChild.value) || 0) + (parseInt(fChild.value) || 0);
+    }
+    mChild.addEventListener('input', calcTotal);
+    fChild.addEventListener('input', calcTotal);
+
+    // === CLASSIFICATION AMOUNT AUTOFILL ===
+    const classSelect = document.getElementById('classificationSelect');
+    const feeAmount = document.getElementById('feeAmount');
+
+    classSelect.addEventListener('change', function() {
+        const selectedOption = this.options[this.selectedIndex];
+        if(selectedOption.value) {
+            feeAmount.value = selectedOption.getAttribute('data-amount');
+        } else {
+            feeAmount.value = '';
+        }
+    });
+
+    // Handle initial selection if any (e.g. from URL query)
+    const urlParams = new URLSearchParams(window.location.search);
+    const tierParam = urlParams.get('tier');
+    if (tierParam) {
+        // Find matching option (case insensitive approx)
+        Array.from(classSelect.options).forEach(opt => {
+            if(opt.value.toLowerCase().replace(' ', '_') === tierParam.toLowerCase()) {
+                opt.selected = true;
+                classSelect.dispatchEvent(new Event('change'));
+            }
+        });
+    }
+});
 </script>
 {% endblock %}
